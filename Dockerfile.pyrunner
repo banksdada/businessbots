@@ -1,0 +1,21 @@
+FROM python:3.12-slim
+
+WORKDIR /app
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    gcc \
+    libpq-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Python dependencies
+COPY python/requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy Python application files
+COPY python/ .
+
+# Create shared storage directory for generated images
+RUN mkdir -p /shared-storage/generated-posts
+
+CMD ["python", "scheduler.py"]
