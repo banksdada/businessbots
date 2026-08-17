@@ -1,0 +1,51 @@
+{
+    "name": "businessbots/businessbots",
+    "type": "project",
+    "description": "AI business automation OS — WhatsApp, content, and lead follow-up for any small business vertical.",
+    "keywords": ["laravel", "livewire", "filament", "saas"],
+    "license": "proprietary",
+    "require": {
+        "php": "^8.3",
+        "laravel/framework": "^11.0",
+        "laravel/cashier": "^15.0",
+        "laravel/socialite": "^5.0",
+        "livewire/livewire": "^3.5",
+        "filament/filament": "^3.2"
+    },
+    "require-dev": {
+        "laravel/pint": "^1.13",
+        "laravel/sail": "^1.26",
+        "laravel/tinker": "^2.9",
+        "phpunit/phpunit": "^11.0",
+        "nunomaduro/collision": "^8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/",
+            "Database\\Factories\\": "database/factories/",
+            "Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "post-autoload-dump": [
+            "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
+            "@php artisan package:discover --ansi"
+        ]
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true,
+            "php-http/discovery": true
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}

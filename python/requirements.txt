@@ -1,0 +1,18 @@
+# Database
+psycopg2-binary==2.9.9
+
+# APIs
+requests==2.31.0
+openai==1.30.1
+
+# Trending
+pytrends==4.9.3
+
+# Scheduling
+APScheduler==3.10.4
+
+# Cache / rate-limit coordination with Laravel (same Redis instance)
+redis==5.0.1
+
+# Config
+python-dotenv==1.0.0
