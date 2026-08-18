@@ -58,8 +58,8 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction --no-script
 
 # Set permissions
 RUN chown -R www-data:www-data /var/www/html \
-    && chmod -R 755 /var/www/html/storage \
-    && chmod -R 755 /var/www/html/bootstrap/cache
+    && chmod -R 775 /var/www/html/storage \
+    && chmod -R 775 /var/www/html/bootstrap/cache
 
 # Copy Nginx configuration
 COPY docker/nginx.conf /etc/nginx/sites-available/default.conf
