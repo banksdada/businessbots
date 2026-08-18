@@ -42,6 +42,16 @@ WORKDIR /var/www/html
 # Copy application files
 COPY . .
 
+# Create required directories before permissions
+RUN mkdir -p storage/app/public \
+    storage/framework/cache \
+    storage/framework/sessions \
+    storage/framework/views \
+    storage/logs \
+    bootstrap/cache
+
+# Install PHP dependencies
+RUN composer install --no-dev --optimize-autoloader --no-interaction --no-scripts
 
 # Install NPM dependencies and build assets
 #RUN npm ci && npm run build
