@@ -50,7 +50,7 @@ RUN mkdir -p storage/app/public \
     bootstrap/cache
 
 # Install PHP dependencies
-RUN composer install --no-dev --optimize-autoloader --no-interaction --no-scripts --no-audit
+RUN composer install --no-dev --optimize-autoloader --no-interaction --no-scripts --no-security-blocking
 
 # Install NPM dependencies and build assets
 #RUN npm ci && npm run build
