@@ -43,8 +43,8 @@ WORKDIR /var/www/html
 COPY . .
 
 # Install PHP dependencies
-RUN composer install --no-dev --optimize-autoloader --no-interaction -vvv
-
+RUN composer install --no-dev --optimize-autoloader --no-interaction 
+-vvv ignore-platform-req-php
 # Install NPM dependencies and build assets
 RUN npm ci && npm run build
 
