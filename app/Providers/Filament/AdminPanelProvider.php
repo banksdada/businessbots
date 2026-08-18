@@ -34,7 +34,7 @@ class AdminPanelProvider extends PanelProvider
             // no manual ->where('business_id', ...) needed in resource queries.
             ->tenant(Business::class, ownershipRelationship: 'business')
             ->tenantMenu(true)
-            ->tenantRegistrationDisabled() // businesses are created via onboarding, not from inside the admin panel
+         
 
             ->resources([
                 LeadResource::class,
