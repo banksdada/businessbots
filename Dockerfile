@@ -27,8 +27,8 @@ RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
 RUN pecl install redis \
     && docker-php-ext-enable redis
 
-# Install Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+# Install Composer (latest version for --no-audit support)
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 # PHP configuration
 RUN cp "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
@@ -50,7 +50,7 @@ RUN mkdir -p storage/app/public \
     bootstrap/cache
 
 # Install PHP dependencies
-RUN COMPOSER_NO_AUDIT=1 composer install --no-dev --optimize-autoloader --no-interaction --no-scripts
+RUN composer install --no-dev --optimize-autoloader --no-interaction --no-scripts --no-audit
 
 # Install NPM dependencies and build assets
 #RUN npm ci && npm run build
