@@ -34,7 +34,6 @@ class AdminPanelProvider extends PanelProvider
             // no manual ->where('business_id', ...) needed in resource queries.
             ->tenant(Business::class, ownershipRelationship: 'business')
             ->tenantMenu(true)
-         
 
             ->resources([
                 LeadResource::class,
