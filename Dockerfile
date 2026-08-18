@@ -1,32 +1,31 @@
-FROM php:8.4-fpm-alpine
+FROM php:8.3-fpm-bookworm
 
 # Install system dependencies
-RUN apk add --no-cache \
+RUN apt-get update && apt-get install -y --no-install-recommends \
     git \
     curl \
     libpng-dev \
-    libjpeg-turbo-dev \
-    freetype-dev \
-    oniguruma-dev \
+    libjpeg-dev \
+    libfreetype6-dev \
+    libonig-dev \
     libxml2-dev \
     zip \
     unzip \
     libpq-dev \
-    icu-dev \
+    libicu-dev \
     supervisor \
     nginx \
     nodejs \
-    npm
+    npm \
+    && rm -rf /var/lib/apt/lists/*
 
 # Install PHP extensions
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
-    &&docker-php-ext-install pdo_pgsql mbstring exif pcntl bcmath gd intl opcache
+    && docker-php-ext-install pdo_pgsql mbstring exif pcntl bcmath gd intl opcache
 
 # Install Redis extension
-RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS \
-    && pecl install redis \
-    && docker-php-ext-enable redis \
-    && apk del .build-deps
+RUN pecl install redis \
+    && docker-php-ext-enable redis
 
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
@@ -51,7 +50,8 @@ RUN mkdir -p storage/app/public \
     bootstrap/cache
 
 # Install PHP dependencies
-RUN composer install --no-dev --optimize-autoloader --no-interaction --no-scripts --no-audit
+ENV COMPOSER_NO_AUDIT=1
+RUN composer install --no-dev --optimize-autoloader --no-interaction --no-scripts
 
 # Install NPM dependencies and build assets
 #RUN npm ci && npm run build
@@ -62,7 +62,9 @@ RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 755 /var/www/html/bootstrap/cache
 
 # Copy Nginx configuration
-COPY docker/nginx.conf /etc/nginx/http.d/default.conf
+COPY docker/nginx.conf /etc/nginx/sites-available/default.conf
+RUN ln -sf /etc/nginx/sites-available/default.conf /etc/nginx/sites-enabled/default.conf
+RUN rm -f /etc/nginx/sites-enabled/default
 
 # Copy Supervisor configuration
 COPY docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
