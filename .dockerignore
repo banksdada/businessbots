@@ -12,7 +12,6 @@ storage/framework/views/*
 bootstrap/cache/*
 tests
 *.md
-docker
 .python-version
 .vscode
 .idea
