@@ -1,0 +1,47 @@
+BUSINESSBOTS — QUICK REFERENCE CARD
+====================================
+
+REPO:     https://github.com/banksdada/businessbots
+APP URL:  https://automation.baseuse.xyz
+STACK:    Laravel 11 + Filament + PostgreSQL + Redis + Python AI Runner
+
+SETUP IN COOLIFY (5 steps):
+1. New App → Git-based → repo URL above → branch: master → Dockerfile
+2. New Database → PostgreSQL → name: postgres
+3. New Database → Redis → name: redis
+4. Environment Variables → set all values (see COOLIFY_SETUP_GUIDE.md)
+5. Deploy → wait 8-10 min → Terminal → run migrations
+
+TERMINAL COMMANDS (after deploy):
+  php artisan migrate:fresh --force
+  php artisan db:seed --force
+  php artisan cache:clear
+  php artisan config:cache
+  php artisan view:cache
+
+KEY ENV VARS (minimum):
+  APP_KEY=          (run: php artisan key:generate)
+  DB_CONNECTION=pgsql
+  DB_HOST=postgres
+  DB_DATABASE=businessbots
+  DB_USERNAME=secret
+  DB_PASSWORD=secret
+  REDIS_HOST=redis
+  REDIS_PASSWORD=secret
+  APP_URL=https://automation.baseuse.xyz
+
+WHAT EACH CONTAINER DOES:
+  app       → Laravel (nginx + php-fpm + queue worker)
+  pyrunner  → AI content generation (trends, posts, images)
+  postgres  → Database
+  redis     → Cache + sessions + queues
+
+FIXES APPLIED THIS SESSION:
+  ✓ Added ext-zip + libzip-dev to Dockerfile
+  ✓ Added base Controller class
+  ✓ Created users table migration
+  ✓ Created DatabaseSeeder
+  ✓ Fixed supervisord (nginx + php-fpm now start)
+  ✓ Fixed bootstrap/cache permissions (775)
+  ✓ Fixed AdminPanelProvider deprecated method
+  ✓ Used --no-security-blocking for composer
