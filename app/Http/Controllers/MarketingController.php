@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\BusinessVertical;
+use App\Models\VerticalConfig;
 use App\Models\ScheduledPost;
 use App\Models\Lead;
 use App\Models\Business;
@@ -67,9 +67,9 @@ class MarketingController extends Controller
 
     private function verticalOptions()
     {
-        return BusinessVertical::query()
+        return VerticalConfig::query()
             ->distinct('vertical_type')
-            ->get(['vertical_type as slug', 'industry_config']);
+            ->get(['vertical_type as slug', 'label']);
     }
 
     private function pricingTiers(): array

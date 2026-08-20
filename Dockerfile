@@ -18,6 +18,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     nginx \
     nodejs \
     npm \
+    wget \
     && rm -rf /var/lib/apt/lists/*
 
 # Install PHP extensions
@@ -54,7 +55,7 @@ RUN mkdir -p storage/app/public \
 RUN composer install --no-dev --optimize-autoloader --no-interaction --no-scripts --no-security-blocking
 
 # Install NPM dependencies and build assets
-#RUN npm ci && npm run build
+RUN npm install --no-audit --no-fund && npm run build
 
 # Set permissions
 RUN chown -R www-data:www-data /var/www/html \
