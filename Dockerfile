@@ -1,3 +1,16 @@
+FROM node:20-bookworm-slim AS frontend
+
+WORKDIR /var/www/html
+
+# Copy only what the frontend build needs
+COPY package.json package-lock.json ./
+COPY vite.config.js ./
+COPY resources ./resources
+COPY public ./public
+
+# Install NPM dependencies and build assets (Tailwind v4 / @tailwindcss/oxide needs Node >= 20)
+RUN npm install --no-audit --no-fund && npm run build
+
 FROM php:8.4-fpm-bookworm
 
 # Install system dependencies
@@ -16,8 +29,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libicu-dev \
     supervisor \
     nginx \
-    nodejs \
-    npm \
     wget \
     && rm -rf /var/lib/apt/lists/*
 
@@ -43,6 +54,9 @@ WORKDIR /var/www/html
 # Copy application files
 COPY . .
 
+# Copy pre-built frontend assets from the Node 20 build stage
+COPY --from=frontend /var/www/html/public/build /var/www/html/public/build
+
 # Create required directories before permissions
 RUN mkdir -p storage/app/public \
     storage/framework/cache \
@@ -53,9 +67,6 @@ RUN mkdir -p storage/app/public \
 
 # Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader --no-interaction --no-scripts --no-security-blocking
-
-# Install NPM dependencies and build assets
-RUN npm install --no-audit --no-fund && npm run build
 
 # Set permissions
 RUN chown -R www-data:www-data /var/www/html \
