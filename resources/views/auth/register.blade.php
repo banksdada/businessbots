@@ -3,7 +3,7 @@
     <section class="mx-auto max-w-[400px] px-6 py-20">
         <div class="text-center mb-8">
             <h1 class="text-2xl font-bold">Create your account</h1>
-            <p class="mt-2 text-text-secondary text-sm">Start your 14-day free trial — no card required</p>
+            <p class="mt-2 text-text-secondary text-sm">Start your 14-day free trial — no password, no card required</p>
         </div>
 
         <form method="POST" action="{{ route('register') }}" class="space-y-4">
@@ -40,33 +40,6 @@
                 @error('email')
                     <p class="mt-1 text-xs text-error">{{ $message }}</p>
                 @enderror
-            </div>
-
-            <div>
-                <label for="password" class="block text-sm font-medium text-text-secondary mb-1">Password</label>
-                <input
-                    type="password"
-                    id="password"
-                    name="password"
-                    required
-                    class="w-full px-3 py-2.5 bg-surface border border-border rounded-md text-text-primary text-sm placeholder-text-muted focus:outline-none focus:border-border-accent transition-colors"
-                    placeholder="Min. 8 characters"
-                >
-                @error('password')
-                    <p class="mt-1 text-xs text-error">{{ $message }}</p>
-                @enderror
-            </div>
-
-            <div>
-                <label for="password_confirmation" class="block text-sm font-medium text-text-secondary mb-1">Confirm password</label>
-                <input
-                    type="password"
-                    id="password_confirmation"
-                    name="password_confirmation"
-                    required
-                    class="w-full px-3 py-2.5 bg-surface border border-border rounded-md text-text-primary text-sm placeholder-text-muted focus:outline-none focus:border-border-accent transition-colors"
-                    placeholder="Repeat your password"
-                >
             </div>
 
             <button type="submit" class="w-full py-2.5 bg-gradient-accent text-white rounded-md text-sm font-semibold hover:opacity-90 transition-opacity">
