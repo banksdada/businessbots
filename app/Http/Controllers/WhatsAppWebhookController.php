@@ -6,32 +6,87 @@ use App\Jobs\WhatsAppHandlerJob;
 use App\Models\ChannelSetting;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Log;
 
 class WhatsAppWebhookController extends Controller
 {
     /**
-     * Meta's one-time verification handshake when you register the webhook URL
-     * in the App Dashboard. Must echo back hub.challenge exactly, as plain text.
+     * Handle Meta webhook verification.
+     *
+     * Meta sends:
+     * hub.mode
+     * hub.verify_token
+     * hub.challenge
+     *
+     * Depending on PHP/Laravel handling, dotted query-string keys may
+     * also appear as underscore versions, so this supports both.
      */
     public function verify(Request $request): Response
     {
-        $mode = $request->query('hub_mode');
-        $token = $request->query('hub_verify_token');
-        $challenge = $request->query('hub_challenge');
+        $mode = (string) (
+            $request->query('hub_mode')
+            ?? $request->query('hub.mode')
+            ?? ''
+        );
 
-        if ($mode === 'subscribe' && $token === config('services.meta.webhook_verify_token')) {
-            return response($challenge, 200);
+        $token = (string) (
+            $request->query('hub_verify_token')
+            ?? $request->query('hub.verify_token')
+            ?? ''
+        );
+
+        $challenge = (string) (
+            $request->query('hub_challenge')
+            ?? $request->query('hub.challenge')
+            ?? ''
+        );
+
+        $expectedToken = (string) config(
+            'services.meta.webhook_verify_token',
+            ''
+        );
+
+        Log::info('Meta WhatsApp webhook verification attempt', [
+            'mode' => $mode,
+            'token_received' => $token !== '',
+            'challenge_received' => $challenge !== '',
+            'verify_token_configured' => $expectedToken !== '',
+        ]);
+
+        if (
+            $mode === 'subscribe'
+            && $token !== ''
+            && $expectedToken !== ''
+            && hash_equals($expectedToken, $token)
+        ) {
+            Log::info('Meta WhatsApp webhook verified successfully');
+
+            return response(
+                $challenge,
+                200,
+                [
+                    'Content-Type' => 'text/plain',
+                ]
+            );
         }
 
-        return response('Forbidden', 403);
+        Log::warning('Meta WhatsApp webhook verification failed', [
+            'mode' => $mode,
+            'token_received' => $token !== '',
+            'verify_token_configured' => $expectedToken !== '',
+        ]);
+
+        return response(
+            'Forbidden',
+            403,
+            [
+                'Content-Type' => 'text/plain',
+            ]
+        );
     }
 
     /**
-     * Inbound messages. Signature is verified by VerifyMetaWebhookSignature
-     * middleware before this method ever runs — never trust an unverified payload.
-     *
-     * Always return 200 quickly, even on internal errors — Meta retries aggressively
-     * on non-200s, and heavy processing happens in the queued job, not here.
+     * Receive webhook events from Meta.
      */
     public function receive(Request $request): Response
     {
@@ -43,51 +98,131 @@ class WhatsAppWebhookController extends Controller
                     $this->processChange($change);
                 }
             }
-        } catch (\Exception $e) {
-            \Log::error('[WhatsAppWebhookController] receive failed', ['error' => $e->getMessage()]);
-            // Still return 200 — see docblock above.
+        } catch (\Throwable $e) {
+            Log::error('WhatsApp webhook processing failed', [
+                'error' => $e->getMessage(),
+            ]);
         }
 
-        return response('EVENT_RECEIVED', 200);
+        /*
+         * Always acknowledge Meta quickly so it does not keep retrying
+         * a webhook because of an internal BusinessBots error.
+         */
+        return response(
+            'EVENT_RECEIVED',
+            200,
+            [
+                'Content-Type' => 'text/plain',
+            ]
+        );
     }
 
+    /**
+     * Process an individual webhook change.
+     */
     private function processChange(array $change): void
     {
         $value = $change['value'] ?? [];
+
         $messages = $value['messages'] ?? [];
-        $phoneNumberId = $value['metadata']['phone_number_id'] ?? null;
 
+        $phoneNumberId =
+            $value['metadata']['phone_number_id'] ?? null;
+
+        /*
+         * Meta also sends delivery/read/status events.
+         * BusinessBots only processes actual incoming messages here.
+         */
         if (empty($messages) || ! $phoneNumberId) {
-            return; // status callbacks (delivered/read receipts) land here too — nothing to do with those yet
-        }
-
-        $businessId = $this->resolveBusinessId($phoneNumberId);
-
-        if (! $businessId) {
-            \Log::warning('[WhatsAppWebhookController] no business found for phone_number_id', ['phone_number_id' => $phoneNumberId]);
             return;
         }
 
-        $contacts = collect($value['contacts'] ?? []);
+        $businessId = $this->resolveBusinessId(
+            (string) $phoneNumberId
+        );
+
+        if (! $businessId) {
+            Log::warning(
+                'No BusinessBots business matched WhatsApp Phone Number ID',
+                [
+                    'phone_number_id' => $phoneNumberId,
+                ]
+            );
+
+            return;
+        }
+
+        $contacts = collect(
+            $value['contacts'] ?? []
+        );
 
         foreach ($messages as $message) {
-            if ($message['type'] !== 'text') {
-                continue; // MVP handles text only — media/location messages logged but not processed
+            $messageType =
+                $message['type'] ?? null;
+
+            /*
+             * Current MVP handles text messages.
+             * Images/audio/documents can be added later.
+             */
+            if ($messageType !== 'text') {
+                Log::info(
+                    'Unsupported WhatsApp message type received',
+                    [
+                        'type' => $messageType,
+                        'business_id' => $businessId,
+                    ]
+                );
+
+                continue;
             }
 
-            $fromPhone = $message['from'];
-            $text = $message['text']['body'] ?? '';
-            $senderName = $contacts->firstWhere('wa_id', $fromPhone)['profile']['name'] ?? null;
+            $fromPhone =
+                $message['from'] ?? null;
 
-            WhatsAppHandlerJob::dispatch($businessId, $fromPhone, $text, $senderName);
+            $text =
+                $message['text']['body'] ?? '';
+
+            if (
+                ! $fromPhone
+                || trim((string) $text) === ''
+            ) {
+                continue;
+            }
+
+            $contact = $contacts->firstWhere(
+                'wa_id',
+                $fromPhone
+            );
+
+            $senderName =
+                $contact['profile']['name'] ?? null;
+
+            WhatsAppHandlerJob::dispatch(
+                $businessId,
+                $fromPhone,
+                $text,
+                $senderName
+            );
         }
     }
 
-    /** Maps Meta's phone_number_id back to which business this webhook event belongs to. */
-    private function resolveBusinessId(string $phoneNumberId): ?int
-    {
-        return ChannelSetting::where('platform', 'whatsapp')
-            ->where('external_account_id', $phoneNumberId)
+    /**
+     * Find the BusinessBots business associated with Meta's
+     * WhatsApp Phone Number ID.
+     */
+    private function resolveBusinessId(
+        string $phoneNumberId
+    ): ?int {
+        $businessId = ChannelSetting::query()
+            ->where('platform', 'whatsapp')
+            ->where(
+                'external_account_id',
+                $phoneNumberId
+            )
             ->value('business_id');
+
+        return $businessId
+            ? (int) $businessId
+            : null;
     }
 }
