@@ -2,11 +2,13 @@ import logging
 import time
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.cron import CronTrigger
+from apscheduler.triggers.interval import IntervalTrigger
 
 from config import config
 from jobs.trend_detector import detect_trends
 from jobs.content_generator import generate_content
 from jobs.analytics_collector import collect_analytics
+from jobs.job_alert_notifier import notify_job_alerts
 
 logging.basicConfig(
     level=logging.INFO,
@@ -40,11 +42,22 @@ scheduler.add_job(
     replace_existing=True,
 )
 
+scheduler.add_job(
+    notify_job_alerts,
+    IntervalTrigger(minutes=30),
+    id="job_alert_notifier",
+    name="Job Alert Notifier (every 30 min)",
+    replace_existing=True,
+)
+
 
 def main():
     logger.info("Starting BusinessBots Python job runner...")
     logger.info(f"Timezone: {config.TIMEZONE}")
-    logger.info("Registered jobs: trend_detector (05:00), content_generator (06:00), analytics_collector (23:00)")
+    logger.info(
+        "Registered jobs: trend_detector (05:00), content_generator (06:00), "
+        "analytics_collector (23:00), job_alert_notifier (every 30 min)"
+    )
 
     scheduler.start()
 

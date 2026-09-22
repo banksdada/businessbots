@@ -39,5 +39,22 @@ class Config:
     TIMEZONE = "Europe/London"
     DEBUG = os.getenv("APP_DEBUG", "false").lower() == "true"
 
+    # --- Job alert notifier (Flux) ---
+    # Reads the SAME MAIL_* vars Laravel's mailer already uses (see
+    # .env.example) — one set of SMTP credentials, not a second config to
+    # keep in sync. Point FLUX_API_URL at wherever Flux is actually deployed;
+    # defaults to the live instance so this works out of the box.
+    FLUX_API_URL = os.getenv("FLUX_API_URL", "https://fluxjobs.baseuse.xyz")
+    JOB_ALERT_EMAIL_TO = os.getenv("JOB_ALERT_EMAIL_TO", "bankoledada@gmail.com")
+    JOB_ALERT_SCORE_THRESHOLD = int(os.getenv("JOB_ALERT_SCORE_THRESHOLD", "65"))
+
+    MAIL_HOST = os.getenv("MAIL_HOST", "mailpit")
+    MAIL_PORT = int(os.getenv("MAIL_PORT", "1025"))
+    MAIL_USERNAME = os.getenv("MAIL_USERNAME") or None
+    MAIL_PASSWORD = os.getenv("MAIL_PASSWORD") or None
+    MAIL_ENCRYPTION = (os.getenv("MAIL_ENCRYPTION") or "").lower() or None  # "tls", "ssl", or None
+    MAIL_FROM_ADDRESS = os.getenv("MAIL_FROM_ADDRESS", "hello@businessbots.com")
+    MAIL_FROM_NAME = os.getenv("MAIL_FROM_NAME", "BusinessBots")
+
 
 config = Config()
