@@ -48,6 +48,11 @@ class Config:
     JOB_ALERT_EMAIL_TO = os.getenv("JOB_ALERT_EMAIL_TO", "bankoledada@gmail.com")
     JOB_ALERT_SCORE_THRESHOLD = int(os.getenv("JOB_ALERT_SCORE_THRESHOLD", "65"))
 
+    # Restrict alerts to one of Flux's role keys (business_analyst, project,
+    # programme, delivery, agile_delivery, scrum_master) — see skills_data.py
+    # ROLES in the Flux repo for the exact keys. Leave blank to get all roles.
+    JOB_ALERT_ROLE_FILTER = os.getenv("JOB_ALERT_ROLE_FILTER", "business_analyst").strip() or None
+
     MAIL_HOST = os.getenv("MAIL_HOST", "mailpit")
     MAIL_PORT = int(os.getenv("MAIL_PORT", "1025"))
     MAIL_USERNAME = os.getenv("MAIL_USERNAME") or None

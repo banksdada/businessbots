@@ -17,8 +17,9 @@ def notify_job_alerts() -> dict:
     """
     Runs every 30 minutes. Polls Flux's own /api/jobs (a separate,
     self-hosted app — see fluxjobs.baseuse.xyz) for postings scored at or
-    above JOB_ALERT_SCORE_THRESHOLD, and emails any that haven't already
-    been notified about.
+    above JOB_ALERT_SCORE_THRESHOLD — and, when JOB_ALERT_ROLE_FILTER is
+    set, matching that specific role only (defaults to "business_analyst")
+    — and emails any that haven't already been notified about.
 
     Flux itself has no outbound email capability (it's a local-first,
     dependency-light dashboard by design) — this job is what turns its
@@ -75,6 +76,7 @@ def _fetch_matching_jobs() -> list:
         job
         for job in payload.get("jobs", [])
         if job.get("match", {}).get("score", 0) >= config.JOB_ALERT_SCORE_THRESHOLD
+        and (config.JOB_ALERT_ROLE_FILTER is None or job.get("role") == config.JOB_ALERT_ROLE_FILTER)
     ]
 
 
@@ -115,7 +117,8 @@ def _record_notified(cursor, jobs: list) -> None:
 
 def _send_alert_email(jobs: list) -> None:
     jobs_sorted = sorted(jobs, key=lambda j: j.get("match", {}).get("score", 0), reverse=True)
-    subject = f"Flux: {len(jobs)} new job match{'es' if len(jobs) != 1 else ''}"
+    role_label = f" {config.JOB_ALERT_ROLE_FILTER.replace('_', ' ')}" if config.JOB_ALERT_ROLE_FILTER else ""
+    subject = f"Flux:{role_label} {len(jobs)} new job match{'es' if len(jobs) != 1 else ''}"
 
     rows_html = "".join(
         f"""
