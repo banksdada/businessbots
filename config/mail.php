@@ -22,19 +22,20 @@ return [
     | reseller/rebrand sitting in front of Plusnet's mail infrastructure),
     | so PHP's default strict certificate-name check rejects the connection.
     |
-    | The "stream" block below is the standard Laravel/Symfony Mailer way to
-    | relax that specific check while keeping the connection encrypted. It
-    | only takes effect when MAIL_VERIFY_PEER is explicitly set to false in
-    | .env / Coolify — every other deployment of this app (or this one, if
-    | the provider ever fixes their certificate) keeps full verification by
-    | default.
+    | Laravel's built-in "smtp" transport has no supported way to relax just
+    | the certificate-name check via config (its transport factory ignores a
+    | "stream" key entirely) — so when MAIL_VERIFY_PEER=false, this switches
+    | to a custom "smtp-relaxed" transport registered in AppServiceProvider
+    | that builds the same underlying connection but skips that one check.
+    | Leave MAIL_VERIFY_PEER unset (or true) everywhere else to keep full
+    | verification, including if this provider ever fixes their certificate.
     |
     */
 
     'mailers' => [
 
         'smtp' => [
-            'transport' => 'smtp',
+            'transport' => env('MAIL_VERIFY_PEER', true) ? 'smtp' : 'smtp-relaxed',
             'scheme' => env('MAIL_SCHEME'),
             'url' => env('MAIL_URL'),
             'host' => env('MAIL_HOST', '127.0.0.1'),
@@ -43,17 +44,6 @@ return [
             'password' => env('MAIL_PASSWORD'),
             'timeout' => null,
             'local_domain' => env('MAIL_EHLO_DOMAIN', parse_url(env('APP_URL', 'http://localhost'), PHP_URL_HOST)),
-            'stream' => [
-                'ssl' => [
-                    // Set MAIL_VERIFY_PEER=false in .env only for a host whose
-                    // certificate is known to be issued to a different name
-                    // (like webmail.enmail.co / relay.plus.net here) but that
-                    // you otherwise trust. Leave unset/true everywhere else.
-                    'verify_peer' => env('MAIL_VERIFY_PEER', true),
-                    'verify_peer_name' => env('MAIL_VERIFY_PEER', true),
-                    'allow_self_signed' => ! env('MAIL_VERIFY_PEER', true),
-                ],
-            ],
         ],
 
         'ses' => [
