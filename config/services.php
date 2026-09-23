@@ -42,7 +42,11 @@ return [
     */
 
     'resend' => [
-        'api_key' => env('RESEND_API_KEY'),
+        // Laravel's built-in Resend mail transport (see MailManager::
+        // createResendTransport()) specifically reads services.resend.key —
+        // not api_key — so this must be named exactly this for MAIL_MAILER=
+        // resend to actually pick up the API key.
+        'key' => env('RESEND_API_KEY'),
     ],
 
     /*

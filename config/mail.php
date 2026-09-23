@@ -55,7 +55,12 @@ return [
         ],
 
         'resend' => [
-            'transport' => 'resend',
+            // 'resend-http' (see AppServiceProvider + app/Mail/Transport/
+            // ResendApiTransport.php) talks to Resend's API directly with
+            // Laravel's own HTTP client — not Laravel's built-in "resend"
+            // transport, which needs the resend/resend-php Composer package
+            // this app doesn't otherwise need.
+            'transport' => 'resend-http',
         ],
 
         'sendmail' => [

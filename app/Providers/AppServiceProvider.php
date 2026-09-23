@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Mail\Transport\ResendApiTransport;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\ServiceProvider;
 use Symfony\Component\Mailer\Transport\Dsn;
@@ -24,6 +25,23 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->registerRelaxedSmtpTransport();
+        $this->registerResendApiTransport();
+    }
+
+    /**
+     * Registers a custom "resend-http" mail transport (see
+     * app/Mail/Transport/ResendApiTransport.php) used by the "resend" mailer
+     * in config/mail.php when MAIL_MAILER=resend. Talks to Resend's HTTP API
+     * directly via Laravel's own HTTP client, so no extra Composer package
+     * is needed for it.
+     */
+    protected function registerResendApiTransport(): void
+    {
+        Mail::extend('resend-http', function (array $config) {
+            return new ResendApiTransport(
+                $config['key'] ?? config('services.resend.key')
+            );
+        });
     }
 
     /**
