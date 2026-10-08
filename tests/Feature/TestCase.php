@@ -1,11 +1,10 @@
 <?php
 
-namespace Tests;
+namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
+use Tests\TestCase as BaseTestCase;
 
-abstract class FeatureTestCase extends BaseTestCase
+abstract class TestCase extends BaseTestCase
 {
-    use RefreshDatabase;
+    //
 }

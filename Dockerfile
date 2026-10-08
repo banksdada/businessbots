@@ -68,6 +68,10 @@ RUN mkdir -p storage/app/public \
 # Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader --no-interaction --no-scripts --no-security-blocking
 
+# Filament's admin CSS/JS live in public/css and public/js, which --no-scripts
+# skips. Without this step the /admin and /ops panels load unstyled.
+RUN php artisan filament:assets
+
 # Set permissions
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 775 /var/www/html/storage \

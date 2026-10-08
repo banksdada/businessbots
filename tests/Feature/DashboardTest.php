@@ -2,9 +2,9 @@
 
 namespace Tests\Feature;
 
+use App\Models\Business;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\Feature\TestCase;
 
 class DashboardTest extends TestCase
 {
@@ -17,13 +17,30 @@ class DashboardTest extends TestCase
         $response->assertRedirect('/login');
     }
 
-    public function test_authenticated_user_can_access_dashboard(): void
+    public function test_user_without_a_business_is_sent_to_onboarding(): void
     {
         $user = User::factory()->create();
 
-        $response = $this->actingAs($user)->get('/dashboard');
+        $this->actingAs($user)->get('/dashboard')->assertRedirect(route('onboarding', ['step' => 'vertical']));
+    }
 
-        $response->assertStatus(200);
+    public function test_onboarded_user_can_access_dashboard(): void
+    {
+        config(['billing.required' => false]);
+        $business = Business::factory()->active()->create();
+
+        $this->actingAs($business->owner)->get('/dashboard')
+            ->assertOk()
+            ->assertSee('Your requests')
+            ->assertSee('No requests yet');
+    }
+
+    public function test_subscription_is_required_when_billing_is_on(): void
+    {
+        config(['billing.required' => true]);
+        $business = Business::factory()->active()->create();
+
+        $this->actingAs($business->owner)->get('/dashboard')->assertRedirect(route('marketing.pricing'));
     }
 
     public function test_home_page_is_displayed(): void

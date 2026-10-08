@@ -17,6 +17,10 @@ class EnsureSubscribed
     {
         $user = $request->user();
 
+        if (! config('billing.required') || $user->is_admin) {
+            return $next($request);
+        }
+
         if ($user->subscribed('default') || $user->onTrial('default')) {
             return $next($request);
         }

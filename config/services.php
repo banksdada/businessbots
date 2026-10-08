@@ -117,6 +117,12 @@ return [
         'reply_webhook' => env(
             'PYRUNNER_REPLY_WEBHOOK_URL'
         ),
+
+        // Starts the client-advice script straight away after a request is
+        // submitted. Optional: the script's 5-minute schedule is the backup.
+        'advice_webhook' => env(
+            'PYRUNNER_ADVICE_WEBHOOK_URL'
+        ),
     ],
 
     /*

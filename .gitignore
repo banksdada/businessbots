@@ -23,3 +23,6 @@ yarn-error.log
 .DS_Store
 /app/Services/WhatsApp/video-agent/
 /python/jobs/config.py
+/public/css/filament
+/public/js/filament
+/public/fonts/filament

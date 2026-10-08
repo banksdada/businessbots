@@ -12,6 +12,10 @@ class MarketingController extends Controller
 {
     public function home(): View
     {
+        if (! config('features.social')) {
+            return view('marketing.home-advice');
+        }
+
         return view('marketing.home', [
             'verticals' => $this->verticalOptions(),
             'pricingTiers' => $this->pricingTiers(),
@@ -22,6 +26,10 @@ class MarketingController extends Controller
 
     public function pricing(): View
     {
+        if (! config('features.social')) {
+            return view('marketing.pricing-advice');
+        }
+
         return view('marketing.pricing', [
             'pricingTiers' => $this->pricingTiers(),
         ]);
@@ -46,6 +54,8 @@ class MarketingController extends Controller
      */
     public function liveProof(): View
     {
+        abort_unless(config('features.social'), 404);
+
         try {
             $stats = [
                 'revenue_this_month' => 0, // populated once billing is wired up

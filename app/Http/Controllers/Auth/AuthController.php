@@ -30,6 +30,7 @@ class AuthController extends Controller
     public function sendLoginLink(Request $request)
     {
         $request->validate([
+            'name' => ['nullable', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255'],
         ]);
 
@@ -39,7 +40,7 @@ class AuthController extends Controller
 
         if (! $user) {
             $user = User::create([
-                'name' => $this->nameFromEmail($email),
+                'name' => trim((string) $request->input('name')) ?: $this->nameFromEmail($email),
                 'email' => $email,
                 'password' => bin2hex(random_bytes(16)),
             ]);
