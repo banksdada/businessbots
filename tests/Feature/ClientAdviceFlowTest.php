@@ -254,4 +254,15 @@ class ClientAdviceFlowTest extends TestCase
 
         $component->call('$refresh')->assertRedirect(route('problems.show', $problem));
     }
+
+    public function test_failed_draft_is_not_shown_as_written(): void
+    {
+        $problem = $this->submitProblem();
+        $problem->update(['status' => ProblemRequest::STATUS_FAILED]);
+
+        Livewire::actingAs($this->business->owner)
+            ->test(\App\Livewire\Problems\RequestProgress::class, ['problem' => $problem])
+            ->assertSee('This is taking a little longer than usual')
+            ->assertSeeHtmlInOrder(['font-semibold text-text-primary">AI is writing a first draft', 'text-text-muted">A person is checking it']);
+    }
 }
