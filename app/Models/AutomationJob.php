@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class AutomationJob extends Model
 {
@@ -30,4 +31,9 @@ class AutomationJob extends Model
         'completed_at' => 'datetime',
         'failed_at' => 'datetime',
     ];
+
+    public function problemRequest(): HasOne
+    {
+        return $this->hasOne(ProblemRequest::class);
+    }
 }

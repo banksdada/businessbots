@@ -1,16 +1,16 @@
-<x-layouts.app title="Sign in — BusinessBots">
+<x-layouts.app :title="'Sign in — ' . config('app.name')">
 
-    <section class="mx-auto max-w-[400px] px-6 py-20">
+    <section class="mx-auto max-w-[440px] px-4 sm:px-6 py-12 sm:py-20">
         <div class="text-center mb-8">
-            <h1 class="text-2xl font-bold">Welcome back</h1>
-            <p class="mt-2 text-text-secondary text-sm">We'll email you a one-time login link — no password needed</p>
+            <h1 class="text-3xl font-bold">Welcome back</h1>
+            <p class="mt-2 text-text-secondary">We'll email you a one-time sign-in link. No password needed.</p>
         </div>
 
-        <form method="POST" action="{{ route('login') }}" class="space-y-4">
+        <form method="POST" action="{{ route('login') }}" class="card p-6 sm:p-8 space-y-5">
             @csrf
 
             <div>
-                <label for="email" class="block text-sm font-medium text-text-secondary mb-1">Email</label>
+                <label for="email" class="field-label">Email</label>
                 <input
                     type="email"
                     id="email"
@@ -18,22 +18,22 @@
                     value="{{ old('email') }}"
                     required
                     autofocus
-                    class="w-full px-3 py-2.5 bg-surface border border-border rounded-md text-text-primary text-sm placeholder-text-muted focus:outline-none focus:border-border-accent transition-colors"
+                    class="field-input"
                     placeholder="you@example.com"
                 >
                 @error('email')
-                    <p class="mt-1 text-xs text-error">{{ $message }}</p>
+                    <p class="field-error">{{ $message }}</p>
                 @enderror
             </div>
 
-            <button type="submit" class="w-full py-2.5 bg-gradient-accent text-white rounded-md text-sm font-semibold hover:opacity-90 transition-opacity">
+            <button type="submit" class="btn-primary w-full py-3">
                 Email me a login link
             </button>
         </form>
 
         <p class="mt-6 text-center text-sm text-text-secondary">
             Don't have an account?
-            <a href="{{ route('register') }}" class="text-accent-light hover:text-accent transition-colors">Create one</a>
+            <a href="{{ route('register') }}" class="font-semibold text-accent hover:text-accent-dark transition-colors">Create one</a>
         </p>
     </section>
 

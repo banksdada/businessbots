@@ -50,6 +50,11 @@ class Business extends Model implements HasName
         return $this->hasMany(AiTemplate::class);
     }
 
+    public function problemRequests(): HasMany
+    {
+        return $this->hasMany(ProblemRequest::class);
+    }
+
     public function verticalType(): ?string
     {
         return $this->businessVertical?->vertical_type;

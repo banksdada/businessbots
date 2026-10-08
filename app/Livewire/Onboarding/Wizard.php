@@ -12,6 +12,12 @@ class Wizard extends Component
 
     public const STEPS = ['vertical', 'profile', 'connect'];
 
+    /** The Connect (social channels) step only exists while social features are on. */
+    public static function steps(): array
+    {
+        return config('features.social') ? self::STEPS : ['vertical', 'profile'];
+    }
+
     public ?int $businessId = null;
 
     public function mount(?string $step = null): void
@@ -20,7 +26,7 @@ class Wizard extends Component
         $business = auth()->user()->businesses()->where('is_active', false)->latest()->first();
         $this->businessId = $business?->id;
 
-        $this->step = in_array($step, self::STEPS, true) ? $step : 'vertical';
+        $this->step = in_array($step, self::steps(), true) ? $step : 'vertical';
     }
 
     #[On('step-completed')]
@@ -30,8 +36,9 @@ class Wizard extends Component
             $this->businessId = $businessId;
         }
 
-        $currentIndex = array_search($step, self::STEPS, true);
-        $nextStep = self::STEPS[$currentIndex + 1] ?? null;
+        $steps = self::steps();
+        $currentIndex = array_search($step, $steps, true);
+        $nextStep = $steps[$currentIndex + 1] ?? null;
 
         if ($nextStep === null) {
             // Final step done — mark business active and go to the real dashboard

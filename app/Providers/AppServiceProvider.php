@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Mail\Transport\ResendApiTransport;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 use Symfony\Component\Mailer\Transport\Dsn;
 use Symfony\Component\Mailer\Transport\Smtp\EsmtpTransportFactory;
@@ -24,6 +25,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // Belt and braces with trustProxies in bootstrap/app.php: if the site's
+        // address is https, every generated link (CSS, JS, emails) is https too.
+        if (str_starts_with((string) config('app.url'), 'https://')) {
+            URL::forceScheme('https');
+        }
+
         $this->registerRelaxedSmtpTransport();
         $this->registerResendApiTransport();
     }

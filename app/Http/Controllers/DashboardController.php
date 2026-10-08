@@ -13,6 +13,7 @@ class DashboardController extends Controller
 
         return view('dashboard.index', [
             'business' => $business,
+            'problems' => $business->problemRequests()->latest()->get(),
         ]);
     }
 

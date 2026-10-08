@@ -19,7 +19,7 @@ class LoginLinkMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Your BusinessBots login link',
+            subject: 'Your ' . config('app.name') . ' login link',
         );
     }
 

@@ -12,6 +12,10 @@ return [
 
     'trial_days' => (int) env('BILLING_TRIAL_DAYS', 14),
 
+    // false = logged-in clients use the app without a Stripe subscription
+    // (e.g. while you invoice by hand). The paywall comes back when set to true.
+    'required' => (bool) env('BILLING_REQUIRED', true),
+
     'tiers' => [
         'starter' => [
             'name' => 'Starter',

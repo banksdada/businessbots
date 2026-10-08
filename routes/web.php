@@ -9,6 +9,8 @@ use App\Http\Controllers\WhatsAppWebhookController;
 use App\Http\Controllers\ChannelOAuthController;
 use App\Livewire\Onboarding\Wizard as OnboardingWizard;
 use App\Livewire\Leads\LeadTable;
+use App\Livewire\Problems\SubmitProblem;
+use App\Http\Controllers\ProblemRequestController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -49,8 +51,10 @@ Route::middleware('auth')->group(function () {
 
     // Channel connect/callback — used by both the onboarding Connect step and
     // "reconnect" actions from Settings once a token expires.
-    Route::get('/channels/{platform}/connect', [ChannelOAuthController::class, 'connect'])->name('channels.connect');
-    Route::get('/channels/{platform}/callback', [ChannelOAuthController::class, 'callback'])->name('channels.callback');
+    if (config('features.social')) {
+        Route::get('/channels/{platform}/connect', [ChannelOAuthController::class, 'connect'])->name('channels.connect');
+        Route::get('/channels/{platform}/callback', [ChannelOAuthController::class, 'callback'])->name('channels.callback');
+    }
 });
 
 /*
@@ -75,10 +79,12 @@ Route::post('/stripe/webhook', [StripeWebhookController::class, 'handleWebhook']
 | Register this URL + META_WEBHOOK_VERIFY_TOKEN in the Meta App Dashboard.
 |--------------------------------------------------------------------------
 */
-Route::get('/webhooks/whatsapp', [WhatsAppWebhookController::class, 'verify'])->name('webhooks.whatsapp.verify');
-Route::post('/webhooks/whatsapp', [WhatsAppWebhookController::class, 'receive'])
-    ->middleware('meta.signature')
-    ->name('webhooks.whatsapp.receive');
+if (config('features.social')) {
+    Route::get('/webhooks/whatsapp', [WhatsAppWebhookController::class, 'verify'])->name('webhooks.whatsapp.verify');
+    Route::post('/webhooks/whatsapp', [WhatsAppWebhookController::class, 'receive'])
+        ->middleware('meta.signature')
+        ->name('webhooks.whatsapp.receive');
+}
 
 /*
 |--------------------------------------------------------------------------
@@ -89,6 +95,13 @@ Route::post('/webhooks/whatsapp', [WhatsAppWebhookController::class, 'receive'])
 */
 Route::middleware(['auth', 'business.onboarded', 'subscribed'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    Route::get('/leads', LeadTable::class)->name('leads.index');
     Route::get('/settings', [DashboardController::class, 'settings'])->name('settings');
+
+    // Client advice portal
+    Route::get('/problems/new', SubmitProblem::class)->name('problems.create');
+    Route::get('/problems/{problemRequest}', [ProblemRequestController::class, 'show'])->name('problems.show');
+
+    if (config('features.social')) {
+        Route::get('/leads', LeadTable::class)->name('leads.index');
+    }
 });

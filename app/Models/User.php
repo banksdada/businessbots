@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Filament\Models\Contracts\FilamentUser;
 use Filament\Models\Contracts\HasTenants;
 use Filament\Panel;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -11,7 +12,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Cashier\Billable;
 
-class User extends Authenticatable implements HasTenants
+class User extends Authenticatable implements FilamentUser, HasTenants
 {
     use HasFactory, Notifiable, Billable;
 
@@ -22,7 +23,26 @@ class User extends Authenticatable implements HasTenants
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
+        'is_admin' => 'boolean',
     ];
+
+    /**
+     * Filament's FilamentUser contract. Outside local dev, Filament returns 403
+     * to anyone not allowed here. /admin is each client's own business panel;
+     * /ops is the owner's review panel for every client's requests.
+     */
+    public function canAccessPanel(Panel $panel): bool
+    {
+        return match ($panel->getId()) {
+            'ops' => $this->is_admin,
+            default => true,
+        };
+    }
+
+    public function problemRequests(): HasMany
+    {
+        return $this->hasMany(ProblemRequest::class);
+    }
 
     public function businesses(): HasMany
     {

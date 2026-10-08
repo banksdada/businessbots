@@ -21,6 +21,8 @@ class VerticalStep extends Component
         ['slug' => 'beauty', 'label' => 'Beauty & salon', 'description' => 'Hair, nails, beauty services'],
         ['slug' => 'legal', 'label' => 'Legal', 'description' => 'Law firms, legal advice'],
         ['slug' => 'automotive', 'label' => 'Automotive', 'description' => 'Car repair, maintenance, sales'],
+        ['slug' => 'church_charity', 'label' => 'Church & charity', 'description' => 'Churches, ministries, charities'],
+        ['slug' => 'other', 'label' => 'Other', 'description' => 'Any other small organisation'],
     ];
 
     public function mount(?int $businessId = null): void
@@ -35,6 +37,17 @@ class VerticalStep extends Component
     public function selectVertical(string $slug): void
     {
         $this->selectedVertical = $slug;
+    }
+
+    public static function labelFor(?string $slug): string
+    {
+        foreach (self::VERTICALS as $vertical) {
+            if ($vertical['slug'] === $slug) {
+                return $vertical['label'];
+            }
+        }
+
+        return 'Small organisation';
     }
 
     public function continue(): void

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\AutomationJob;
+use App\Services\Advice\AdviceRequestService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -107,6 +108,10 @@ class PyRunnerJobController extends Controller
             'error_message' => null,
         ]);
 
+        if ($job->type === config('portal.job_type')) {
+            app(AdviceRequestService::class)->jobCompleted($job);
+        }
+
         return response()->json([
             'success' => true,
         ]);
@@ -140,6 +145,10 @@ class PyRunnerJobController extends Controller
             'error_message' => $validated['error'],
             'failed_at' => now(),
         ]);
+
+        if ($job->type === config('portal.job_type')) {
+            app(AdviceRequestService::class)->jobFailed($job);
+        }
 
         return response()->json([
             'success' => true,

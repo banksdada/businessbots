@@ -17,16 +17,17 @@ class LeadFactory extends Factory
             'phone' => fake()->numerify('+44##########'),
             'name' => fake()->name(),
             'status' => 'new',
-            'intent' => null,
-            'last_message' => fake()->sentence(),
-            'escalated' => false,
+            'intent' => 'inquiry',
+            'message' => fake()->sentence(),
+            'ai_reply_sent' => true,
         ];
     }
 
+    /** A complaint — needsHumanAttention() flags it for manual follow-up. */
     public function escalated(): static
     {
         return $this->state(fn (array $attributes) => [
-            'escalated' => true,
+            'intent' => 'complaint',
         ]);
     }
 }

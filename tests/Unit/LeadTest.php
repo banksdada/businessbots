@@ -31,13 +31,13 @@ class LeadTest extends TestCase
     {
         $lead = Lead::factory()->create();
 
-        $this->assertFalse($lead->escalated);
+        $this->assertFalse($lead->needsHumanAttention());
     }
 
     public function test_lead_can_be_escalated(): void
     {
         $lead = Lead::factory()->escalated()->create();
 
-        $this->assertTrue($lead->escalated);
+        $this->assertTrue($lead->needsHumanAttention());
     }
 }
