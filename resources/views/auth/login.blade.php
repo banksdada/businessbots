@@ -2,6 +2,7 @@
 
     <section class="mx-auto max-w-[440px] px-4 sm:px-6 py-12 sm:py-20">
         <div class="text-center mb-8">
+            <x-person name="owner-explain" bg="bg-peach" class="w-24 h-24 mx-auto mb-5" />
             <h1 class="text-3xl font-bold">Welcome back</h1>
             <p class="mt-2 text-text-secondary">We'll email you a one-time sign-in link. No password needed.</p>
         </div>

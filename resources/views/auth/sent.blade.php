@@ -2,6 +2,7 @@
 
     <section class="mx-auto max-w-[440px] px-4 sm:px-6 py-12 sm:py-20 text-center">
         <div class="mb-8">
+            <x-person name="elder-shirt" bg="bg-sage" class="w-24 h-24 mx-auto mb-5" />
             <h1 class="text-3xl font-bold">Check your email</h1>
             <p class="mt-2 text-text-secondary">
                 We've sent a one-time login link to

@@ -31,7 +31,7 @@ class DashboardTest extends TestCase
 
         $this->actingAs($business->owner)->get('/dashboard')
             ->assertOk()
-            ->assertSee('Your advice requests')
+            ->assertSee('Your requests')
             ->assertSee('No requests yet');
     }
 

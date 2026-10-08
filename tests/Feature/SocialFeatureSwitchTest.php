@@ -30,6 +30,6 @@ class SocialFeatureSwitchTest extends TestCase
 
     public function test_home_page_shows_the_advice_offer(): void
     {
-        $this->get('/')->assertOk()->assertSee('Tell us the problem.')->assertDontSee('WhatsApp');
+        $this->get('/')->assertOk()->assertSee("Tell us what's getting in the way.", false)->assertDontSee('WhatsApp');
     }
 }

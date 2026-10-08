@@ -1,35 +1,46 @@
 <x-layouts.app :title="'My requests — ' . config('app.name')">
     <div class="mx-auto max-w-[1100px] px-4 sm:px-6 py-8 sm:py-10">
 
-        <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-8">
-            <div>
-                <p class="text-sm font-medium text-text-muted">{{ $business->name }}</p>
-                <h1 class="text-2xl sm:text-3xl font-bold mt-1">Your advice requests</h1>
+        @php
+            $hour = now()->hour;
+            $greeting = $hour < 12 ? 'Good morning' : ($hour < 18 ? 'Good afternoon' : 'Good evening');
+            $firstName = \Illuminate\Support\Str::of(auth()->user()->name)->before(' ');
+        @endphp
+
+        <div class="rounded-3xl bg-peach/60 border border-peach px-6 py-7 sm:px-10 sm:py-8 flex items-center gap-6 mb-8 overflow-hidden">
+            <div class="flex-1">
+                <p class="text-sm font-medium text-text-secondary">{{ $business->name }}</p>
+                <h1 class="text-3xl sm:text-4xl font-semibold mt-1">{{ $greeting }}, {{ $firstName }}</h1>
+                <p class="mt-2 text-text-secondary max-w-md">What's on your mind today? Tell us about anything that's slowing your team down.</p>
+                <a href="{{ route('problems.create') }}" class="btn-primary mt-5">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" d="M12 5v14M5 12h14"/></svg>
+                    Ask for advice
+                </a>
             </div>
-            <a href="{{ route('problems.create') }}" class="btn-primary self-start sm:self-auto">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" d="M12 5v14M5 12h14"/></svg>
-                Ask for advice
-            </a>
+            <x-person name="manager-hijab" bg="bg-surface" class="hidden sm:block w-40 h-40 shrink-0" />
         </div>
+
+        <h2 class="text-xl font-semibold mb-4">Your requests</h2>
 
         @if ($problems->isEmpty())
             <div class="card p-8 sm:p-12 text-center">
-                <div class="mx-auto w-12 h-12 rounded-full bg-accent-muted flex items-center justify-center mb-4">
-                    <svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M8 10h8M8 14h5m-9 6l2.5-3H19a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v14z"/></svg>
+                <div class="flex justify-center -space-x-3 mb-5" aria-hidden="true">
+                    <x-person name="pastor-coffee" bg="bg-sage" class="w-14 h-14 ring-4 ring-surface" />
+                    <x-person name="reviewer-paper" bg="bg-sun" class="w-14 h-14 ring-4 ring-surface" />
                 </div>
-                <h2 class="text-lg font-semibold">No requests yet</h2>
-                <p class="mt-2 text-text-secondary max-w-md mx-auto">Tell us about a problem in your organisation, such as staff rotas, paperwork or getting more enquiries. We'll send you a reviewed report with practical next steps.</p>
+                <h3 class="text-xl font-semibold">No requests yet</h3>
+                <p class="mt-2 text-text-secondary max-w-md mx-auto">Staff rotas, paperwork, missed enquiries: whatever it is, tell us in your own words. We'll send back a plan that a real person has checked.</p>
                 <a href="{{ route('problems.create') }}" class="btn-primary mt-6">Ask your first question</a>
             </div>
 
             <ol class="mt-10 grid sm:grid-cols-3 gap-4" aria-label="How it works">
                 @foreach ([
-                    ['1', 'Describe the problem', 'A short form, about five minutes.'],
-                    ['2', 'We prepare your report', 'AI drafts it, then a person checks it.'],
-                    ['3', 'Read your advice', 'We email you when it\'s ready.'],
-                ] as [$n, $heading, $text])
+                    ['1', 'bg-peach', 'Describe the problem', 'A short form, about five minutes.'],
+                    ['2', 'bg-sage', 'We prepare your plan', 'AI drafts it, then a real person checks it.'],
+                    ['3', 'bg-sun', 'Read your advice', 'We email you when it\'s ready.'],
+                ] as [$n, $bg, $heading, $text])
                     <li class="card p-5">
-                        <span class="inline-flex w-7 h-7 rounded-full bg-accent-muted text-accent text-sm font-bold items-center justify-center">{{ $n }}</span>
+                        <span class="inline-flex w-9 h-9 rounded-full {{ $bg }} font-display text-lg font-semibold items-center justify-center">{{ $n }}</span>
                         <h3 class="mt-3 font-semibold">{{ $heading }}</h3>
                         <p class="mt-1 text-sm text-text-secondary">{{ $text }}</p>
                     </li>

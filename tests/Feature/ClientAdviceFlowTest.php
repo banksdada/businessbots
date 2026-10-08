@@ -123,7 +123,7 @@ class ClientAdviceFlowTest extends TestCase
         // Client can't see the draft yet
         $this->actingAs($this->business->owner)->get(route('problems.show', $problem))
             ->assertOk()
-            ->assertSee("We're preparing your report", false)
+            ->assertSee("We're working on your plan")
             ->assertDontSee('Use a rota tool.');
 
         // Owner edits and approves in /ops

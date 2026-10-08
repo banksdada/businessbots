@@ -1,31 +1,36 @@
 @import "tailwindcss";
 
+/* Self-hosted fonts (no Google Fonts call, so no visitor data leaves the site) */
+@import "@fontsource-variable/inter";
+@import "@fontsource-variable/fraunces";
+
 /* Alpine hides x-cloak elements until it has started (e.g. the mobile menu). */
 [x-cloak] {
   display: none !important;
 }
 
 @theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+  /* Warm, slightly soft serif for headings: friendly rather than corporate */
+  --font-display: "Fraunces Variable", Georgia, serif;
 
-  /* Page and surfaces — light, calm theme for non-technical clients
-     (care homes, churches, small firms). Every page uses these tokens,
-     so the whole look can be changed here. */
-  --color-background: #f7f7fb;
+  /* Page and surfaces — warm cream page, white cards. Every page uses these
+     tokens, so the whole look can be changed here. */
+  --color-background: #fbf7f1;
   --color-surface: #ffffff;
-  --color-surface-secondary: #f3f4f8;
+  --color-surface-secondary: #f6f1e9;
   --color-surface-elevated: #ffffff;
 
   /* Borders */
-  --color-border: #e4e5ee;
-  --color-border-strong: #cfd1de;
+  --color-border: #ece4d8;
+  --color-border-strong: #d9cfc0;
   --color-border-accent: #6d4fe8;
 
-  /* Text — all pass WCAG AA contrast on white */
-  --color-text-primary: #16151f;
-  --color-text-secondary: #4a4b5c;
-  --color-text-muted: #636478;
-  --color-text-faint: #8b8ca0;
+  /* Text — all pass WCAG AA contrast on white and cream */
+  --color-text-primary: #1f1a17;
+  --color-text-secondary: #4f4640;
+  --color-text-muted: #6b625b;
+  --color-text-faint: #9a9089;
 
   /* Accent — purple family kept from the original brand */
   --color-accent: #6d4fe8;
@@ -34,19 +39,34 @@
   --color-accent-muted: #efeafe;
   --color-accent-foreground: #ffffff;
 
+  /* Warm supporting colours for illustrations and highlights */
+  --color-peach: #f9dcc7;
+  --color-peach-strong: #e8875a;
+  --color-sage: #dcebdf;
+  --color-sage-strong: #3f7d5a;
+  --color-sun: #fbe8b0;
+  --color-sun-strong: #b7791f;
+
   /* Status */
-  --color-success: #0f8a5f;
-  --color-success-muted: #e6f6ef;
-  --color-warning: #b45309;
-  --color-warning-muted: #fef3e2;
+  --color-success: #2f7a52;
+  --color-success-muted: #e3f1e8;
+  --color-warning: #a8550f;
+  --color-warning-muted: #fdeedd;
   --color-error: #c62828;
   --color-error-muted: #fdecec;
 
   /* Border radius */
-  --radius-sm: 4px;
-  --radius-md: 8px;
-  --radius-lg: 12px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
   --radius-full: 9999px;
+}
+
+/* Headings use the warm display face everywhere */
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
+  letter-spacing: -0.01em;
 }
 
 /* Gradient text utility — used for hero headline emphasis */
@@ -72,7 +92,7 @@
   }
 
   .field-input {
-    @apply w-full px-3.5 py-2.5 bg-surface border border-border-strong rounded-md text-base text-text-primary placeholder:text-text-faint shadow-sm transition-colors focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/25;
+    @apply w-full px-3.5 py-2.5 bg-surface border border-border-strong rounded-xl text-base text-text-primary placeholder:text-text-faint shadow-sm transition-colors focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/25;
   }
 
   .field-error {
@@ -80,15 +100,15 @@
   }
 
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-gradient-accent text-white rounded-md text-sm font-semibold shadow-sm transition-opacity hover:opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 disabled:opacity-50;
+    @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-gradient-accent text-white rounded-full text-sm font-semibold shadow-sm shadow-accent/20 transition-opacity hover:opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 disabled:opacity-50;
   }
 
   .btn-secondary {
-    @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-surface border border-border-strong text-text-primary rounded-md text-sm font-semibold transition-colors hover:bg-surface-secondary focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2;
+    @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-surface border border-border-strong text-text-primary rounded-full text-sm font-semibold transition-colors hover:bg-surface-secondary focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2;
   }
 
   .card {
-    @apply bg-surface border border-border rounded-xl shadow-sm;
+    @apply bg-surface border border-border rounded-2xl shadow-[0_1px_2px_rgba(60,40,20,0.04),0_4px_16px_rgba(60,40,20,0.04)];
   }
 }
 

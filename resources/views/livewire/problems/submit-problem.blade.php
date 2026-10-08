@@ -4,6 +4,11 @@
     <h1 class="text-2xl sm:text-3xl font-bold mt-4">Ask for advice</h1>
     <p class="mt-2 text-text-secondary">Tell us what's getting in the way. The more detail you give, the more useful your report will be. A person reviews every report before you see it.</p>
 
+    <div class="mt-6 flex items-center gap-4 rounded-2xl bg-sun/60 p-4 sm:p-5">
+        <x-person name="owner-explain" bg="bg-sun-strong/20" class="w-14 h-14 shrink-0" />
+        <p class="text-sm text-text-secondary"><span class="font-semibold text-text-primary">Tip:</span> write it the way you'd explain it to a friend over a cup of tea. Plain words are perfect.</p>
+    </div>
+
     <form wire:submit="submit" class="card p-5 sm:p-8 mt-6 space-y-6" novalidate>
         <div>
             <label for="title" class="field-label">Give it a short title</label>

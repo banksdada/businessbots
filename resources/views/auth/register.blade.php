@@ -2,6 +2,11 @@
 
     <section class="mx-auto max-w-[440px] px-4 sm:px-6 py-12 sm:py-20">
         <div class="text-center mb-8">
+            <div class="flex justify-center -space-x-4 mb-5">
+                <x-person name="pastor-coffee" bg="bg-sage" class="w-20 h-20 ring-4 ring-background" />
+                <x-person name="manager-hijab" bg="bg-peach" class="w-20 h-20 ring-4 ring-background" />
+                <x-person name="volunteer-hoodie" bg="bg-sun" class="w-20 h-20 ring-4 ring-background" />
+            </div>
             <h1 class="text-3xl font-bold">Create your account</h1>
             <p class="mt-2 text-text-secondary">We'll email you a sign-in link. No password needed.</p>
         </div>
