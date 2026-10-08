@@ -29,11 +29,12 @@ import sys
 
 import requests
 
-BASE_URL = os.environ["BUSINESSBOTS_URL"].rstrip("/")
-WORKER_TOKEN = os.environ["PYRUNNER_WORKER_TOKEN"]
-AI_BASE_URL = os.environ["AI_BASE_URL"].rstrip("/")
-AI_API_KEY = os.environ["AI_API_KEY"]
-AI_MODEL = os.environ["AI_MODEL"]
+# .strip() guards against spaces or line breaks picked up when pasting secrets.
+BASE_URL = os.environ["BUSINESSBOTS_URL"].strip().rstrip("/")
+WORKER_TOKEN = os.environ["PYRUNNER_WORKER_TOKEN"].strip()
+AI_BASE_URL = os.environ["AI_BASE_URL"].strip().rstrip("/")
+AI_API_KEY = os.environ["AI_API_KEY"].strip()
+AI_MODEL = os.environ["AI_MODEL"].strip()
 AI_TIMEOUT = int(os.environ.get("AI_TIMEOUT_SECONDS", "120"))
 MAX_JOBS = int(os.environ.get("MAX_JOBS_PER_RUN", "10"))
 
@@ -110,7 +111,9 @@ def ask_ai(prompt):
         },
         timeout=AI_TIMEOUT,
     )
-    response.raise_for_status()
+    if not response.ok:
+        # Include the service's own explanation (e.g. "model not found").
+        raise RuntimeError(f"AI service returned {response.status_code}: {response.text[:500]}")
     content = response.json()["choices"][0]["message"]["content"]
     if not content or not content.strip():
         raise RuntimeError("The AI returned an empty answer.")

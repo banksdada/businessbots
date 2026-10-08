@@ -26,3 +26,7 @@ yarn-error.log
 /public/css/filament
 /public/js/filament
 /public/fonts/filament
+
+# Python bytecode
+__pycache__/
+*.pyc

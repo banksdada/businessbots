@@ -50,6 +50,21 @@ class EditProblemRequest extends EditRecord
         ];
     }
 
+    /** Polled from the form while the AI is drafting (see ProblemRequestResource). */
+    public function checkForDraft(): void
+    {
+        // The poll only runs while the page shows "drafting", so any other status is news.
+        if ($this->record->refresh()->status === ProblemRequest::STATUS_PROCESSING) {
+            return;
+        }
+
+        $this->refreshFormData(['draft_report']);
+
+        $this->record->status === ProblemRequest::STATUS_FAILED
+            ? Notification::make()->title('The AI draft failed')->body($this->record->error_message)->danger()->send()
+            : Notification::make()->title('The AI draft is ready to review')->success()->send();
+    }
+
     protected function getSaveFormAction(): Action
     {
         return parent::getSaveFormAction()->label('Save draft');

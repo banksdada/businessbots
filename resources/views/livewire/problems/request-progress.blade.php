@@ -2,7 +2,8 @@
     $failed = $problem->status === \App\Models\ProblemRequest::STATUS_FAILED;
     $steps = [
         ['You sent your question', true],
-        ['AI is writing a first draft', $problem->status !== \App\Models\ProblemRequest::STATUS_PROCESSING],
+        // A failed draft is still stuck on this step, not past it.
+        ['AI is writing a first draft', $problem->status === \App\Models\ProblemRequest::STATUS_PENDING_REVIEW],
         ['A person is checking it', false],
         ['Your plan is ready', false],
     ];
