@@ -24,6 +24,16 @@ class DashboardTest extends TestCase
         $this->actingAs($user)->get('/dashboard')->assertRedirect(route('onboarding', ['step' => 'vertical']));
     }
 
+    public function test_onboarding_page_loads_when_billing_is_required(): void
+    {
+        // The navbar's billing badge renders nothing for users without a
+        // subscription; it must still output a root element for Livewire.
+        config(['billing.required' => true]);
+        $user = User::factory()->create();
+
+        $this->actingAs($user)->get('/onboarding')->assertOk();
+    }
+
     public function test_onboarded_user_can_access_dashboard(): void
     {
         config(['billing.required' => false]);
