@@ -233,4 +233,25 @@ class ClientAdviceFlowTest extends TestCase
 
         $this->assertSame('pending', $problem->automationJob->status);
     }
+
+    public function test_waiting_screen_tells_client_to_expect_an_email_and_updates_when_approved(): void
+    {
+        $problem = $this->submitProblem();
+        $owner = $this->business->owner;
+
+        $component = Livewire::actingAs($owner)
+            ->test(\App\Livewire\Problems\RequestProgress::class, ['problem' => $problem])
+            ->assertSee("You don't need to wait here", false)
+            ->assertSee($owner->email)
+            ->assertSee('AI is writing a first draft')
+            ->assertNoRedirect();
+
+        $problem->update([
+            'status' => ProblemRequest::STATUS_APPROVED,
+            'final_report' => 'Done',
+            'approved_at' => now(),
+        ]);
+
+        $component->call('$refresh')->assertRedirect(route('problems.show', $problem));
+    }
 }

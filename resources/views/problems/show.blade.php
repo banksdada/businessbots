@@ -19,50 +19,7 @@
                 </div>
             </article>
         @else
-            @php
-                $failed = $problem->status === \App\Models\ProblemRequest::STATUS_FAILED;
-                $steps = [
-                    ['You sent your question', true],
-                    ['AI is writing a first draft', $problem->status !== \App\Models\ProblemRequest::STATUS_PROCESSING],
-                    ['A person is checking it', false],
-                    ['Your plan is ready', false],
-                ];
-                $current = collect($steps)->search(fn ($step) => ! $step[1]);
-            @endphp
-            <div class="card p-6 sm:p-8 mt-6 grid sm:grid-cols-[1fr_auto] gap-8 items-center">
-                <div>
-                    <h2 class="text-xl font-semibold">{{ $failed ? 'This is taking a little longer than usual' : "We're working on your plan" }}</h2>
-                    <p class="mt-2 text-text-secondary">
-                        @if ($failed)
-                            Something held up the first draft. We've been told and will get it moving again, so there's nothing you need to do.
-                        @else
-                            We'll email you as soon as it's ready, so there's no need to keep this page open.
-                        @endif
-                    </p>
-
-                    <ol class="mt-6 space-y-4" aria-label="Progress">
-                        @foreach ($steps as $i => [$label, $done])
-                            <li class="flex items-center gap-3">
-                                @if ($done)
-                                    <span class="w-7 h-7 rounded-full bg-sage-strong flex items-center justify-center shrink-0">
-                                        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
-                                    </span>
-                                    <span class="text-text-primary">{{ $label }}</span>
-                                @elseif ($i === $current)
-                                    <span class="w-7 h-7 rounded-full border-2 border-accent flex items-center justify-center shrink-0">
-                                        <span class="w-2.5 h-2.5 rounded-full bg-accent {{ $failed ? '' : 'animate-pulse' }}"></span>
-                                    </span>
-                                    <span class="font-semibold text-text-primary">{{ $label }}</span>
-                                @else
-                                    <span class="w-7 h-7 rounded-full border-2 border-border-strong shrink-0"></span>
-                                    <span class="text-text-muted">{{ $label }}</span>
-                                @endif
-                            </li>
-                        @endforeach
-                    </ol>
-                </div>
-                <x-person name="reviewer-paper" bg="bg-sun" class="hidden sm:block w-44 h-44" />
-            </div>
+            <livewire:problems.request-progress :problem="$problem" />
         @endif
 
         <details class="card mt-6 group">
