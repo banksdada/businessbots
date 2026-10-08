@@ -58,6 +58,12 @@ class ProblemRequestResource extends Resource
             Section::make('Report')
                 ->description('Edit the AI draft, then press Approve and send. The client only sees the report after you approve it.')
                 ->schema([
+                    // While the AI is drafting, poll so the draft appears without a reload.
+                    Placeholder::make('drafting')
+                        ->hiddenLabel()
+                        ->content('Waiting for the AI draft. This page updates by itself.')
+                        ->visible(fn (?ProblemRequest $record) => $record?->status === ProblemRequest::STATUS_PROCESSING)
+                        ->extraAttributes(['wire:poll.5s' => 'checkForDraft']),
                     MarkdownEditor::make('draft_report')
                         ->label('Draft')
                         ->required()

@@ -265,4 +265,23 @@ class ClientAdviceFlowTest extends TestCase
             ->assertSee('This is taking a little longer than usual')
             ->assertSeeHtmlInOrder(['font-semibold text-text-primary">AI is writing a first draft', 'text-text-muted">A person is checking it']);
     }
+
+    public function test_review_page_picks_up_the_draft_without_a_reload(): void
+    {
+        $problem = $this->submitProblem();
+        $admin = User::factory()->admin()->create();
+        Filament::setCurrentPanel(Filament::getPanel('ops'));
+
+        $page = Livewire::actingAs($admin)
+            ->test(EditProblemRequest::class, ['record' => $problem->getRouteKey()])
+            ->assertSee('This page updates by itself')
+            ->assertActionHidden('approve');
+
+        $problem->update(['status' => ProblemRequest::STATUS_PENDING_REVIEW, 'draft_report' => 'Fresh AI draft']);
+
+        $page->call('checkForDraft')
+            ->assertFormSet(['draft_report' => 'Fresh AI draft'])
+            ->assertActionVisible('approve')
+            ->assertDontSee('This page updates by itself');
+    }
 }
