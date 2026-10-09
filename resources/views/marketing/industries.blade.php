@@ -1,4 +1,4 @@
-<x-layouts.app title="Industries — BusinessBots">
+<x-layouts.app :title="'Industries — ' . config('app.name')">
 
     <section class="mx-auto max-w-[900px] px-6 pt-20 pb-16">
         <span class="inline-block px-3 py-1 bg-accent-muted text-accent-light rounded-full text-xs font-semibold tracking-wide uppercase">
@@ -8,7 +8,7 @@
             Works for any business, <span class="text-gradient-accent">out of the box</span>
         </h1>
         <p class="mt-4 text-text-secondary text-base leading-relaxed max-w-[600px]">
-            Pick your vertical and BusinessBots trains itself on how your industry talks, sells and follows up.
+            Pick your vertical and {{ config('app.name') }} trains itself on how your industry talks, sells and follows up.
         </p>
 
         <div class="mt-10 grid grid-cols-2 md:grid-cols-3 gap-3">

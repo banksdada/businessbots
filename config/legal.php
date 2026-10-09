@@ -6,7 +6,7 @@
 // never hardcode these values directly in Blade views.
 
 return [
-    'company_name' => env('COMPANY_LEGAL_NAME', 'BusinessBots Ltd'),
+    'company_name' => env('COMPANY_LEGAL_NAME', env('APP_NAME', 'Sorted')),
     'company_address' => env('COMPANY_ADDRESS', 'Address to be confirmed'),
     'domain' => env('APP_URL', 'https://automation.baseuse.xyz'),
 

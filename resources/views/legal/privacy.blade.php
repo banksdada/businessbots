@@ -1,4 +1,4 @@
-<x-layouts.app title="Privacy Policy — BusinessBots">
+<x-layouts.app :title="'Privacy Policy — ' . config('app.name')">
     <div class="mx-auto max-w-[720px] px-6 py-16 text-sm text-text-secondary leading-relaxed">
 
         <div class="mb-8 px-4 py-3 bg-warning/10 border border-warning/20 rounded-lg text-xs text-warning">
@@ -10,7 +10,7 @@
 
         <p class="mb-4">
             {{ $legal['company_name'] }} ("we", "us") is the data controller for personal data
-            collected through the BusinessBots platform at {{ $legal['domain'] }}. This policy
+            collected through the {{ config('app.name') }} platform at {{ $legal['domain'] }}. This policy
             explains what we collect, why, and your rights under UK GDPR / EU GDPR.
         </p>
 

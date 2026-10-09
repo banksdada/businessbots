@@ -1,7 +1,7 @@
 <footer class="border-t border-border mt-16 bg-surface">
     <div class="mx-auto max-w-[1200px] px-6 py-8 flex flex-col md:flex-row items-center justify-between gap-4">
         <div class="flex items-center gap-2">
-            <div class="w-6 h-6 rounded-md bg-gradient-accent flex items-center justify-center text-white font-semibold text-xs">B</div>
+            <div class="w-6 h-6 rounded-md bg-gradient-accent flex items-center justify-center text-white font-semibold text-xs">{{ mb_substr(config('app.name'), 0, 1) }}</div>
             <span class="text-sm text-text-muted">© {{ date('Y') }} {{ config('legal.company_name') }}</span>
         </div>
 

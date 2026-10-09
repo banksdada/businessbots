@@ -72,7 +72,7 @@ class SubmitProblem extends Component
 
         $request = $advice->submit($user, $business, $validated);
 
-        session()->flash('status', 'Thanks! We\'re preparing your report and will email you when it\'s ready.');
+        session()->flash('status', 'Thanks! We\'ve got your problem and we\'re on it.');
 
         return $this->redirectRoute('problems.show', $request);
     }

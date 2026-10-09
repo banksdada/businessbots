@@ -46,16 +46,7 @@ class BusinessResource extends Resource
                 ->schema([
                     Select::make('vertical_type')
                         ->label('Industry')
-                        ->options([
-                            'care' => 'Care & Support Services',
-                            'cleaning' => 'Cleaning & Decluttering',
-                            'real_estate' => 'Property & Real Estate',
-                            'fitness' => 'Fitness & Wellness',
-                            'trades' => 'Trades & Services',
-                            'beauty' => 'Beauty & Salon',
-                            'legal' => 'Legal Services',
-                            'automotive' => 'Automotive & Mechanics',
-                        ])
+                        ->options(\App\Livewire\Onboarding\VerticalStep::options())
                         ->required(),
                 ])
                 ->columnSpanFull(),

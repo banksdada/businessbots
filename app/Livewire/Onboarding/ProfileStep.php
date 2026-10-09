@@ -13,11 +13,18 @@ class ProfileStep extends Component
     #[Validate('required|string|max:255')]
     public string $name = '';
 
-    #[Validate('required|string|max:255')]
+    #[Validate('nullable|string|max:255')]
     public string $location = '';
 
     #[Validate('nullable|string|max:1000')]
     public string $description = '';
+
+    protected function messages(): array
+    {
+        return [
+            'name.required' => 'Please tell us the name of your business or organisation.',
+        ];
+    }
 
     public function mount(int $businessId): void
     {

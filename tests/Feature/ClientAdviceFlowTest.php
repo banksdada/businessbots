@@ -87,7 +87,7 @@ class ClientAdviceFlowTest extends TestCase
         $job = $problem->automationJob;
         $this->assertSame('pending', $job->status);
         $this->assertSame('client_advice', $job->type);
-        $this->assertSame('Care & support', $job->payload['organisation']['type']);
+        $this->assertSame('Care', $job->payload['organisation']['type']);
         $this->assertSame('Urgent', $job->payload['problem']['urgency']);
         $this->assertSame('Staff time, Stress or lost focus', $job->payload['problem']['what_it_costs']);
         $this->assertSame('about 416 hours (£6,240) a year', $job->payload['problem']['yearly_cost']);
@@ -128,7 +128,8 @@ class ClientAdviceFlowTest extends TestCase
             ->set('title', '')
             ->set('description', 'too short')
             ->call('submit')
-            ->assertHasErrors(['title' => 'required', 'description' => 'min']);
+            ->assertHasErrors(['title' => 'required', 'description' => 'min'])
+            ->assertSee('Please check the questions marked in red above.');
 
         $this->assertSame(0, ProblemRequest::count());
     }
@@ -180,7 +181,7 @@ class ClientAdviceFlowTest extends TestCase
 
         $this->actingAs($this->business->owner)->get(route('dashboard'))
             ->assertSee('Rotas take a whole day')
-            ->assertSee('Report ready');
+            ->assertSee('Plan ready');
     }
 
     public function test_failed_job_marks_request_failed_and_emails_owner(): void

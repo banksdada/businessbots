@@ -12,17 +12,22 @@ class VerticalStep extends Component
 
     public string $selectedVertical = '';
 
+    /** Types marked 'more' sit behind the More button to keep the first view short. */
     public const VERTICALS = [
-        ['slug' => 'care', 'label' => 'Care & support', 'description' => 'Home care, elderly support'],
-        ['slug' => 'cleaning', 'label' => 'Cleaning', 'description' => 'Homes, offices, decluttering'],
-        ['slug' => 'real_estate', 'label' => 'Real estate', 'description' => 'Sales, lettings, valuations'],
-        ['slug' => 'fitness', 'label' => 'Fitness', 'description' => 'Studios, personal training'],
+        ['slug' => 'care', 'label' => 'Care', 'description' => 'Home care, elderly support'],
+        ['slug' => 'cleaning', 'label' => 'Cleaning', 'description' => 'Homes, offices, decluttering', 'more' => true],
+        ['slug' => 'real_estate', 'label' => 'Property', 'description' => 'Sales, lettings, valuations', 'more' => true],
+        ['slug' => 'fitness', 'label' => 'Fitness', 'description' => 'Studios, personal training', 'more' => true],
         ['slug' => 'trades', 'label' => 'Trades', 'description' => 'Plumbing, electrical, handyman'],
-        ['slug' => 'beauty', 'label' => 'Beauty & salon', 'description' => 'Hair, nails, beauty services'],
-        ['slug' => 'legal', 'label' => 'Legal', 'description' => 'Law firms, legal advice'],
-        ['slug' => 'automotive', 'label' => 'Automotive', 'description' => 'Car repair, maintenance, sales'],
-        ['slug' => 'church_charity', 'label' => 'Church & charity', 'description' => 'Churches, ministries, charities'],
-        ['slug' => 'other', 'label' => 'Other', 'description' => 'Any other business or organisation'],
+        ['slug' => 'beauty', 'label' => 'Beauty', 'description' => 'Hair, nails, beauty services', 'more' => true],
+        ['slug' => 'legal', 'label' => 'Legal', 'description' => 'Law firms, legal advice', 'more' => true],
+        ['slug' => 'automotive', 'label' => 'Motor', 'description' => 'Car repair, maintenance, sales', 'more' => true],
+        ['slug' => 'retail', 'label' => 'Retail', 'description' => 'Shops, online stores, markets'],
+        ['slug' => 'hospitality', 'label' => 'Food & hospitality', 'description' => 'Cafés, restaurants, hotels, events'],
+        ['slug' => 'professional_services', 'label' => 'Professional services', 'description' => 'Accounting, consulting, agencies'],
+        ['slug' => 'education', 'label' => 'Education', 'description' => 'Schools, tutors, training providers'],
+        ['slug' => 'church_charity', 'label' => 'Charity & community', 'description' => 'Charities, churches, community groups'],
+        ['slug' => 'other', 'label' => 'Something else', 'description' => 'Any other business or organisation'],
     ];
 
     public function mount(?int $businessId = null): void
@@ -34,9 +39,17 @@ class VerticalStep extends Component
         }
     }
 
+    /** One tap picks the type and moves straight on, so there's no extra Continue press. */
     public function selectVertical(string $slug): void
     {
         $this->selectedVertical = $slug;
+        $this->continue();
+    }
+
+    /** slug => label, for dropdowns such as the admin business form. */
+    public static function options(): array
+    {
+        return array_column(self::VERTICALS, 'label', 'slug');
     }
 
     public static function labelFor(?string $slug): string
@@ -53,7 +66,7 @@ class VerticalStep extends Component
     public function continue(): void
     {
         if (empty($this->selectedVertical)) {
-            $this->addError('selectedVertical', 'Choose a business type to continue.');
+            $this->addError('selectedVertical', 'Pick the option closest to you. If none fit, choose Something else.');
             return;
         }
 

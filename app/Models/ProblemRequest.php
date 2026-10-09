@@ -107,7 +107,7 @@ class ProblemRequest extends Model
     public function clientStatusLabel(): string
     {
         return match ($this->status) {
-            self::STATUS_APPROVED => 'Report ready',
+            self::STATUS_APPROVED => 'Plan ready',
             self::STATUS_FAILED => 'Delayed',
             default => 'Being prepared',
         };

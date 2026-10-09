@@ -10,7 +10,7 @@
 <nav class="bg-surface border-b border-border" x-data="{ mobileOpen: false }">
     <div class="mx-auto max-w-[1100px] px-4 sm:px-6 h-16 flex items-center justify-between">
         <a href="{{ auth()->check() ? route('dashboard') : route('home') }}" class="flex items-center gap-2">
-            <div class="w-8 h-8 rounded-md bg-gradient-accent flex items-center justify-center text-white font-bold text-sm">B</div>
+            <div class="w-8 h-8 rounded-md bg-gradient-accent flex items-center justify-center text-white font-bold text-sm">{{ mb_substr(config('app.name'), 0, 1) }}</div>
             <span class="font-semibold text-base text-text-primary">{{ config('app.name') }}</span>
         </a>
 

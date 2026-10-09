@@ -1,4 +1,4 @@
-<x-layouts.app title="Terms of Service — BusinessBots">
+<x-layouts.app :title="'Terms of Service — ' . config('app.name')">
     <div class="mx-auto max-w-[720px] px-6 py-16 text-sm text-text-secondary leading-relaxed">
 
         <div class="mb-8 px-4 py-3 bg-warning/10 border border-warning/20 rounded-lg text-xs text-warning">
@@ -9,7 +9,7 @@
         <p class="text-xs text-text-muted mb-8">Last updated {{ $legal['last_updated'] }}</p>
 
         <p class="mb-4">
-            These Terms of Service ("Terms") govern access to and use of the BusinessBots platform
+            These Terms of Service ("Terms") govern access to and use of the {{ config('app.name') }} platform
             (the "Service"), operated by {{ $legal['company_name'] }} ("we", "us", "our"), a company
             with its registered address at {{ $legal['company_address'] }}. By creating an account or
             using the Service, you agree to these Terms.
@@ -17,7 +17,7 @@
 
         <h2 class="text-base font-semibold text-text-primary mt-8 mb-3">1. The Service</h2>
         <p class="mb-4">
-            BusinessBots provides AI-driven automation for small businesses, including WhatsApp lead
+            {{ config('app.name') }} provides AI-driven automation for small businesses, including WhatsApp lead
             capture and reply, social media content generation and scheduling, and related analytics
             ("the Service"). The Service is provided on a subscription basis as described at
             <a href="{{ route('marketing.pricing') }}" class="text-accent-light">{{ $legal['domain'] }}/pricing</a>.
