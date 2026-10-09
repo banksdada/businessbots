@@ -39,6 +39,15 @@
             </summary>
             <dl class="px-6 pb-6 space-y-4 text-sm">
                 <div><dt class="font-medium text-text-muted">The problem</dt><dd class="mt-1 whitespace-pre-line">{{ $problem->description }}</dd></div>
+                @if ($problem->impactLabels())
+                    <div><dt class="font-medium text-text-muted">What it's costing you</dt><dd class="mt-1">{{ $problem->impactLabels() }}</dd></div>
+                @endif
+                @if ($problem->yearlyCost())
+                    <div><dt class="font-medium text-text-muted">Time it takes</dt><dd class="mt-1">{{ $problem->hours_per_week + 0 }} hours a week, {{ $problem->yearlyCost() }}</dd></div>
+                @endif
+                @if ($problem->desired_outcome)
+                    <div><dt class="font-medium text-text-muted">What "fixed" looks like</dt><dd class="mt-1 whitespace-pre-line">{{ $problem->desired_outcome }}</dd></div>
+                @endif
                 @if ($problem->already_tried)
                     <div><dt class="font-medium text-text-muted">Already tried</dt><dd class="mt-1 whitespace-pre-line">{{ $problem->already_tried }}</dd></div>
                 @endif
