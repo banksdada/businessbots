@@ -13,20 +13,20 @@ class VerticalStep extends Component
     public string $selectedVertical = '';
 
     public const VERTICALS = [
-        ['slug' => 'care', 'label' => 'Care & support', 'description' => 'Home care, elderly support'],
+        ['slug' => 'care', 'label' => 'Care', 'description' => 'Home care, elderly support'],
         ['slug' => 'cleaning', 'label' => 'Cleaning', 'description' => 'Homes, offices, decluttering'],
-        ['slug' => 'real_estate', 'label' => 'Real estate', 'description' => 'Sales, lettings, valuations'],
+        ['slug' => 'real_estate', 'label' => 'Property', 'description' => 'Sales, lettings, valuations'],
         ['slug' => 'fitness', 'label' => 'Fitness', 'description' => 'Studios, personal training'],
         ['slug' => 'trades', 'label' => 'Trades', 'description' => 'Plumbing, electrical, handyman'],
-        ['slug' => 'beauty', 'label' => 'Beauty & salon', 'description' => 'Hair, nails, beauty services'],
+        ['slug' => 'beauty', 'label' => 'Beauty', 'description' => 'Hair, nails, beauty services'],
         ['slug' => 'legal', 'label' => 'Legal', 'description' => 'Law firms, legal advice'],
-        ['slug' => 'automotive', 'label' => 'Automotive', 'description' => 'Car repair, maintenance, sales'],
-        ['slug' => 'retail', 'label' => 'Retail & shops', 'description' => 'Shops, online stores, markets'],
-        ['slug' => 'hospitality', 'label' => 'Hospitality & food', 'description' => 'Cafés, restaurants, hotels, events'],
+        ['slug' => 'automotive', 'label' => 'Motor', 'description' => 'Car repair, maintenance, sales'],
+        ['slug' => 'retail', 'label' => 'Retail', 'description' => 'Shops, online stores, markets'],
+        ['slug' => 'hospitality', 'label' => 'Food & hospitality', 'description' => 'Cafés, restaurants, hotels, events'],
         ['slug' => 'professional_services', 'label' => 'Professional services', 'description' => 'Accounting, consulting, agencies'],
-        ['slug' => 'education', 'label' => 'Education & training', 'description' => 'Schools, tutors, training providers'],
-        ['slug' => 'church_charity', 'label' => 'Charity, church & community', 'description' => 'Charities, churches, community groups'],
-        ['slug' => 'other', 'label' => 'Other', 'description' => 'Any other business or organisation'],
+        ['slug' => 'education', 'label' => 'Education', 'description' => 'Schools, tutors, training providers'],
+        ['slug' => 'church_charity', 'label' => 'Charity & community', 'description' => 'Charities, churches, community groups'],
+        ['slug' => 'other', 'label' => 'Something else', 'description' => 'Any other business or organisation'],
     ];
 
     public function mount(?int $businessId = null): void
@@ -38,9 +38,11 @@ class VerticalStep extends Component
         }
     }
 
+    /** One tap picks the type and moves straight on, so there's no extra Continue press. */
     public function selectVertical(string $slug): void
     {
         $this->selectedVertical = $slug;
+        $this->continue();
     }
 
     /** slug => label, for dropdowns such as the admin business form. */
@@ -63,7 +65,7 @@ class VerticalStep extends Component
     public function continue(): void
     {
         if (empty($this->selectedVertical)) {
-            $this->addError('selectedVertical', 'Pick the option closest to you. If none fit, choose Other.');
+            $this->addError('selectedVertical', 'Pick the option closest to you. If none fit, choose Something else.');
             return;
         }
 

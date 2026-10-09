@@ -18,13 +18,14 @@
         </div>
 
         <div>
-            <label for="profile-description" class="field-label">What do you do? (optional)</label>
+            <label for="profile-description" class="field-label">Tell us a bit about what you do <span class="font-normal text-text-muted">(optional)</span></label>
             <textarea id="profile-description" wire:model="description" rows="3" placeholder="e.g. We sell handmade furniture online and from our shop."
                 class="field-input"></textarea>
             @error('description') <p class="field-error">{{ $message }}</p> @enderror
         </div>
 
-        <div class="flex justify-end pt-2">
+        <div class="flex items-center justify-between pt-2">
+            <a href="{{ route('onboarding', ['step' => 'vertical']) }}" wire:navigate class="text-sm font-medium text-text-secondary hover:text-text-primary">&larr; Back</a>
             <button type="submit" wire:loading.attr="disabled" wire:target="continue"
                 class="btn-primary">
                 <span wire:loading.remove wire:target="continue">Continue</span>

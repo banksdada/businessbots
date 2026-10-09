@@ -47,10 +47,10 @@ class OnboardingTest extends TestCase
         Livewire::actingAs($user)
             ->test(VerticalStep::class)
             ->call('selectVertical', 'hospitality')
-            ->call('continue')
-            ->assertHasNoErrors();
+            ->assertHasNoErrors()
+            ->assertDispatched('step-completed');
 
         $this->assertSame('hospitality', $user->businesses()->first()->verticalType());
-        $this->assertSame('Hospitality & food', VerticalStep::labelFor('hospitality'));
+        $this->assertSame('Food & hospitality', VerticalStep::labelFor('hospitality'));
     }
 }

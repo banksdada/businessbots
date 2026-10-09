@@ -87,7 +87,7 @@ class ClientAdviceFlowTest extends TestCase
         $job = $problem->automationJob;
         $this->assertSame('pending', $job->status);
         $this->assertSame('client_advice', $job->type);
-        $this->assertSame('Care & support', $job->payload['organisation']['type']);
+        $this->assertSame('Care', $job->payload['organisation']['type']);
         $this->assertSame('Urgent', $job->payload['problem']['urgency']);
         $this->assertSame('Staff time, Stress or lost focus', $job->payload['problem']['what_it_costs']);
         $this->assertSame('about 416 hours (£6,240) a year', $job->payload['problem']['yearly_cost']);
