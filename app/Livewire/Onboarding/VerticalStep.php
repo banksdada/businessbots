@@ -53,7 +53,7 @@ class VerticalStep extends Component
     public function continue(): void
     {
         if (empty($this->selectedVertical)) {
-            $this->addError('selectedVertical', 'Choose a business type to continue.');
+            $this->addError('selectedVertical', 'Pick the option closest to you. If none fit, choose Other.');
             return;
         }
 

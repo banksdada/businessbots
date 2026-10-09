@@ -28,7 +28,7 @@
                 <x-person name="pastor-coffee" bg="bg-sage" class="absolute left-0 bottom-[4%] w-[40%] aspect-square ring-8 ring-background" />
                 <x-person name="owner-explain" bg="bg-sun" class="absolute right-0 bottom-[10%] w-[38%] aspect-square ring-8 ring-background" />
 
-                <div class="absolute -left-2 sm:left-0 top-[10%] card px-4 py-3 max-w-[13rem] -rotate-2">
+                <div class="absolute left-0 top-[10%] card px-4 py-3 max-w-[13rem] -rotate-2">
                     <p class="text-sm font-medium leading-snug">"Our admin takes a whole day every week."</p>
                 </div>
                 <div class="absolute right-0 sm:-right-2 top-[44%] card px-4 py-3 flex items-center gap-3 rotate-2">

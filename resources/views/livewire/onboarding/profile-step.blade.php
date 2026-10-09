@@ -5,21 +5,21 @@
     <form wire:submit="continue" class="space-y-4">
         <div>
             <label for="profile-name" class="field-label">Organisation name</label>
-            <input type="text" id="profile-name" wire:model="name" placeholder="Bright Care Ltd"
+            <input type="text" id="profile-name" wire:model="name" placeholder="e.g. Bright Co Ltd"
                 class="field-input">
             @error('name') <p class="field-error">{{ $message }}</p> @enderror
         </div>
 
         <div>
             <label for="profile-location" class="field-label">Location</label>
-            <input type="text" id="profile-location" wire:model="location" placeholder="Birmingham, UK"
+            <input type="text" id="profile-location" wire:model="location" placeholder="e.g. Birmingham, UK"
                 class="field-input">
             @error('location') <p class="field-error">{{ $message }}</p> @enderror
         </div>
 
         <div>
             <label for="profile-description" class="field-label">What do you do? (optional)</label>
-            <textarea id="profile-description" wire:model="description" rows="3" placeholder="We provide home care visits across the West Midlands…"
+            <textarea id="profile-description" wire:model="description" rows="3" placeholder="e.g. We sell handmade furniture online and from our shop."
                 class="field-input"></textarea>
             @error('description') <p class="field-error">{{ $message }}</p> @enderror
         </div>

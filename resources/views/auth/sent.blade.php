@@ -26,6 +26,11 @@
                 Resend login link
             </button>
         </form>
+
+        <p class="mt-6 text-center text-sm text-text-secondary">
+            Can't find it? Check your spam or junk folder.<br>
+            Wrong email address? <a href="{{ route('register') }}" class="font-semibold text-accent hover:underline">Start again</a>
+        </p>
     </section>
 
 </x-layouts.app>

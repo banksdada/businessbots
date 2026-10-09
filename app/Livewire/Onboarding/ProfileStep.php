@@ -19,6 +19,14 @@ class ProfileStep extends Component
     #[Validate('nullable|string|max:1000')]
     public string $description = '';
 
+    protected function messages(): array
+    {
+        return [
+            'name.required' => 'Please tell us the name of your business or organisation.',
+            'location.required' => 'Please tell us roughly where you are, like a town or city.',
+        ];
+    }
+
     public function mount(int $businessId): void
     {
         $this->businessId = $businessId;

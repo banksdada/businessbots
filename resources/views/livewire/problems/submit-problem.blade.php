@@ -164,6 +164,11 @@
                 @error('help_wanted') <p class="field-error">{{ $message }}</p> @enderror
             </fieldset>
 
+            {{-- Errors show beside the questions further up; say so here, where the client pressed the button. --}}
+            @if ($errors->any())
+                <p role="alert" class="rounded-lg bg-error-muted px-4 py-3 text-sm text-text-primary">A couple of answers need a little more. Please check the questions marked in red above.</p>
+            @endif
+
             <div class="flex flex-col-reverse sm:flex-row sm:items-center sm:justify-end gap-3 pt-2 border-t border-border">
                 <a href="{{ route('dashboard') }}" class="btn-secondary mt-4 sm:mt-6">Cancel</a>
                 <button type="submit" class="btn-primary mt-4 sm:mt-6" wire:loading.attr="disabled" wire:target="submit">
