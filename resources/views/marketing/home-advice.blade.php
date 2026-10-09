@@ -6,7 +6,7 @@
             <div>
                 <span class="inline-flex items-center gap-2 px-3 py-1 bg-surface border border-border rounded-full text-sm font-medium text-text-secondary">
                     <span class="w-2 h-2 rounded-full bg-sage-strong"></span>
-                    For any business or organisation
+                    For teams, startups and growing businesses
                 </span>
                 <h1 class="mt-6 text-4xl sm:text-5xl lg:text-[3.5rem] font-semibold leading-[1.08]">
                     Tell us what's getting in the way.
@@ -29,7 +29,7 @@
                 <x-person name="owner-explain" bg="bg-sun" class="absolute right-0 bottom-[10%] w-[38%] aspect-square ring-8 ring-background" />
 
                 <div class="absolute -left-2 sm:left-0 top-[10%] card px-4 py-3 max-w-[13rem] -rotate-2">
-                    <p class="text-sm font-medium leading-snug">"Our rotas take a whole day every week."</p>
+                    <p class="text-sm font-medium leading-snug">"Our admin takes a whole day every week."</p>
                 </div>
                 <div class="absolute right-0 sm:-right-2 top-[44%] card px-4 py-3 flex items-center gap-3 rotate-2">
                     <span class="w-8 h-8 rounded-full bg-sage-strong flex items-center justify-center">
