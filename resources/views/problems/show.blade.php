@@ -26,7 +26,7 @@
                     <p class="font-semibold text-text-primary">Want us to put the fix in place?</p>
                     <p class="mt-1 text-sm text-text-secondary">You don't need to handle the technical side. We'll agree in writing what's included, what isn't and when it will be done, so there are no surprises.</p>
                 </div>
-                <a href="mailto:{{ config('legal.support_email') }}?subject={{ rawurlencode('Help with: ' . $problem->title) }}" class="btn-primary shrink-0">Ask us to help</a>
+                <a href="{{ route('contact', ['about' => $problem->title]) }}" class="btn-primary shrink-0">Ask us to help</a>
             </div>
         @else
             <livewire:problems.request-progress :problem="$problem" />

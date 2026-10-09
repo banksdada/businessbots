@@ -1,4 +1,4 @@
-<x-layouts.app :title="config('app.name') . ' — Practical fixes for small organisations'">
+<x-layouts.app :title="config('app.name') . ' — Practical fixes for any business or organisation'">
 
     {{-- Hero --}}
     <section class="overflow-hidden">
@@ -6,7 +6,7 @@
             <div>
                 <span class="inline-flex items-center gap-2 px-3 py-1 bg-surface border border-border rounded-full text-sm font-medium text-text-secondary">
                     <span class="w-2 h-2 rounded-full bg-sage-strong"></span>
-                    For care providers, churches and small firms
+                    For teams, startups and growing businesses
                 </span>
                 <h1 class="mt-6 text-4xl sm:text-5xl lg:text-[3.5rem] font-semibold leading-[1.08]">
                     Tell us what's getting in the way.
@@ -29,7 +29,7 @@
                 <x-person name="owner-explain" bg="bg-sun" class="absolute right-0 bottom-[10%] w-[38%] aspect-square ring-8 ring-background" />
 
                 <div class="absolute -left-2 sm:left-0 top-[10%] card px-4 py-3 max-w-[13rem] -rotate-2">
-                    <p class="text-sm font-medium leading-snug">"Our rotas take a whole day every week."</p>
+                    <p class="text-sm font-medium leading-snug">"Our admin takes a whole day every week."</p>
                 </div>
                 <div class="absolute right-0 sm:-right-2 top-[44%] card px-4 py-3 flex items-center gap-3 rotate-2">
                     <span class="w-8 h-8 rounded-full bg-sage-strong flex items-center justify-center">
@@ -78,7 +78,7 @@
             @foreach ([
                 ['bg-peach/60', 'Time back', 'Fewer hours lost to rotas, paperwork and chasing people.'],
                 ['bg-sage/60', 'Money saved', 'We show what the problem costs you now, and what fixing it is worth.'],
-                ['bg-sun/60', 'More focus', 'More of your day for the people you support, not the admin.'],
+                ['bg-sun/60', 'More focus', 'More of your day for the work that matters, not the admin.'],
             ] as [$bg, $heading, $text])
                 <div class="rounded-2xl {{ $bg }} p-7">
                     <h3 class="text-xl font-semibold">{{ $heading }}</h3>
@@ -114,12 +114,13 @@
     <section class="bg-surface border-y border-border">
         <div class="mx-auto max-w-[1100px] px-4 sm:px-6 py-16 sm:py-20">
             <p class="text-center text-sm font-semibold text-peach-strong uppercase tracking-wider">Who it's for</p>
-            <h2 class="mt-2 text-3xl sm:text-4xl font-semibold text-center">Made for organisations like yours</h2>
+            <h2 class="mt-2 text-3xl sm:text-4xl font-semibold text-center">Made for any business or organisation</h2>
+            <p class="mt-3 text-center text-text-secondary max-w-[38rem] mx-auto">Whatever you do and however big your team, if something keeps costing you time or money, we can help. These are a few of the problems we hear most.</p>
             <div class="mt-12 grid sm:grid-cols-3 gap-6">
                 @foreach ([
-                    ['elder-shirt', 'bg-sage', 'Care providers', 'Less time on rotas, incident tracking, paperwork and CQC evidence.'],
-                    ['volunteer-hoodie', 'bg-peach', 'Churches and charities', 'Easier volunteering, communications, giving and events.'],
-                    ['owner-explain', 'bg-sun', 'Small businesses', 'No more missed enquiries, less admin and faster follow-ups.'],
+                    ['elder-shirt', 'bg-sage', 'Too much admin', 'Paperwork, rotas, reports and typing the same thing twice.'],
+                    ['volunteer-hoodie', 'bg-peach', 'Things slipping through', 'Missed enquiries, forgotten follow-ups and lost forms.'],
+                    ['owner-explain', 'bg-sun', 'Tools that don\'t talk', 'Spreadsheets, emails and apps that don\'t work together.'],
                 ] as [$person, $bg, $heading, $text])
                     <div class="rounded-2xl bg-background p-7 text-center">
                         <x-person :name="$person" :bg="$bg" class="w-28 h-28 mx-auto" />
@@ -128,6 +129,7 @@
                     </div>
                 @endforeach
             </div>
+            <p class="mt-8 text-center text-text-secondary">Something else? Tell us about it. If it costs you time or money, it's worth fixing.</p>
         </div>
     </section>
 

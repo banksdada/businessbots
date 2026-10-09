@@ -22,7 +22,7 @@ class VerticalStep extends Component
         ['slug' => 'legal', 'label' => 'Legal', 'description' => 'Law firms, legal advice'],
         ['slug' => 'automotive', 'label' => 'Automotive', 'description' => 'Car repair, maintenance, sales'],
         ['slug' => 'church_charity', 'label' => 'Church & charity', 'description' => 'Churches, ministries, charities'],
-        ['slug' => 'other', 'label' => 'Other', 'description' => 'Any other small organisation'],
+        ['slug' => 'other', 'label' => 'Other', 'description' => 'Any other business or organisation'],
     ];
 
     public function mount(?int $businessId = null): void
