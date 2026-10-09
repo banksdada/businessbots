@@ -11,10 +11,10 @@
             <div class="flex-1">
                 <p class="text-sm font-medium text-text-secondary">{{ $business->name }}</p>
                 <h1 class="text-3xl sm:text-4xl font-semibold mt-1">{{ $greeting }}, {{ $firstName }}</h1>
-                <p class="mt-2 text-text-secondary max-w-md">What's on your mind today? Tell us about anything that's slowing your team down.</p>
+                <p class="mt-2 text-text-secondary max-w-md">What's costing your team time or money right now? Tell us in your own words and we'll find the fix.</p>
                 <a href="{{ route('problems.create') }}" class="btn-primary mt-5">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" d="M12 5v14M5 12h14"/></svg>
-                    Ask for advice
+                    Tell us a problem
                 </a>
             </div>
             <x-person name="manager-hijab" bg="bg-surface" class="hidden sm:block w-40 h-40 shrink-0" />
@@ -29,15 +29,15 @@
                     <x-person name="reviewer-paper" bg="bg-sun" class="w-14 h-14 ring-4 ring-surface" />
                 </div>
                 <h3 class="text-xl font-semibold">No requests yet</h3>
-                <p class="mt-2 text-text-secondary max-w-md mx-auto">Staff rotas, paperwork, missed enquiries: whatever it is, tell us in your own words. We'll send back a plan that a real person has checked.</p>
-                <a href="{{ route('problems.create') }}" class="btn-primary mt-6">Ask your first question</a>
+                <p class="mt-2 text-text-secondary max-w-md mx-auto">Staff rotas, paperwork, missed enquiries: whatever is slowing you down, tell us in your own words. You don't need to know what the fix looks like. That's our job. We'll send back a plan, checked by a real person.</p>
+                <a href="{{ route('problems.create') }}" class="btn-primary mt-6">Tell us your first problem</a>
             </div>
 
             <ol class="mt-10 grid sm:grid-cols-3 gap-4" aria-label="How it works">
                 @foreach ([
-                    ['1', 'bg-peach', 'Describe the problem', 'A short form, about five minutes.'],
-                    ['2', 'bg-sage', 'We prepare your plan', 'AI drafts it, then a real person checks it.'],
-                    ['3', 'bg-sun', 'Read your advice', 'We email you when it\'s ready.'],
+                    ['1', 'bg-peach', 'Tell us the problem', 'A short form, about five minutes.'],
+                    ['2', 'bg-sage', 'We find the fix', 'AI drafts it, then a real person checks it.'],
+                    ['3', 'bg-sun', 'Get your plan', 'The simplest fix, what it could save you and first steps.'],
                 ] as [$n, $bg, $heading, $text])
                     <li class="card p-5">
                         <span class="inline-flex w-9 h-9 rounded-full {{ $bg }} font-display text-lg font-semibold items-center justify-center">{{ $n }}</span>

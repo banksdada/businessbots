@@ -1,12 +1,12 @@
 <div class="mx-auto max-w-[720px] px-4 sm:px-6 py-8 sm:py-10">
     <a href="{{ route('dashboard') }}" class="text-sm font-medium text-text-secondary hover:text-text-primary">&larr; My requests</a>
 
-    <h1 class="text-2xl sm:text-3xl font-bold mt-4">Ask for advice</h1>
-    <p class="mt-2 text-text-secondary">Tell us what's getting in the way. The more detail you give, the more useful your report will be. A person reviews every report before you see it.</p>
+    <h1 class="text-2xl sm:text-3xl font-bold mt-4">Tell us what's slowing you down</h1>
+    <p class="mt-2 text-text-secondary">Focus on the problem, not the technology. You don't need to know what the fix looks like. That's our job. The more detail you give, the more useful your plan will be, and a person checks every plan before you see it.</p>
 
     <div class="mt-6 flex items-center gap-4 rounded-2xl bg-sun/60 p-4 sm:p-5">
         <x-person name="owner-explain" bg="bg-sun-strong/20" class="w-14 h-14 shrink-0" />
-        <p class="text-sm text-text-secondary"><span class="font-semibold text-text-primary">Tip:</span> write it the way you'd explain it to a friend over a cup of tea. Plain words are perfect.</p>
+        <p class="text-sm text-text-secondary"><span class="font-semibold text-text-primary">Tip:</span> write it the way you'd explain it to a friend over a cup of tea. If you can, say roughly how many hours it takes each week or what it costs you. That's how we show what fixing it is worth.</p>
     </div>
 
     <form wire:submit="submit" class="card p-5 sm:p-8 mt-6 space-y-6" novalidate>
@@ -21,7 +21,7 @@
             <label for="description" class="field-label">Describe the problem</label>
             <textarea id="description" wire:model.blur="description" rows="6" class="field-input"
                 aria-describedby="description-help"
-                placeholder="What happens, how often, and who it affects."></textarea>
+                placeholder="What happens, how often, who it affects, and roughly how much time or money it costs you."></textarea>
             <p id="description-help" class="field-help">Please don't include names or personal details of the people you support.</p>
             @error('description') <p class="field-error">{{ $message }}</p> @enderror
         </div>
@@ -77,7 +77,7 @@
         <div class="flex flex-col-reverse sm:flex-row sm:items-center sm:justify-end gap-3 pt-2 border-t border-border">
             <a href="{{ route('dashboard') }}" class="btn-secondary mt-4 sm:mt-6">Cancel</a>
             <button type="submit" class="btn-primary mt-4 sm:mt-6" wire:loading.attr="disabled" wire:target="submit">
-                <span wire:loading.remove wire:target="submit">Send request</span>
+                <span wire:loading.remove wire:target="submit">Find me a fix</span>
                 <span wire:loading wire:target="submit">Sending…</span>
             </button>
         </div>

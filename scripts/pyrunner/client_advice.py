@@ -53,12 +53,17 @@ The likely root causes, based only on what the client said.
 Two to four options, from simplest/cheapest to most involved. For each: what it is,
 roughly what it takes (time, cost band, skills), and the trade-offs.
 Name well-known tools only where genuinely useful, and never invent prices.
+## What fixing this could be worth
+Using only numbers the client gave (hours, staff, costs, how often), a simple estimate
+of the time or money the recommended option could save each year, showing the sum.
+If they gave no numbers, say what to measure for a week instead. Never guess figures.
 ## Recommended first steps
 A numbered list of 3-5 concrete steps they can start this week.
 ## Questions to confirm
 Anything you had to assume, as short questions.
 
-Rules: be specific to their sector and size; say clearly when something depends on
+Rules: focus on the outcome (time back, money saved, more focus), not the technology;
+recommend the simplest fix that works; be specific to their sector and size; say clearly when something depends on
 regulation (e.g. CQC, GDPR, Charity Commission) and suggest checking with the right
 body; do not make up facts, statistics or regulations; keep it under 900 words."""
 

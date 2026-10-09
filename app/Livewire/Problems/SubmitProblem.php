@@ -10,7 +10,7 @@ use Livewire\Attributes\Title;
 use Livewire\Component;
 
 #[Layout('components.layouts.app')]
-#[Title('Ask for advice')]
+#[Title('Tell us a problem')]
 class SubmitProblem extends Component
 {
     public string $title = '';

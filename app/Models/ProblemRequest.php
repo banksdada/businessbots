@@ -26,8 +26,8 @@ class ProblemRequest extends Model
     ];
 
     public const HELP_OPTIONS = [
-        'advice' => 'Advice only',
-        'build' => 'Advice and help building a solution',
+        'advice' => 'A plan I can follow myself',
+        'build' => 'A plan, and help putting the fix in place',
     ];
 
     protected $fillable = [

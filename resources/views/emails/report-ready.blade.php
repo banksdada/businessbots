@@ -1,9 +1,9 @@
 <x-mail::message>
-# Your report is ready
+# Your plan is ready
 
 Hi {{ $request->user->name }},
 
-Your report for "{{ $request->title }}" has been reviewed and is ready to read.
+Your plan to fix "{{ $request->title }}" has been checked by a real person and is ready to read. It covers the simplest fix, what it could save you and the first steps to take.
 
 <x-mail::button :url="route('problems.show', $request)">
 Read your report
