@@ -1,4 +1,4 @@
-<x-layouts.app title="Cookie Policy — BusinessBots">
+<x-layouts.app :title="'Cookie Policy — ' . config('app.name')">
     <div class="mx-auto max-w-[720px] px-6 py-16 text-sm text-text-secondary leading-relaxed">
 
         <div class="mb-8 px-4 py-3 bg-warning/10 border border-warning/20 rounded-lg text-xs text-warning">
@@ -23,7 +23,7 @@
                 <div>Cookie</div><div>Purpose</div><div>Duration</div>
             </div>
             <div class="grid grid-cols-3 px-4 py-2.5 border-t border-border text-xs">
-                <div class="text-text-primary font-mono">businessbots_session</div>
+                <div class="text-text-primary font-mono">{{ config('session.cookie') }}</div>
                 <div>Keeps you logged in, protects against CSRF</div>
                 <div>Session</div>
             </div>

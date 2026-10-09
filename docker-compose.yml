@@ -62,7 +62,7 @@ services:
       - MAIL_PASSWORD=${MAIL_PASSWORD}
       - MAIL_ENCRYPTION=${MAIL_ENCRYPTION:-tls}
       - MAIL_FROM_ADDRESS=${MAIL_FROM_ADDRESS:-hello@businessbots.com}
-      - MAIL_FROM_NAME=${MAIL_FROM_NAME:-BusinessBots}
+      - MAIL_FROM_NAME=${MAIL_FROM_NAME:-Sorted}
     depends_on:
       postgres:
         condition: service_healthy

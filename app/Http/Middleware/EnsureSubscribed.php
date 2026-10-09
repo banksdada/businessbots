@@ -26,6 +26,6 @@ class EnsureSubscribed
         }
 
         return redirect()->route('marketing.pricing')
-            ->with('notice', 'Your trial has ended — pick a plan to keep using BusinessBots.');
+            ->with('notice', 'Your trial has ended — pick a plan to keep using '.config('app.name').'.');
     }
 }

@@ -1,4 +1,4 @@
-<x-layouts.app title="BusinessBots — Your business, running on autopilot">
+<x-layouts.app :title="config('app.name') . ' — Your business, running on autopilot'">
 
     {{-- Hero --}}
     <section class="mx-auto max-w-[720px] px-6 pt-20 pb-16 text-center">

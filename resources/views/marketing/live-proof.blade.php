@@ -1,4 +1,4 @@
-<x-layouts.app title="Live proof — BusinessBots">
+<x-layouts.app :title="'Live proof — ' . config('app.name')">
 
     <section class="mx-auto max-w-[900px] px-6 pt-20 pb-16 text-center">
         <span class="inline-block px-3 py-1 bg-accent-muted text-accent-light rounded-full text-xs font-semibold tracking-wide">
