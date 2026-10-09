@@ -9,7 +9,7 @@
             <a href="{{ route('legal.terms') }}" class="hover:text-text-primary">Terms</a>
             <a href="{{ route('legal.privacy') }}" class="hover:text-text-primary">Privacy</a>
             <a href="{{ route('legal.cookies') }}" class="hover:text-text-primary">Cookies</a>
-            <a href="mailto:{{ config('legal.support_email') }}" class="hover:text-text-primary">Support</a>
+            <a href="{{ route('contact') }}" class="hover:text-text-primary">Support</a>
         </div>
     </div>
 </footer>

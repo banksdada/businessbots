@@ -5,6 +5,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\BillingController;
 use App\Http\Controllers\StripeWebhookController;
 use App\Http\Controllers\LegalController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\WhatsAppWebhookController;
 use App\Http\Controllers\ChannelOAuthController;
 use App\Livewire\Onboarding\Wizard as OnboardingWizard;
@@ -22,6 +23,10 @@ Route::get('/', [MarketingController::class, 'home'])->name('home');
 Route::get('/pricing', [MarketingController::class, 'pricing'])->name('marketing.pricing');
 Route::get('/industries/{vertical?}', [MarketingController::class, 'industries'])->name('marketing.industries');
 Route::get('/demo', [MarketingController::class, 'demo'])->name('marketing.demo');
+
+// "Email us" as a form, so it works without a mail app on the visitor's device.
+Route::get('/contact', [ContactController::class, 'show'])->name('contact');
+Route::post('/contact', [ContactController::class, 'send'])->middleware('throttle:5,10')->name('contact.send');
 
 // Public, unauthenticated — the "living proof" metrics page from the reference design
 Route::get('/live-proof', [MarketingController::class, 'liveProof'])->name('live-proof');

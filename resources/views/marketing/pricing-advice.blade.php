@@ -7,7 +7,7 @@
         </p>
         <div class="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
             <a href="{{ route('register') }}" class="btn-primary text-base px-6 py-3">Get started</a>
-            <a href="mailto:{{ config('legal.support_email') }}" class="btn-secondary text-base px-6 py-3">Email us</a>
+            <a href="{{ route('contact') }}" class="btn-secondary text-base px-6 py-3">Email us</a>
         </div>
     </section>
 </x-layouts.app>
