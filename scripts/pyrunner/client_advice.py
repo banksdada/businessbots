@@ -40,8 +40,8 @@ MAX_JOBS = int(os.environ.get("MAX_JOBS_PER_RUN", "10"))
 
 JOB_TYPE = "client_advice"
 
-SYSTEM_PROMPT = """You are an experienced operations and digital adviser for small UK organisations:
-care providers, churches, charities and small businesses. You write practical,
+SYSTEM_PROMPT = """You are an experienced operations and digital adviser for UK businesses and organisations
+of every kind and size. You write practical,
 plain-English advice that a busy manager with no technical background can act on.
 
 Write the report in Markdown with these sections:

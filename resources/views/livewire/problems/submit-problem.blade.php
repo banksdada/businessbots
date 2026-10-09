@@ -32,7 +32,7 @@
                 <textarea id="description" wire:model.blur="description" rows="5" class="field-input"
                     aria-describedby="description-help"
                     placeholder="Walk us through it: what happens, how often, and who it affects."></textarea>
-                <p id="description-help" class="field-help">Please don't include names or personal details of the people you support.</p>
+                <p id="description-help" class="field-help">Please don't include names or personal details of your customers, clients or staff.</p>
                 @error('description') <p class="field-error">{{ $message }}</p> @enderror
             </div>
         </section>
