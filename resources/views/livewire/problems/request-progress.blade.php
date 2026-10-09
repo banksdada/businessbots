@@ -1,7 +1,7 @@
 @php
     $failed = $problem->status === \App\Models\ProblemRequest::STATUS_FAILED;
     $steps = [
-        ['You sent your question', true],
+        ['You told us the problem', true],
         // A failed draft is still stuck on this step, not past it.
         ['AI is writing a first draft', $problem->status === \App\Models\ProblemRequest::STATUS_PENDING_REVIEW],
         ['A person is checking it', false],
@@ -70,7 +70,7 @@
         <x-person name="owner-explain" bg="bg-peach" class="w-14 h-14 shrink-0" />
         <div class="min-w-0 flex-1">
             <p class="text-xs font-semibold uppercase tracking-wider text-peach-strong">While you wait</p>
-            <div class="relative mt-2 min-h-[4.5rem] sm:min-h-[3.25rem]">
+            <div class="relative mt-2 min-h-[6rem] sm:min-h-[4.5rem]">
                 <template x-for="(tip, n) in tips" :key="n">
                     <p x-show="i === n"
                         x-transition:enter="transition ease-out duration-500"

@@ -17,7 +17,7 @@
         <div class="hidden md:flex items-center gap-6 text-sm">
             @if ($inApp)
                 <a href="{{ route('dashboard') }}" class="{{ $navLink(request()->routeIs('dashboard', 'problems.show')) }}">My requests</a>
-                <a href="{{ route('problems.create') }}" class="{{ $navLink(request()->routeIs('problems.create')) }}">Ask for advice</a>
+                <a href="{{ route('problems.create') }}" class="{{ $navLink(request()->routeIs('problems.create')) }}">Tell us a problem</a>
                 @if ($social)
                     <a href="{{ route('leads.index') }}" class="{{ $navLink(request()->routeIs('leads.index')) }}">Leads</a>
                 @endif
@@ -60,7 +60,7 @@
         @auth
             @if ($inApp)
             <a href="{{ route('dashboard') }}" class="block py-2 text-text-primary">My requests</a>
-            <a href="{{ route('problems.create') }}" class="block py-2 text-text-primary">Ask for advice</a>
+            <a href="{{ route('problems.create') }}" class="block py-2 text-text-primary">Tell us a problem</a>
             @if ($social)
                 <a href="{{ route('leads.index') }}" class="block py-2 text-text-primary">Leads</a>
             @endif

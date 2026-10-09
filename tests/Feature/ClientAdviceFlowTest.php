@@ -49,6 +49,10 @@ class ClientAdviceFlowTest extends TestCase
             ->test(SubmitProblem::class)
             ->set('title', 'Rotas take a whole day')
             ->set('description', 'Every week our manager spends a full day building staff rotas by hand in Excel.')
+            ->set('impacts', ['time', 'stress'])
+            ->set('hours_per_week', 8)
+            ->set('hourly_cost', 15)
+            ->set('desired_outcome', 'Rotas done in an hour')
             ->set('already_tried', 'A shared spreadsheet')
             ->set('staff_count', 25)
             ->set('urgency', 'high')
@@ -85,8 +89,36 @@ class ClientAdviceFlowTest extends TestCase
         $this->assertSame('client_advice', $job->type);
         $this->assertSame('Care & support', $job->payload['organisation']['type']);
         $this->assertSame('Urgent', $job->payload['problem']['urgency']);
+        $this->assertSame('Staff time, Stress or lost focus', $job->payload['problem']['what_it_costs']);
+        $this->assertSame('about 416 hours (£6,240) a year', $job->payload['problem']['yearly_cost']);
+        $this->assertSame('Rotas done in an hour', $job->payload['problem']['desired_outcome']);
 
         Http::assertSent(fn ($request) => $request->url() === 'https://pyrunner.test/webhook/abc/');
+    }
+
+    public function test_form_shows_yearly_cost_from_the_clients_own_numbers(): void
+    {
+        Livewire::actingAs($this->business->owner)
+            ->test(SubmitProblem::class)
+            ->assertDontSee('By your numbers')
+            ->set('hours_per_week', 2.5)
+            ->assertSee('about 130 hours a year')
+            ->set('hourly_cost', 20)
+            ->assertSee('about 130 hours (£2,600) a year');
+    }
+
+    public function test_value_questions_are_optional_and_checked(): void
+    {
+        Livewire::actingAs($this->business->owner)
+            ->test(SubmitProblem::class)
+            ->set('title', 'Rotas')
+            ->set('description', 'Every week our manager spends a full day building staff rotas.')
+            ->set('impacts', ['not-a-real-option'])
+            ->set('hourly_cost', 0)
+            ->call('submit')
+            ->assertHasErrors(['impacts.0', 'hourly_cost']);
+
+        $this->assertSame(0, ProblemRequest::count());
     }
 
     public function test_form_validates_required_answers(): void

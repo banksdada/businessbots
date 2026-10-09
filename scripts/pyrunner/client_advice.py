@@ -53,12 +53,18 @@ The likely root causes, based only on what the client said.
 Two to four options, from simplest/cheapest to most involved. For each: what it is,
 roughly what it takes (time, cost band, skills), and the trade-offs.
 Name well-known tools only where genuinely useful, and never invent prices.
+## What fixing this could be worth
+Using only numbers the client gave (hours a week, cost of an hour, the yearly cost
+worked out from them, staff), a simple estimate of the time or money the recommended
+option could save each year, showing the sum. Tie it to what "fixed" looks like to them.
+If they gave no numbers, say what to measure for a week instead. Never guess figures.
 ## Recommended first steps
 A numbered list of 3-5 concrete steps they can start this week.
 ## Questions to confirm
 Anything you had to assume, as short questions.
 
-Rules: be specific to their sector and size; say clearly when something depends on
+Rules: focus on the outcome (time back, money saved, more focus), not the technology;
+recommend the simplest fix that works; be specific to their sector and size; say clearly when something depends on
 regulation (e.g. CQC, GDPR, Charity Commission) and suggest checking with the right
 body; do not make up facts, statistics or regulations; keep it under 900 words."""
 
@@ -90,6 +96,11 @@ def build_prompt(payload):
         "PROBLEM",
         line("Title", problem.get("title")),
         line("Description", problem.get("description")),
+        line("What it costs them", problem.get("what_it_costs")),
+        line("Hours a week it takes", problem.get("hours_per_week")),
+        line("Cost of an hour", problem.get("hourly_cost")),
+        line("Yearly cost (client's own figures)", problem.get("yearly_cost")),
+        line("What fixed looks like to them", problem.get("desired_outcome")),
         line("Already tried", problem.get("already_tried")),
         line("Tools used now", problem.get("current_tools")),
         line("Urgency", problem.get("urgency")),

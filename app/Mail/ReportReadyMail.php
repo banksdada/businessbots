@@ -20,7 +20,7 @@ class ReportReadyMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: "Your report is ready: {$this->request->title}",
+            subject: "Your plan is ready: {$this->request->title}",
         );
     }
 

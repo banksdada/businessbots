@@ -16,12 +16,14 @@ class RequestProgress extends Component
     public int $problemId;
 
     public const TIPS = [
-        'Your plan will include a short summary, what is likely causing the problem, a few options and first steps you can start this week.',
+        'Your plan will cover the likely cause, the simplest fix, what fixing it could save you and first steps for this week.',
+        'You do not need to understand the technology. Like a taxi ride, what matters is getting there, not which car takes you.',
+        'We start with the simplest fix that works. No over-complicated systems you will have to babysit.',
         'Have a rough budget in mind. It makes it much easier to choose between the options in your plan.',
         'Think about who would be involved in fixing this. Bringing them in early helps changes stick.',
         'Small steps count. Most plans start with one thing you can try in the next few days.',
         'Every plan is read by a real person before you see it, so it fits your organisation and not just the theory.',
-        'If you would like a hand putting your plan in place, just ask. That is what we are here for.',
+        'Want a hand putting the fix in place? Just ask. We agree what is included and when it is done before anything starts.',
     ];
 
     public function mount(ProblemRequest $problem): void
