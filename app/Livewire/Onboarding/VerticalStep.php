@@ -12,15 +12,16 @@ class VerticalStep extends Component
 
     public string $selectedVertical = '';
 
+    /** Types marked 'more' sit behind the More button to keep the first view short. */
     public const VERTICALS = [
         ['slug' => 'care', 'label' => 'Care', 'description' => 'Home care, elderly support'],
-        ['slug' => 'cleaning', 'label' => 'Cleaning', 'description' => 'Homes, offices, decluttering'],
-        ['slug' => 'real_estate', 'label' => 'Property', 'description' => 'Sales, lettings, valuations'],
-        ['slug' => 'fitness', 'label' => 'Fitness', 'description' => 'Studios, personal training'],
+        ['slug' => 'cleaning', 'label' => 'Cleaning', 'description' => 'Homes, offices, decluttering', 'more' => true],
+        ['slug' => 'real_estate', 'label' => 'Property', 'description' => 'Sales, lettings, valuations', 'more' => true],
+        ['slug' => 'fitness', 'label' => 'Fitness', 'description' => 'Studios, personal training', 'more' => true],
         ['slug' => 'trades', 'label' => 'Trades', 'description' => 'Plumbing, electrical, handyman'],
-        ['slug' => 'beauty', 'label' => 'Beauty', 'description' => 'Hair, nails, beauty services'],
-        ['slug' => 'legal', 'label' => 'Legal', 'description' => 'Law firms, legal advice'],
-        ['slug' => 'automotive', 'label' => 'Motor', 'description' => 'Car repair, maintenance, sales'],
+        ['slug' => 'beauty', 'label' => 'Beauty', 'description' => 'Hair, nails, beauty services', 'more' => true],
+        ['slug' => 'legal', 'label' => 'Legal', 'description' => 'Law firms, legal advice', 'more' => true],
+        ['slug' => 'automotive', 'label' => 'Motor', 'description' => 'Car repair, maintenance, sales', 'more' => true],
         ['slug' => 'retail', 'label' => 'Retail', 'description' => 'Shops, online stores, markets'],
         ['slug' => 'hospitality', 'label' => 'Food & hospitality', 'description' => 'Cafés, restaurants, hotels, events'],
         ['slug' => 'professional_services', 'label' => 'Professional services', 'description' => 'Accounting, consulting, agencies'],
