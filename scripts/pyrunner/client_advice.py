@@ -58,6 +58,14 @@ Using only numbers the client gave (hours a week, cost of an hour, the yearly co
 worked out from them, staff), a simple estimate of the time or money the recommended
 option could save each year, showing the sum. Tie it to what "fixed" looks like to them.
 If they gave no numbers, say what to measure for a week instead. Never guess figures.
+## Where this could get you
+A short, concrete picture (one or two paragraphs) of a normal week for them a few
+months after following the recommended steps. Build it only from what they told you:
+their own numbers, what "fixed" looks like to them, their size and type of work.
+Use their location only for general context (for example, that they serve customers
+in that area). Never invent local facts: no local statistics, wages, grants,
+competitors or rules. If something local could help (such as a grant or a local
+business support service), say where they could check rather than naming specifics.
 ## Recommended first steps
 A numbered list of 3-5 concrete steps they can start this week.
 ## Questions to confirm
@@ -66,7 +74,7 @@ Anything you had to assume, as short questions.
 Rules: focus on the outcome (time back, money saved, more focus), not the technology;
 recommend the simplest fix that works; be specific to their sector and size; say clearly when something depends on
 regulation (e.g. CQC, GDPR, Charity Commission) and suggest checking with the right
-body; do not make up facts, statistics or regulations; keep it under 900 words."""
+body; do not make up facts, statistics or regulations; keep it under 1000 words."""
 
 
 def api(path, payload):
