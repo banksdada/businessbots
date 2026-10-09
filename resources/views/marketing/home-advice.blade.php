@@ -6,7 +6,7 @@
             <div>
                 <span class="inline-flex items-center gap-2 px-3 py-1 bg-surface border border-border rounded-full text-sm font-medium text-text-secondary">
                     <span class="w-2 h-2 rounded-full bg-sage-strong"></span>
-                    For care providers, churches and small firms
+                    For charities, churches, care providers, small businesses and more
                 </span>
                 <h1 class="mt-6 text-4xl sm:text-5xl lg:text-[3.5rem] font-semibold leading-[1.08]">
                     Tell us what's getting in the way.
@@ -115,6 +115,7 @@
         <div class="mx-auto max-w-[1100px] px-4 sm:px-6 py-16 sm:py-20">
             <p class="text-center text-sm font-semibold text-peach-strong uppercase tracking-wider">Who it's for</p>
             <h2 class="mt-2 text-3xl sm:text-4xl font-semibold text-center">Made for organisations like yours</h2>
+            <p class="mt-3 text-center text-text-secondary max-w-[38rem] mx-auto">If you run a small team, paid or volunteer, and something keeps costing you time or money, we can help.</p>
             <div class="mt-12 grid sm:grid-cols-3 gap-6">
                 @foreach ([
                     ['elder-shirt', 'bg-sage', 'Care providers', 'Less time on rotas, incident tracking, paperwork and CQC evidence.'],
@@ -128,6 +129,7 @@
                     </div>
                 @endforeach
             </div>
+            <p class="mt-8 text-center text-text-secondary">Run a school, club, social enterprise or community group? This is for you too.</p>
         </div>
     </section>
 
