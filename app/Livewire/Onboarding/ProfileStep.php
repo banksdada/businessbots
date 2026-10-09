@@ -13,7 +13,7 @@ class ProfileStep extends Component
     #[Validate('required|string|max:255')]
     public string $name = '';
 
-    #[Validate('required|string|max:255')]
+    #[Validate('nullable|string|max:255')]
     public string $location = '';
 
     #[Validate('nullable|string|max:1000')]
@@ -23,7 +23,6 @@ class ProfileStep extends Component
     {
         return [
             'name.required' => 'Please tell us the name of your business or organisation.',
-            'location.required' => 'Please tell us roughly where you are, like a town or city.',
         ];
     }
 

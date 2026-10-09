@@ -1,6 +1,6 @@
 <div>
     <h2 class="text-xl font-semibold mb-1">What kind of organisation are you?</h2>
-    <p class="text-sm text-text-secondary mb-5">This helps us tailor advice to your sector.</p>
+    <p class="text-sm text-text-secondary mb-5">Pick the closest one so we can tailor your advice. If none fit, choose Other.</p>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 mb-2">
         @foreach ($verticals as $vertical)

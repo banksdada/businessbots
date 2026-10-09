@@ -21,7 +21,11 @@ class VerticalStep extends Component
         ['slug' => 'beauty', 'label' => 'Beauty & salon', 'description' => 'Hair, nails, beauty services'],
         ['slug' => 'legal', 'label' => 'Legal', 'description' => 'Law firms, legal advice'],
         ['slug' => 'automotive', 'label' => 'Automotive', 'description' => 'Car repair, maintenance, sales'],
-        ['slug' => 'church_charity', 'label' => 'Church & charity', 'description' => 'Churches, ministries, charities'],
+        ['slug' => 'retail', 'label' => 'Retail & shops', 'description' => 'Shops, online stores, markets'],
+        ['slug' => 'hospitality', 'label' => 'Hospitality & food', 'description' => 'Cafés, restaurants, hotels, events'],
+        ['slug' => 'professional_services', 'label' => 'Professional services', 'description' => 'Accounting, consulting, agencies'],
+        ['slug' => 'education', 'label' => 'Education & training', 'description' => 'Schools, tutors, training providers'],
+        ['slug' => 'church_charity', 'label' => 'Charity, church & community', 'description' => 'Charities, churches, community groups'],
         ['slug' => 'other', 'label' => 'Other', 'description' => 'Any other business or organisation'],
     ];
 
@@ -37,6 +41,12 @@ class VerticalStep extends Component
     public function selectVertical(string $slug): void
     {
         $this->selectedVertical = $slug;
+    }
+
+    /** slug => label, for dropdowns such as the admin business form. */
+    public static function options(): array
+    {
+        return array_column(self::VERTICALS, 'label', 'slug');
     }
 
     public static function labelFor(?string $slug): string

@@ -11,7 +11,7 @@
         </div>
 
         <div>
-            <label for="profile-location" class="field-label">Location</label>
+            <label for="profile-location" class="field-label">Location <span class="font-normal text-text-muted">(optional)</span></label>
             <input type="text" id="profile-location" wire:model="location" placeholder="e.g. Birmingham, UK"
                 class="field-input">
             @error('location') <p class="field-error">{{ $message }}</p> @enderror
