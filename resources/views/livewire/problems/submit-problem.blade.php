@@ -88,90 +88,106 @@
             @endif
         </section>
 
-        {{-- 3. Solve: what "fixed" looks like to them --}}
-        <section class="card p-5 sm:p-8 space-y-6" aria-labelledby="step-fixed">
-            <div class="flex items-center gap-3">
-                <span class="inline-flex w-9 h-9 rounded-full bg-sun font-display text-lg font-semibold items-center justify-center shrink-0">3</span>
-                <div>
-                    <h2 id="step-fixed" class="text-lg font-semibold">What "fixed" looks like</h2>
-                    <p class="text-sm text-text-muted">So we aim for the result you actually want.</p>
-                </div>
+        {{-- Sections 3 and 4 are optional, so they stay folded away to keep the form short on phones. --}}
+        <div x-data="{ more: @js($errors->hasAny(['desired_outcome', 'already_tried', 'current_tools', 'staff_count', 'urgency', 'help_wanted'])) }" class="space-y-6">
+            <button type="button" x-on:click="more = !more" x-bind:aria-expanded="more.toString()" aria-controls="more-detail"
+                class="w-full card p-5 sm:px-8 flex items-center justify-between gap-4 text-left hover:bg-surface-secondary transition-colors">
+                <span>
+                    <span class="block font-semibold text-text-primary">Add more detail <span class="font-normal text-text-muted">(optional)</span></span>
+                    <span class="block mt-0.5 text-sm text-text-secondary">What "fixed" looks like, what you've tried, how soon you need it and the help you'd like. It all makes your plan more useful.</span>
+                </span>
+                <svg class="w-5 h-5 shrink-0 text-text-faint transition-transform" x-bind:class="more && 'rotate-180'" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+            </button>
+
+            <div id="more-detail" x-show="more" x-cloak class="space-y-6">
+                {{-- 3. Solve: what "fixed" looks like to them --}}
+                <section class="card p-5 sm:p-8 space-y-6" aria-labelledby="step-fixed">
+                    <div class="flex items-center gap-3">
+                        <span class="inline-flex w-9 h-9 rounded-full bg-sun font-display text-lg font-semibold items-center justify-center shrink-0">3</span>
+                        <div>
+                            <h2 id="step-fixed" class="text-lg font-semibold">What "fixed" looks like</h2>
+                            <p class="text-sm text-text-muted">So we aim for the result you actually want.</p>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="desired_outcome" class="field-label">If this were fixed, what would be different? <span class="font-normal text-text-muted">(optional)</span></label>
+                        <textarea id="desired_outcome" wire:model.blur="desired_outcome" rows="3" class="field-input"
+                            placeholder="e.g. Rotas done in an hour, and staff get them a week earlier."></textarea>
+                        @error('desired_outcome') <p class="field-error">{{ $message }}</p> @enderror
+                    </div>
+
+                    <div>
+                        <label for="already_tried" class="field-label">What have you already tried? <span class="font-normal text-text-muted">(optional)</span></label>
+                        <textarea id="already_tried" wire:model.blur="already_tried" rows="3" class="field-input"
+                            placeholder="e.g. We tried a spreadsheet but people stopped updating it."></textarea>
+                        @error('already_tried') <p class="field-error">{{ $message }}</p> @enderror
+                    </div>
+
+                    <div class="grid sm:grid-cols-2 gap-6">
+                        <div>
+                            <label for="current_tools" class="field-label">Tools or software you use now <span class="font-normal text-text-muted">(optional)</span></label>
+                            <input id="current_tools" type="text" wire:model.blur="current_tools" class="field-input"
+                                placeholder="e.g. Excel, WhatsApp, Google Drive">
+                            @error('current_tools') <p class="field-error">{{ $message }}</p> @enderror
+                        </div>
+
+                        <div>
+                            <label for="staff_count" class="field-label">Number of staff <span class="font-normal text-text-muted">(optional)</span></label>
+                            <input id="staff_count" type="number" min="1" inputmode="numeric" wire:model.blur="staff_count" class="field-input" placeholder="e.g. 25">
+                            @error('staff_count') <p class="field-error">{{ $message }}</p> @enderror
+                        </div>
+                    </div>
+                </section>
+
+                {{-- 4. How we help --}}
+                <section class="card p-5 sm:p-8 space-y-6" aria-labelledby="step-help">
+                    <div class="flex items-center gap-3">
+                        <span class="inline-flex w-9 h-9 rounded-full bg-accent-muted font-display text-lg font-semibold items-center justify-center shrink-0">4</span>
+                        <div>
+                            <h2 id="step-help" class="text-lg font-semibold">How we can help</h2>
+                            <p class="text-sm text-text-muted">You can change your mind later.</p>
+                        </div>
+                    </div>
+
+                    <fieldset>
+                        <legend class="field-label">How soon do you need it fixed?</legend>
+                        <div class="grid sm:grid-cols-3 gap-2.5">
+                            @foreach ($urgencies as $value => $label)
+                                <label class="flex items-center gap-2.5 rounded-lg border px-3.5 py-3 cursor-pointer transition-colors {{ $urgency === $value ? 'border-accent bg-accent-muted' : 'border-border-strong hover:bg-surface-secondary' }}">
+                                    <input type="radio" wire:model.live="urgency" value="{{ $value }}" class="accent-[var(--color-accent)]">
+                                    <span class="text-sm font-medium">{{ $label }}</span>
+                                </label>
+                            @endforeach
+                        </div>
+                        @error('urgency') <p class="field-error">{{ $message }}</p> @enderror
+                    </fieldset>
+
+                    <fieldset>
+                        <legend class="field-label">What would you like?</legend>
+                        <div class="grid sm:grid-cols-2 gap-2.5">
+                            @foreach ($helpOptions as $value => $label)
+                                <label class="flex items-center gap-2.5 rounded-lg border px-3.5 py-3 cursor-pointer transition-colors {{ $help_wanted === $value ? 'border-accent bg-accent-muted' : 'border-border-strong hover:bg-surface-secondary' }}">
+                                    <input type="radio" wire:model.live="help_wanted" value="{{ $value }}" class="accent-[var(--color-accent)]">
+                                    <span class="text-sm font-medium">{{ $label }}</span>
+                                </label>
+                            @endforeach
+                        </div>
+                        @error('help_wanted') <p class="field-error">{{ $message }}</p> @enderror
+                    </fieldset>
+                </section>
             </div>
+        </div>
 
-            <div>
-                <label for="desired_outcome" class="field-label">If this were fixed, what would be different? <span class="font-normal text-text-muted">(optional)</span></label>
-                <textarea id="desired_outcome" wire:model.blur="desired_outcome" rows="3" class="field-input"
-                    placeholder="e.g. Rotas done in an hour, and staff get them a week earlier."></textarea>
-                @error('desired_outcome') <p class="field-error">{{ $message }}</p> @enderror
-            </div>
-
-            <div>
-                <label for="already_tried" class="field-label">What have you already tried? <span class="font-normal text-text-muted">(optional)</span></label>
-                <textarea id="already_tried" wire:model.blur="already_tried" rows="3" class="field-input"
-                    placeholder="e.g. We tried a spreadsheet but people stopped updating it."></textarea>
-                @error('already_tried') <p class="field-error">{{ $message }}</p> @enderror
-            </div>
-
-            <div class="grid sm:grid-cols-2 gap-6">
-                <div>
-                    <label for="current_tools" class="field-label">Tools or software you use now <span class="font-normal text-text-muted">(optional)</span></label>
-                    <input id="current_tools" type="text" wire:model.blur="current_tools" class="field-input"
-                        placeholder="e.g. Excel, WhatsApp, Google Drive">
-                    @error('current_tools') <p class="field-error">{{ $message }}</p> @enderror
-                </div>
-
-                <div>
-                    <label for="staff_count" class="field-label">Number of staff <span class="font-normal text-text-muted">(optional)</span></label>
-                    <input id="staff_count" type="number" min="1" inputmode="numeric" wire:model.blur="staff_count" class="field-input" placeholder="e.g. 25">
-                    @error('staff_count') <p class="field-error">{{ $message }}</p> @enderror
-                </div>
-            </div>
-        </section>
-
-        {{-- 4. How we help --}}
-        <section class="card p-5 sm:p-8 space-y-6" aria-labelledby="step-help">
-            <div class="flex items-center gap-3">
-                <span class="inline-flex w-9 h-9 rounded-full bg-accent-muted font-display text-lg font-semibold items-center justify-center shrink-0">4</span>
-                <div>
-                    <h2 id="step-help" class="text-lg font-semibold">How we can help</h2>
-                    <p class="text-sm text-text-muted">You can change your mind later.</p>
-                </div>
-            </div>
-
-            <fieldset>
-                <legend class="field-label">How soon do you need it fixed?</legend>
-                <div class="grid sm:grid-cols-3 gap-2.5">
-                    @foreach ($urgencies as $value => $label)
-                        <label class="flex items-center gap-2.5 rounded-lg border px-3.5 py-3 cursor-pointer transition-colors {{ $urgency === $value ? 'border-accent bg-accent-muted' : 'border-border-strong hover:bg-surface-secondary' }}">
-                            <input type="radio" wire:model.live="urgency" value="{{ $value }}" class="accent-[var(--color-accent)]">
-                            <span class="text-sm font-medium">{{ $label }}</span>
-                        </label>
-                    @endforeach
-                </div>
-                @error('urgency') <p class="field-error">{{ $message }}</p> @enderror
-            </fieldset>
-
-            <fieldset>
-                <legend class="field-label">What would you like?</legend>
-                <div class="grid sm:grid-cols-2 gap-2.5">
-                    @foreach ($helpOptions as $value => $label)
-                        <label class="flex items-center gap-2.5 rounded-lg border px-3.5 py-3 cursor-pointer transition-colors {{ $help_wanted === $value ? 'border-accent bg-accent-muted' : 'border-border-strong hover:bg-surface-secondary' }}">
-                            <input type="radio" wire:model.live="help_wanted" value="{{ $value }}" class="accent-[var(--color-accent)]">
-                            <span class="text-sm font-medium">{{ $label }}</span>
-                        </label>
-                    @endforeach
-                </div>
-                @error('help_wanted') <p class="field-error">{{ $message }}</p> @enderror
-            </fieldset>
-
+        <section class="card p-5 sm:p-8">
             {{-- Errors show beside the questions further up; say so here, where the client pressed the button. --}}
             @if ($errors->any())
-                <p role="alert" class="rounded-lg bg-error-muted px-4 py-3 text-sm text-text-primary">A couple of answers need a little more. Please check the questions marked in red above.</p>
+                <p role="alert" class="mb-4 rounded-lg bg-error-muted px-4 py-3 text-sm text-text-primary">A couple of answers need a little more. Please check the questions marked in red above.</p>
             @endif
 
-            <div class="flex flex-col-reverse sm:flex-row sm:items-center sm:justify-end gap-3 pt-2 border-t border-border">
-                <a href="{{ route('dashboard') }}" class="btn-secondary mt-4 sm:mt-6">Cancel</a>
-                <button type="submit" class="btn-primary mt-4 sm:mt-6" wire:loading.attr="disabled" wire:target="submit">
+            <div class="flex flex-col-reverse sm:flex-row sm:items-center sm:justify-end gap-3">
+                <a href="{{ route('dashboard') }}" class="btn-secondary">Cancel</a>
+                <button type="submit" class="btn-primary" wire:loading.attr="disabled" wire:target="submit">
                     <span wire:loading.remove wire:target="submit">Find me a fix</span>
                     <span wire:loading wire:target="submit">Sending…</span>
                 </button>
