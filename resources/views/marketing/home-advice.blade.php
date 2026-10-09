@@ -48,12 +48,13 @@
     <section id="how-it-works" class="bg-surface border-y border-border scroll-mt-20">
         <div class="mx-auto max-w-[1100px] px-4 sm:px-6 py-16 sm:py-20">
             <p class="text-center text-sm font-semibold text-peach-strong uppercase tracking-wider">How it works</p>
-            <h2 class="mt-2 text-3xl sm:text-4xl font-semibold text-center">Three simple steps</h2>
+            <h2 class="mt-2 text-3xl sm:text-4xl font-semibold text-center">Five minutes from you. We do the rest.</h2>
+            <p class="mt-3 text-center text-text-secondary max-w-[38rem] mx-auto">Picture it. You describe the problem over a cup of tea, then close the page. When your plan is ready, it lands in your inbox.</p>
             <ol class="mt-12 grid md:grid-cols-3 gap-6">
                 @foreach ([
-                    ['1', 'bg-peach', 'Tell us what\'s slowing you down', 'Answer a few friendly questions in about five minutes. If you can, say roughly how much time or money the problem costs you.'],
-                    ['2', 'bg-sage', 'We find the fix', 'AI drafts a plan for your sector and size. Then a real person reads it, checks it and improves it.'],
-                    ['3', 'bg-sun', 'See what it\'s worth, then act', 'Your plan shows the simplest fix, what it could save you and first steps for this week. Want a hand putting it in place? Just ask.'],
+                    ['1', 'bg-peach', 'Tell us what\'s slowing you down', 'Answer a few friendly questions in your own words. A rough guess at the hours or money it costs you helps a lot.'],
+                    ['2', 'bg-sage', 'We find the fix', 'AI writes a first draft for your situation. Then a real person reads it, checks it and makes it better.'],
+                    ['3', 'bg-sun', 'See what it\'s worth, then act', 'You get the simplest fix, what it could save you, and steps you can start this week. Want us to do it for you? Just ask.'],
                 ] as [$n, $bg, $heading, $text])
                     <li class="relative rounded-2xl bg-background p-7">
                         <span class="inline-flex w-11 h-11 rounded-full {{ $bg }} font-display text-xl font-semibold items-center justify-center">{{ $n }}</span>
@@ -71,7 +72,7 @@
             <p class="text-sm font-semibold text-peach-strong uppercase tracking-wider">Results, not robots</p>
             <h2 class="mt-2 text-3xl sm:text-4xl font-semibold leading-tight">You don't need AI. You need the problem gone.</h2>
             <p class="mt-4 text-lg text-text-secondary leading-relaxed">
-                When you have a headache, you don't mind which tablet works. You just want the headache gone. It's the same here. We don't sell chatbots or software. We find where your organisation is losing time, money or focus, and the simplest way to fix it.
+                Think about the last time you had a headache. You didn't care which tablet worked. You just wanted the headache gone. Your business problems are the same. So we don't sell chatbots or software. We find where you're losing time, money or focus, and the simplest way to stop it.
             </p>
         </div>
         <div class="mt-10 grid sm:grid-cols-3 gap-6">
@@ -92,10 +93,10 @@
     <section class="mx-auto max-w-[1100px] px-4 sm:px-6 py-16 sm:py-24 grid md:grid-cols-[2fr_3fr] gap-10 items-center">
         <x-person name="reviewer-paper" bg="bg-accent-muted" class="w-full max-w-[320px] aspect-square mx-auto" />
         <div>
-            <p class="text-sm font-semibold text-peach-strong uppercase tracking-wider">Not just a robot</p>
-            <h2 class="mt-2 text-3xl sm:text-4xl font-semibold leading-tight">A real person reads every plan before you do</h2>
+            <p class="text-sm font-semibold text-peach-strong uppercase tracking-wider">The honest part</p>
+            <h2 class="mt-2 text-3xl sm:text-4xl font-semibold leading-tight">AI gets things wrong. That's why a person checks every plan.</h2>
             <p class="mt-4 text-lg text-text-secondary leading-relaxed">
-                AI is quick at a first draft, but it doesn't know your world like a person does. So every report is checked, edited and approved by someone on our team. If something doesn't fit your situation, we fix it before it reaches you.
+                We'll be straight with you. AI is fast at a first draft, but it doesn't know your world. So someone on our team reads every plan, edits it and approves it. If something doesn't fit your situation, we fix it before you ever see it.
             </p>
             <ul class="mt-6 space-y-3">
                 @foreach (['Plain English, no tech talk', 'The simplest fix first, nothing over-complicated', 'What fixing it could save you, in hours or pounds', 'Clear first steps you can start this week'] as $point)
@@ -110,12 +111,35 @@
         </div>
     </section>
 
+    {{-- Questions people ask: raise each doubt and answer it plainly --}}
+    <section class="mx-auto max-w-[760px] px-4 sm:px-6 pb-16 sm:pb-24">
+        <p class="text-center text-sm font-semibold text-peach-strong uppercase tracking-wider">Fair questions</p>
+        <h2 class="mt-2 text-3xl sm:text-4xl font-semibold text-center">What you might be wondering</h2>
+        <div class="mt-10 space-y-3">
+            @foreach ([
+                ['Do I need to understand AI or technology?', 'No. Explain the problem the way you would to a friend. Working out the technology is our job, not yours.'],
+                ['What if my problem seems too small?', 'If it costs you time or money every week, it isn\'t small. Small problems that keep coming back are often the quickest to fix.'],
+                ['Will I be pushed into buying something?', 'No. Your plan is yours to keep. Follow it yourself, or ask us to help put the fix in place. It\'s your choice.'],
+                ['How much will a fix cost?', 'We agree a price with you before any work starts, and you\'ll see exactly what\'s included. No surprises.'],
+                ['How long does it take?', 'Telling us takes about five minutes. Then you can close the page. We email you as soon as your plan has been checked and is ready.'],
+            ] as [$question, $answer])
+                <details class="card group">
+                    <summary class="cursor-pointer list-none px-6 py-4 font-semibold flex items-center justify-between gap-4">
+                        {{ $question }}
+                        <svg class="w-5 h-5 shrink-0 text-text-faint transition-transform group-open:rotate-180" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                    </summary>
+                    <p class="px-6 pb-5 text-text-secondary leading-relaxed">{{ $answer }}</p>
+                </details>
+            @endforeach
+        </div>
+    </section>
+
     {{-- Who it's for --}}
     <section class="bg-surface border-y border-border">
         <div class="mx-auto max-w-[1100px] px-4 sm:px-6 py-16 sm:py-20">
             <p class="text-center text-sm font-semibold text-peach-strong uppercase tracking-wider">Who it's for</p>
             <h2 class="mt-2 text-3xl sm:text-4xl font-semibold text-center">Made for any business or organisation</h2>
-            <p class="mt-3 text-center text-text-secondary max-w-[38rem] mx-auto">Whatever you do and however big your team, if something keeps costing you time or money, we can help. These are a few of the problems we hear most.</p>
+            <p class="mt-3 text-center text-text-secondary max-w-[38rem] mx-auto">Whatever you do and however big your team, if something keeps costing you time or money, we can help. Here are a few common ones.</p>
             <div class="mt-12 grid sm:grid-cols-3 gap-6">
                 @foreach ([
                     ['elder-shirt', 'bg-sage', 'Too much admin', 'Paperwork, rotas, reports and typing the same thing twice.'],
@@ -141,9 +165,9 @@
                 <x-person name="pastor-coffee" bg="bg-sage" class="w-14 h-14 ring-4 ring-accent" />
                 <x-person name="reviewer-paper" bg="bg-sun" class="w-14 h-14 ring-4 ring-accent" />
             </div>
-            <h2 class="text-3xl sm:text-4xl font-semibold">Ready to get some time back?</h2>
-            <p class="mt-3 text-lg text-white/85">Tell us the problem in about five minutes. We'll come back with a plan to fix it.</p>
-            <a href="{{ route('register') }}" class="mt-8 inline-flex items-center justify-center px-7 py-3 rounded-full bg-white text-accent-dark font-semibold hover:bg-accent-muted transition-colors">Get started</a>
+            <h2 class="text-3xl sm:text-4xl font-semibold">What's one problem you'd love to be rid of?</h2>
+            <p class="mt-3 text-lg text-white/85">Tell us about it now. It takes about five minutes, and a real person will check your plan before it reaches you.</p>
+            <a href="{{ route('register') }}" class="mt-8 inline-flex items-center justify-center px-7 py-3 rounded-full bg-white text-accent-dark font-semibold hover:bg-accent-muted transition-colors">Tell us your problem</a>
         </div>
     </section>
 
