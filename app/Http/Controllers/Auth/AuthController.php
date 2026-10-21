@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Mail\LoginLinkMail;
 use App\Models\LoginToken;
 use App\Models\User;
+use App\Services\Crm\CrmCaptureService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -60,7 +61,7 @@ class AuthController extends Controller
     /**
      * Log the user in from a valid, unused, unexpired token.
      */
-    public function verify(Request $request, string $token)
+    public function verify(Request $request, string $token, CrmCaptureService $crm)
     {
         $loginToken = LoginToken::where('token', $token)->first();
 
@@ -73,6 +74,11 @@ class AuthController extends Controller
 
         Auth::login($loginToken->user);
         $request->session()->regenerate();
+
+        // Clicking the link is the proof the email is real, so this is where a
+        // lead enters the CRM. Fail-safe: capture() never throws, so a CRM
+        // outage can't block a login.
+        $crm->capture($loginToken->user);
 
         return redirect()->intended(route('onboarding'));
     }

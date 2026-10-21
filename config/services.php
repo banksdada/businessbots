@@ -165,4 +165,23 @@ return [
         ),
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | AIOS CRM
+    |--------------------------------------------------------------------------
+    |
+    | A verified sign-up (magic link clicked) is POSTed to the AIOS, which
+    | appends the contact to the Clients sheet. The shared secret signs the
+    | body: HMAC-SHA256 over "<timestamp>.<body>". Leave the secret blank in
+    | local/dev to disable capture — the service logs and moves on.
+    |
+    */
+
+    'crm' => [
+        'webhook_url' => env('CRM_WEBHOOK_URL', 'https://aios.webawesome.co.uk/webhook/crm'),
+        'webhook_secret' => env('CRM_WEBHOOK_SECRET'),
+        'timeout_seconds' => (int) env('CRM_WEBHOOK_TIMEOUT', 10),
+        'user_agent' => env('CRM_WEBHOOK_USER_AGENT', 'Sorted/1.0'),
+    ],
+
 ];
