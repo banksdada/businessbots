@@ -2,22 +2,22 @@
 
     {{-- Hero --}}
     <section class="mx-auto max-w-[720px] px-6 pt-20 pb-16 text-center">
-        <span class="inline-block px-3 py-1 bg-accent-muted text-accent-light rounded-full text-xs font-semibold tracking-wide">
-            {{ $liveBusinessCount ?? 8 }} BUSINESSES RUNNING NOW · 0 HUMAN STAFF
+        <span class="text-label inline-block px-3 py-1 bg-accent-muted text-accent rounded-full">
+            {{ $liveBusinessCount ?? 8 }} businesses running now · 0 human staff
         </span>
 
-        <h1 class="mt-5 text-3xl md:text-4xl font-bold leading-tight">
+        <h1 class="mt-5 text-display">
             One AI system.<br>
-            <span class="text-gradient-accent">Any small business.</span><br>
+            <span class="text-accent-dark">Any small business.</span><br>
             £4.99/Month.
         </h1>
 
-        <p class="mt-4 text-text-secondary text-base leading-relaxed">
+        <p class="mt-4 text-text-secondary text-body leading-relaxed">
             Runs WhatsApp, content and lead follow-up 24/7 — while the owner works 15 minutes a day.
         </p>
 
         <div class="mt-8 flex justify-center gap-3">
-            <a href="{{ route('live-proof') }}" class="px-5 py-2.5 bg-gradient-accent text-white rounded-md text-sm font-semibold">
+            <a href="{{ route('live-proof') }}" class="px-5 py-2.5 bg-accent text-white rounded-md text-sm font-semibold">
                 View live proof dashboard
             </a>
             <a href="{{ route('marketing.demo') }}" class="px-5 py-2.5 border border-border-strong text-text-primary rounded-md text-sm font-semibold">
@@ -37,7 +37,7 @@
             ] as $stat)
                 <div class="bg-surface-secondary p-4 text-center">
                     <div class="text-xl font-bold text-text-primary">{{ $stat['value'] }}</div>
-                    <div class="mt-1 text-[10px] text-text-muted tracking-wide uppercase">{{ $stat['label'] }}</div>
+                    <div class="mt-1 text-label">{{ $stat['label'] }}</div>
                 </div>
             @endforeach
         </div>
@@ -45,7 +45,7 @@
 
     {{-- Vertical picker teaser --}}
     <section class="mx-auto max-w-[720px] px-6 pb-20">
-        <h2 class="text-lg font-semibold text-center mb-6">Works for any business, out of the box</h2>
+        <h2 class="text-h2 text-center mb-6">Works for any business, out of the box</h2>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
             @foreach ($verticals as $vertical)
                 <a href="{{ route('marketing.industries', $vertical->slug) }}"
@@ -61,10 +61,10 @@
     {{-- AI‑OS native: the fix plan, running on autopilot --}}
     <section class="mx-auto max-w-[720px] px-6 pb-24">
         <div class="bg-surface border border-border-accent rounded-xl p-8 md:p-10">
-            <span class="text-xs font-semibold text-accent-light tracking-wide">AI‑OS NATIVE</span>
-            <h2 class="mt-3 text-2xl md:text-3xl font-bold leading-tight">
+            <span class="text-label inline-block px-2.5 py-0.5 bg-accent-muted text-accent rounded-full">AI‑OS NATIVE</span>
+            <h2 class="mt-3 text-h2">
                 The fix plan isn't a PDF.<br>
-                <span class="text-gradient-accent">It runs.</span>
+                <span class="text-accent-dark">It runs.</span>
             </h2>
             <p class="mt-4 text-text-secondary leading-relaxed">
                 Describe the problem, get a clear fix plan — and then have that
@@ -104,15 +104,15 @@
     <section class="mx-auto max-w-[720px] px-6 pb-28">
         <div class="flex items-center gap-2 mb-5">
             <span class="w-2 h-2 rounded-full bg-success animate-pulse"></span>
-            <h2 class="text-lg font-semibold text-text-primary">AI insights, live</h2>
-            <span class="text-xs text-text-muted">updated as the system runs</span>
+            <h2 class="text-h2">AI insights, live</h2>
+            <span class="text-label">updated as the system runs</span>
         </div>
 
         <div class="grid md:grid-cols-2 gap-4">
             @foreach ($aiInsights as $insight)
                 <div class="bg-surface border border-border rounded-xl p-5">
                     <div class="flex items-center justify-between">
-                        <span class="text-[10px] font-semibold text-accent-light tracking-wide uppercase">{{ $insight['label'] }}</span>
+                        <span class="text-label">{{ $insight['label'] }}</span>
                         <span class="text-[10px] text-text-faint">{{ $insight['as_of'] }}</span>
                     </div>
                     <p class="mt-2 text-2xl font-bold text-text-primary">{{ $insight['value'] }}</p>
@@ -130,8 +130,8 @@
     {{-- Success stories: real businesses, real numbers --}}
     <section class="mx-auto max-w-[1200px] px-6 pb-28">
         <div class="text-center mb-8">
-            <span class="text-xs font-semibold text-accent-light tracking-wide">OUTCOMES</span>
-            <h2 class="mt-2 text-xl font-bold text-text-primary">Businesses running on autopilot</h2>
+            <span class="text-label inline-block px-2.5 py-0.5 bg-accent-muted text-accent rounded-full">OUTCOMES</span>
+            <h2 class="mt-2 text-h2 text-text-primary">Businesses running on autopilot</h2>
         </div>
 
         @if (count($successStories) > 0)
@@ -140,7 +140,7 @@
                     <div class="group relative bg-surface border border-border rounded-xl p-5 hover:border-border-accent transition-colors">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center gap-2">
-                                <div class="w-8 h-8 rounded-md bg-gradient-accent flex items-center justify-center text-white font-semibold text-xs">
+                                <div class="w-8 h-8 rounded-md bg-accent flex items-center justify-center text-white font-semibold text-xs">
                                     {{ strtoupper(substr($story['name'], 0, 1)) }}
                                 </div>
                                 <div>

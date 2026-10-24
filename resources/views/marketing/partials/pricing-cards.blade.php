@@ -1,13 +1,15 @@
 <section class="mx-auto max-w-[900px] px-6 pb-24">
     <div class="text-center mb-10">
-        <span class="text-xs font-semibold text-accent-light tracking-wide">BUSINESSBOTS PRICING</span>
-        <h2 class="mt-2 text-xl font-bold">Pay monthly. AI does the work.</h2>
+        <p class="text-h2">Pay monthly. AI does the work.</p>
+        <p class="mt-2 text-body text-text-secondary max-w-[560px] mx-auto">
+            Start free. Scale when you're ready. No setup fees, no contracts, cancel anytime.
+        </p>
     </div>
 
     <div class="grid md:grid-cols-3 gap-4">
         @foreach ($pricingTiers as $tier)
-            <div class="relative bg-surface border rounded-xl p-6
-                {{ $tier['featured'] ? 'border-border-accent bg-surface-elevated' : 'border-border' }}">
+            <div class="relative bg-surface border rounded-xl p-6 flex flex-col
+                {{ $tier['featured'] ? 'border-accent bg-accent-muted/40' : 'border-border' }}">
 
                 @if ($tier['featured'])
                     <span class="absolute -top-2.5 left-4 bg-accent text-white text-[10px] font-semibold px-2.5 py-0.5 rounded-full">
@@ -32,7 +34,7 @@
 
                 <a href="{{ $tier['cta_url'] }}"
                     class="mt-5 block text-center py-2.5 rounded-md text-xs font-semibold
-                    {{ $tier['featured'] ? 'bg-gradient-accent text-white' : 'border border-border-strong text-text-primary' }}">
+                    {{ $tier['featured'] ? 'bg-accent text-white' : 'border border-border-strong text-text-primary hover:bg-surface-secondary' }}">
                     {{ $tier['cta_label'] }}
                 </a>
             </div>

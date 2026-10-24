@@ -1,13 +1,13 @@
 <x-layouts.app :title="'Book a demo — ' . config('app.name')">
 
     <section class="mx-auto max-w-[720px] px-6 pt-20 pb-16 text-center">
-        <span class="inline-block px-3 py-1 bg-accent-muted text-accent-light rounded-full text-xs font-semibold tracking-wide">
-            BOOK A DEMO
+        <span class="text-label inline-block px-3 py-1 bg-accent-muted text-accent rounded-full">
+            Demo
         </span>
-        <h1 class="mt-5 text-3xl md:text-4xl font-bold leading-tight">
-            See {{ config('app.name') }} <span class="text-gradient-accent">run your business</span>
+        <h1 class="mt-5 text-display">
+            See {{ config('app.name') }} <span class="text-accent-dark">run your business</span>
         </h1>
-        <p class="mt-4 text-text-secondary text-base leading-relaxed">
+        <p class="mt-4 text-text-secondary text-body leading-relaxed">
             Watch how WhatsApp replies, content and lead follow-up run on autopilot — in your own industry.
         </p>
 
@@ -24,7 +24,7 @@
                         class="w-full px-3 py-2 bg-surface-secondary border border-border-strong rounded-md text-sm text-text-primary focus:border-border-accent outline-none">
                 </div>
                 <button type="submit"
-                    class="w-full py-2.5 bg-gradient-accent text-white rounded-md text-sm font-semibold">
+                    class="w-full py-2.5 bg-accent text-white rounded-md text-sm font-semibold">
                     Request my demo
                 </button>
             </form>

@@ -1,13 +1,13 @@
 <x-layouts.app :title="'Live proof — ' . config('app.name')">
 
     <section class="mx-auto max-w-[900px] px-6 pt-20 pb-16 text-center">
-        <span class="inline-block px-3 py-1 bg-accent-muted text-accent-light rounded-full text-xs font-semibold tracking-wide">
-            LIVE PROOF
+        <span class="text-label inline-block px-3 py-1 bg-accent-muted text-accent rounded-full">
+            Live proof
         </span>
-        <h1 class="mt-5 text-3xl md:text-4xl font-bold leading-tight">
-            The numbers behind <span class="text-gradient-accent">the autopilot</span>
+        <h1 class="mt-5 text-display">
+            The numbers behind <span class="text-accent-dark">the autopilot</span>
         </h1>
-        <p class="mt-4 text-text-secondary text-base leading-relaxed">
+        <p class="mt-4 text-text-secondary text-body leading-relaxed">
             Aggregated, non-sensitive metrics from across the network.
         </p>
 
@@ -21,7 +21,7 @@
                 ] as $stat)
                     <div class="bg-surface-secondary p-4 text-center">
                         <div class="text-xl font-bold text-text-primary">{{ $stat['value'] }}</div>
-                        <div class="mt-1 text-[10px] text-text-muted tracking-wide uppercase">{{ $stat['label'] }}</div>
+                        <div class="mt-1 text-label">{{ $stat['label'] }}</div>
                     </div>
                 @endforeach
             </div>

@@ -7,6 +7,10 @@
 
 return [
     'company_name' => env('COMPANY_LEGAL_NAME', env('APP_NAME', 'Sorted')),
+    // Consumer-facing brand shown in the footer chrome. Separate from the
+    // legal entity name and from the app title — the public brand, not the
+    // company. Defaults to the new name now that the app is rebranding.
+    'brand' => env('FOOTER_BRAND', 'nowsorted'),
     'company_address' => env('COMPANY_ADDRESS', 'Address to be confirmed'),
     'domain' => env('APP_URL', 'https://automation.baseuse.xyz'),
 

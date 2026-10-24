@@ -24,7 +24,7 @@
   /* Borders */
   --color-border: #ece4d8;
   --color-border-strong: #d9cfc0;
-  --color-border-accent: #6d4fe8;
+  --color-border-accent: #c7512e;
 
   /* Text — all pass WCAG AA contrast on white and cream */
   --color-text-primary: #1f1a17;
@@ -32,11 +32,11 @@
   --color-text-muted: #6b625b;
   --color-text-faint: #9a9089;
 
-  /* Accent — purple family kept from the original brand */
-  --color-accent: #6d4fe8;
-  --color-accent-dark: #5536d4;
-  --color-accent-light: #5536d4;
-  --color-accent-muted: #efeafe;
+  /* Accent — terracotta. Warm, human, unmistakably not a purple SaaS default. */
+  --color-accent: #c7512e;
+  --color-accent-dark: #9c3f26;
+  --color-accent-light: #9c3f26;
+  --color-accent-muted: #fbe9e2;
   --color-accent-foreground: #ffffff;
 
   /* Warm supporting colours for illustrations and highlights */
@@ -62,6 +62,45 @@
   --radius-full: 9999px;
 }
 
+/* Type scale — one place to change the whole rhythm.
+   Display is the Fraunces face; body is Inter. No jumps. */
+@utility text-display {
+  font-family: var(--font-display);
+  font-size: clamp(2.25rem, 5vw, 3.25rem);
+  line-height: 1.08;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+@utility text-h1 {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 3.4vw, 2.5rem);
+  line-height: 1.12;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+}
+
+@utility text-h2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 2.6vw, 1.9rem);
+  line-height: 1.18;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+@utility text-body {
+  font-size: 1.0625rem;
+  line-height: 1.65;
+}
+
+@utility text-label {
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--color-text-muted);
+}
+
 /* Headings use the warm display face everywhere */
 h1, h2, h3 {
   font-family: var(--font-display);
@@ -69,16 +108,15 @@ h1, h2, h3 {
   letter-spacing: -0.01em;
 }
 
-/* Gradient text utility — used for hero headline emphasis */
+/* Flat accent fills — a single warm colour beats a gradient for a
+   human-centred brand. Kept under the old names so existing class
+   usages keep working while views are migrated off them. */
 @utility text-gradient-accent {
-  background: linear-gradient(135deg, #8a6cf5, var(--color-accent-dark));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: var(--color-accent-dark);
 }
 
 @utility bg-gradient-accent {
-  background: linear-gradient(135deg, var(--color-accent), var(--color-accent-dark));
+  background: var(--color-accent);
 }
 
 /* Shared form controls — one place for consistent, accessible fields */
