@@ -1,0 +1,222 @@
+From e0c1149138c079191199de5d7af7ae2856ea5b70 Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Wed, 23 Sep 2026 11:31:29 +0100
+Subject: [PATCH] Add Resend as a mail option (no new Composer dependency)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+webmail.enmail.co turned out to block SMTP AUTH from external servers
+even with confirmed-correct credentials (webmail login and IMAP work
+fine; SMTP AUTH rejects both LOGIN and PLAIN with the same login) — a
+common anti-abuse restriction on ISP-style mailboxes, not something
+fixable from this app's side. Resend is a proper transactional email
+service built for exactly this (an app/server sending mail).
+
+Rather than pull in the resend/resend-php SDK Laravel's built-in
+"resend" transport requires (composer.lock can't be regenerated from
+this environment against packagist), ResendApiTransport talks to
+Resend's HTTP API directly using Laravel's own HTTP client.
+
+Also fixes a pre-existing naming bug in config/services.php: the
+resend config block stored the key as "api_key", but Laravel's own
+convention (and this app's new transport) reads services.resend.key.
+
+Set MAIL_MAILER=resend and RESEND_API_KEY (see .env.example) to use
+it. The smtp / smtp-relaxed transports are untouched and still the
+default otherwise.
+
+Co-Authored-By: Claude Sonnet 5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_0148gwh5KxXc1cxQpzEZsLZE
+---
+ .env.example                              |  8 +++
+ app/Mail/Transport/ResendApiTransport.php | 84 +++++++++++++++++++++++
+ app/Providers/AppServiceProvider.php      | 18 +++++
+ config/mail.php                           |  7 +-
+ config/services.php                       |  6 +-
+ 5 files changed, 121 insertions(+), 2 deletions(-)
+ create mode 100644 app/Mail/Transport/ResendApiTransport.php
+
+diff --git a/.env.example b/.env.example
+index 0dcc8d0..126d8fe 100644
+--- a/.env.example
++++ b/.env.example
+@@ -53,6 +53,14 @@ MAIL_FROM_NAME="${APP_NAME}"
+ # Leave unset/true for every normal provider — see config/mail.php.
+ MAIL_VERIFY_PEER=true
+ 
++# To send via Resend (https://resend.com) instead of SMTP — needed here
++# because webmail.enmail.co blocks external SMTP AUTH even with correct
++# credentials — set MAIL_MAILER=resend and fill in RESEND_API_KEY (free,
++# from your Resend dashboard). Until your own sending domain is verified in
++# Resend, MAIL_FROM_ADDRESS must be "onboarding@resend.dev" (their shared
++# test address) — swap it for your own domain once verified there.
++RESEND_API_KEY=
++
+ # Stripe
+ STRIPE_KEY=
+ STRIPE_SECRET=
+diff --git a/app/Mail/Transport/ResendApiTransport.php b/app/Mail/Transport/ResendApiTransport.php
+new file mode 100644
+index 0000000..5e2b4f2
+--- /dev/null
++++ b/app/Mail/Transport/ResendApiTransport.php
+@@ -0,0 +1,84 @@
++<?php
++
++namespace App\Mail\Transport;
++
++use Illuminate\Support\Facades\Http;
++use Symfony\Component\Mailer\Exception\TransportException;
++use Symfony\Component\Mailer\SentMessage;
++use Symfony\Component\Mailer\Transport\AbstractTransport;
++use Symfony\Component\Mime\Address;
++use Symfony\Component\Mime\Email;
++
++/**
++ * Sends mail through Resend's HTTP API directly:
++ * https://resend.com/docs/api-reference/emails/send-email
++ *
++ * Deliberately does NOT use the resend/resend-php SDK or Laravel's built-in
++ * ResendTransport (which requires that package) — this app's SMTP mail via
++ * webmail.enmail.co turned out to be blocked at the provider level for
++ * external app access (correct credentials, works for webmail/IMAP, rejected
++ * for SMTP AUTH), so Resend was chosen as a proper transactional email
++ * service instead. Talking to its API directly with Laravel's own HTTP
++ * client avoids adding a new Composer dependency altogether.
++ *
++ * Registered as the "resend-http" transport in AppServiceProvider, used by
++ * the "resend" mailer in config/mail.php when MAIL_MAILER=resend. Requires
++ * RESEND_API_KEY (see .env.example) — get one free at https://resend.com.
++ */
++class ResendApiTransport extends AbstractTransport
++{
++    public function __construct(protected string $apiKey)
++    {
++        parent::__construct();
++    }
++
++    protected function doSend(SentMessage $message): void
++    {
++        $email = $message->getOriginalMessage();
++
++        if (! $email instanceof Email) {
++            throw new TransportException('The Resend API transport only supports Symfony\Component\Mime\Email messages.');
++        }
++
++        $from = $email->getFrom();
++
++        if (empty($from)) {
++            throw new TransportException('Cannot send via Resend: the message has no "from" address.');
++        }
++
++        $replyTo = $email->getReplyTo();
++
++        $payload = array_filter([
++            'from' => $this->formatAddress($from[0]),
++            'to' => array_map($this->formatAddress(...), $email->getTo()),
++            'cc' => array_map($this->formatAddress(...), $email->getCc()),
++            'bcc' => array_map($this->formatAddress(...), $email->getBcc()),
++            'reply_to' => $replyTo ? $this->formatAddress($replyTo[0]) : null,
++            'subject' => $email->getSubject() ?? '',
++            'html' => $email->getHtmlBody(),
++            'text' => $email->getTextBody(),
++        ], fn ($value) => $value !== null && $value !== []);
++
++        $response = Http::withToken($this->apiKey)
++            ->acceptJson()
++            ->post('https://api.resend.com/emails', $payload);
++
++        if ($response->failed()) {
++            throw new TransportException(
++                "Resend API request failed with status {$response->status()}: {$response->body()}"
++            );
++        }
++    }
++
++    protected function formatAddress(Address $address): string
++    {
++        return $address->getName() !== ''
++            ? sprintf('%s <%s>', $address->getName(), $address->getAddress())
++            : $address->getAddress();
++    }
++
++    public function __toString(): string
++    {
++        return 'resend+api://api.resend.com';
++    }
++}
+diff --git a/app/Providers/AppServiceProvider.php b/app/Providers/AppServiceProvider.php
+index 7b0b66c..c875b76 100644
+--- a/app/Providers/AppServiceProvider.php
++++ b/app/Providers/AppServiceProvider.php
+@@ -2,6 +2,7 @@
+ 
+ namespace App\Providers;
+ 
++use App\Mail\Transport\ResendApiTransport;
+ use Illuminate\Support\Facades\Mail;
+ use Illuminate\Support\ServiceProvider;
+ use Symfony\Component\Mailer\Transport\Dsn;
+@@ -24,6 +25,23 @@ class AppServiceProvider extends ServiceProvider
+     public function boot(): void
+     {
+         $this->registerRelaxedSmtpTransport();
++        $this->registerResendApiTransport();
++    }
++
++    /**
++     * Registers a custom "resend-http" mail transport (see
++     * app/Mail/Transport/ResendApiTransport.php) used by the "resend" mailer
++     * in config/mail.php when MAIL_MAILER=resend. Talks to Resend's HTTP API
++     * directly via Laravel's own HTTP client, so no extra Composer package
++     * is needed for it.
++     */
++    protected function registerResendApiTransport(): void
++    {
++        Mail::extend('resend-http', function (array $config) {
++            return new ResendApiTransport(
++                $config['key'] ?? config('services.resend.key')
++            );
++        });
+     }
+ 
+     /**
+diff --git a/config/mail.php b/config/mail.php
+index b3dbf13..4c3b95d 100644
+--- a/config/mail.php
++++ b/config/mail.php
+@@ -55,7 +55,12 @@ return [
+         ],
+ 
+         'resend' => [
+-            'transport' => 'resend',
++            // 'resend-http' (see AppServiceProvider + app/Mail/Transport/
++            // ResendApiTransport.php) talks to Resend's API directly with
++            // Laravel's own HTTP client — not Laravel's built-in "resend"
++            // transport, which needs the resend/resend-php Composer package
++            // this app doesn't otherwise need.
++            'transport' => 'resend-http',
+         ],
+ 
+         'sendmail' => [
+diff --git a/config/services.php b/config/services.php
+index 3ecea0a..ad02eba 100644
+--- a/config/services.php
++++ b/config/services.php
+@@ -42,7 +42,11 @@ return [
+     */
+ 
+     'resend' => [
+-        'api_key' => env('RESEND_API_KEY'),
++        // Laravel's built-in Resend mail transport (see MailManager::
++        // createResendTransport()) specifically reads services.resend.key —
++        // not api_key — so this must be named exactly this for MAIL_MAILER=
++        // resend to actually pick up the API key.
++        'key' => env('RESEND_API_KEY'),
+     ],
+ 
+     /*
+-- 
+2.43.0
+

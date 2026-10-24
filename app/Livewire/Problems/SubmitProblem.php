@@ -4,6 +4,7 @@ namespace App\Livewire\Problems;
 
 use App\Models\ProblemRequest;
 use App\Services\Advice\AdviceRequestService;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
@@ -28,7 +29,8 @@ class SubmitProblem extends Component
     protected function rules(): array
     {
         return [
-            'title' => ['required', 'string', 'max:120'],
+            // Optional: if left blank we build one from the description.
+            'title' => ['nullable', 'string', 'max:120'],
             'description' => ['required', 'string', 'min:30', 'max:5000'],
             'impacts' => ['array'],
             'impacts.*' => [Rule::in(array_keys(ProblemRequest::IMPACTS))],
@@ -46,7 +48,6 @@ class SubmitProblem extends Component
     protected function messages(): array
     {
         return [
-            'title.required' => 'Give your problem a short title.',
             'description.required' => 'Describe the problem so we can help.',
             'description.min' => 'Please add a bit more detail (at least 30 characters). The more we know, the better the advice.',
             'hours_per_week.min' => 'Enter at least half an hour, or leave it blank.',
@@ -67,6 +68,11 @@ class SubmitProblem extends Component
     {
         $validated = $this->validate();
 
+        // No title typed? Make one from the first sentence of the description.
+        if (blank($validated['title'] ?? null)) {
+            $validated['title'] = $this->titleFromDescription($validated['description']);
+        }
+
         $user = auth()->user();
         $business = $user->activeBusiness();
 
@@ -75,6 +81,16 @@ class SubmitProblem extends Component
         session()->flash('status', 'Thanks! We\'ve got your problem and we\'re on it.');
 
         return $this->redirectRoute('problems.show', $request);
+    }
+
+    /** First sentence of the description, trimmed to about 12 words. */
+    protected function titleFromDescription(string $description): string
+    {
+        $firstSentence = preg_split('/(?<=[.!?])\s+|\R/', trim($description), 2)[0] ?? '';
+        $title = Str::words(trim($firstSentence), 12, '');
+        $title = rtrim($title, " .,;:!?-");
+
+        return Str::limit(ucfirst($title), 120, '');
     }
 
     public function render()

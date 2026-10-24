@@ -1,0 +1,92 @@
+From b0880f25375832832657384fb900d5abaf40291a Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Tue, 22 Sep 2026 14:39:58 +0100
+Subject: [PATCH] Restrict job_alert_notifier to Business Analyst roles by
+ default
+
+Adds JOB_ALERT_ROLE_FILTER (defaults to "business_analyst"), applied
+alongside the existing score threshold when polling Flux's /api/jobs.
+Leaving it blank restores the original behavior of alerting on any of
+Flux's 6 target roles. Subject line now names the role when a filter
+is active, so it's clear in the inbox what triggered the email.
+
+Verified with a mocked test covering all three cases: right role +
+high score (included), wrong role + high score (excluded), right
+role + low score (excluded).
+
+Co-Authored-By: Claude Sonnet 5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_0148gwh5KxXc1cxQpzEZsLZE
+---
+ .env.example                      | 4 ++++
+ python/config.py                  | 5 +++++
+ python/jobs/job_alert_notifier.py | 9 ++++++---
+ 3 files changed, 15 insertions(+), 3 deletions(-)
+
+diff --git a/.env.example b/.env.example
+index f2eadb9..90c426c 100644
+--- a/.env.example
++++ b/.env.example
+@@ -88,6 +88,10 @@ AI_TIMEOUT_SECONDS=15
+ FLUX_API_URL=https://fluxjobs.baseuse.xyz
+ JOB_ALERT_EMAIL_TO=bankoledada@gmail.com
+ JOB_ALERT_SCORE_THRESHOLD=65
++# One of Flux's role keys — business_analyst, project, programme, delivery,
++# agile_delivery, scrum_master (see skills_data.py ROLES in the Flux repo).
++# Leave blank to get alerts for all target roles, not just this one.
++JOB_ALERT_ROLE_FILTER=business_analyst
+ 
+ # OpenAI (DALL-E image generation — not covered by AI abstraction)
+ OPENAI_API_KEY=
+diff --git a/python/config.py b/python/config.py
+index 639d6d3..b49d222 100644
+--- a/python/config.py
++++ b/python/config.py
+@@ -48,6 +48,11 @@ class Config:
+     JOB_ALERT_EMAIL_TO = os.getenv("JOB_ALERT_EMAIL_TO", "bankoledada@gmail.com")
+     JOB_ALERT_SCORE_THRESHOLD = int(os.getenv("JOB_ALERT_SCORE_THRESHOLD", "65"))
+ 
++    # Restrict alerts to one of Flux's role keys (business_analyst, project,
++    # programme, delivery, agile_delivery, scrum_master) — see skills_data.py
++    # ROLES in the Flux repo for the exact keys. Leave blank to get all roles.
++    JOB_ALERT_ROLE_FILTER = os.getenv("JOB_ALERT_ROLE_FILTER", "business_analyst").strip() or None
++
+     MAIL_HOST = os.getenv("MAIL_HOST", "mailpit")
+     MAIL_PORT = int(os.getenv("MAIL_PORT", "1025"))
+     MAIL_USERNAME = os.getenv("MAIL_USERNAME") or None
+diff --git a/python/jobs/job_alert_notifier.py b/python/jobs/job_alert_notifier.py
+index 1c49d8d..f2d08ad 100644
+--- a/python/jobs/job_alert_notifier.py
++++ b/python/jobs/job_alert_notifier.py
+@@ -17,8 +17,9 @@ def notify_job_alerts() -> dict:
+     """
+     Runs every 30 minutes. Polls Flux's own /api/jobs (a separate,
+     self-hosted app — see fluxjobs.baseuse.xyz) for postings scored at or
+-    above JOB_ALERT_SCORE_THRESHOLD, and emails any that haven't already
+-    been notified about.
++    above JOB_ALERT_SCORE_THRESHOLD — and, when JOB_ALERT_ROLE_FILTER is
++    set, matching that specific role only (defaults to "business_analyst")
++    — and emails any that haven't already been notified about.
+ 
+     Flux itself has no outbound email capability (it's a local-first,
+     dependency-light dashboard by design) — this job is what turns its
+@@ -75,6 +76,7 @@ def _fetch_matching_jobs() -> list:
+         job
+         for job in payload.get("jobs", [])
+         if job.get("match", {}).get("score", 0) >= config.JOB_ALERT_SCORE_THRESHOLD
++        and (config.JOB_ALERT_ROLE_FILTER is None or job.get("role") == config.JOB_ALERT_ROLE_FILTER)
+     ]
+ 
+ 
+@@ -115,7 +117,8 @@ def _record_notified(cursor, jobs: list) -> None:
+ 
+ def _send_alert_email(jobs: list) -> None:
+     jobs_sorted = sorted(jobs, key=lambda j: j.get("match", {}).get("score", 0), reverse=True)
+-    subject = f"Flux: {len(jobs)} new job match{'es' if len(jobs) != 1 else ''}"
++    role_label = f" {config.JOB_ALERT_ROLE_FILTER.replace('_', ' ')}" if config.JOB_ALERT_ROLE_FILTER else ""
++    subject = f"Flux:{role_label} {len(jobs)} new job match{'es' if len(jobs) != 1 else ''}"
+ 
+     rows_html = "".join(
+         f"""
+-- 
+2.43.0
+

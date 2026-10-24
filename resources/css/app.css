@@ -2,7 +2,7 @@
 
 /* Self-hosted fonts (no Google Fonts call, so no visitor data leaves the site) */
 @import "@fontsource-variable/inter";
-@import "@fontsource-variable/fraunces";
+@import "@fontsource/space-grotesk";
 
 /* Alpine hides x-cloak elements until it has started (e.g. the mobile menu). */
 [x-cloak] {
@@ -11,37 +11,43 @@
 
 @theme {
   --font-sans: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
-  /* Warm, slightly soft serif for headings: friendly rather than corporate */
-  --font-display: "Fraunces Variable", Georgia, serif;
+  /* WebAwesome display face: geometric, slightly quirky, unmistakably
+     not a serif. Matches the brand kit's Space Grotesk. */
+  --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
 
-  /* Page and surfaces — warm cream page, white cards. Every page uses these
-     tokens, so the whole look can be changed here. */
-  --color-background: #fbf7f1;
+  /* Page and surfaces — WebAwesome mist, white cards. Every page uses
+     these tokens, so the whole look can be changed here. */
+  --color-background: #f6f4ff;
   --color-surface: #ffffff;
-  --color-surface-secondary: #f6f1e9;
+  --color-surface-secondary: #f0edff;
   --color-surface-elevated: #ffffff;
 
   /* Borders */
-  --color-border: #ece4d8;
-  --color-border-strong: #d9cfc0;
-  --color-border-accent: #c7512e;
+  --color-border: #e3ddf6;
+  --color-border-strong: #c9bfe8;
+  --color-border-accent: #8e4dff;
 
-  /* Text — all pass WCAG AA contrast on white and cream */
-  --color-text-primary: #1f1a17;
-  --color-text-secondary: #4f4640;
-  --color-text-muted: #6b625b;
-  --color-text-faint: #9a9089;
+  /* Text — all pass WCAG AA contrast on mist and white */
+  --color-text-primary: #0b1642;
+  --color-text-secondary: #2a2f55;
+  --color-text-muted: #5b5680;
+  --color-text-faint: #8a84b0;
 
-  /* Accent — terracotta. Warm, human, unmistakably not a purple SaaS default. */
-  --color-accent: #c7512e;
-  --color-accent-dark: #9c3f26;
-  --color-accent-light: #9c3f26;
-  --color-accent-muted: #fbe9e2;
+  /* Accent — WebAwesome royal violet + hot pink */
+  --color-accent: #3b1a88;
+  --color-accent-dark: #2c1270;
+  --color-accent-light: #8e4dff;
+  --color-accent-muted: #efeafe;
   --color-accent-foreground: #ffffff;
 
-  /* Warm supporting colours for illustrations and highlights */
-  --color-peach: #f9dcc7;
-  --color-peach-strong: #e8875a;
+  /* Secondary accent — hot pink, used sparingly for emphasis */
+  --color-accent2: #ff4da6;
+  --color-accent2-dark: #d13f87;
+  --color-accent2-muted: #ffe0ee;
+
+  /* Supporting colours for illustrations and highlights */
+  --color-peach: #ffe0ee;
+  --color-peach-strong: #ff4da6;
   --color-sage: #dcebdf;
   --color-sage-strong: #3f7d5a;
   --color-sun: #fbe8b0;
@@ -63,7 +69,7 @@
 }
 
 /* Type scale — one place to change the whole rhythm.
-   Display is the Fraunces face; body is Inter. No jumps. */
+   Display is Space Grotesk; body is Inter. No jumps. */
 @utility text-display {
   font-family: var(--font-display);
   font-size: clamp(2.25rem, 5vw, 3.25rem);
