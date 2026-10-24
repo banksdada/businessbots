@@ -6,11 +6,7 @@
 
     <div class="mt-6 flex items-center gap-4 rounded-2xl bg-sun/60 p-4 sm:p-5">
         <x-person name="owner-explain" bg="bg-sun-strong/20" class="w-14 h-14 shrink-0" />
-        <p class="text-sm text-text-secondary"><span class="font-semibold text-text-primary">Tip:</span> write it the way you'd explain it to a friend over a cup of tea, or tap the microphone and just speak. Rough guesses are fine. Only the description is required.</p>
-    </div>
-
-    <div class="mt-4">
-        <livewire:problems.voice-note :description="$description" />
+        <p class="text-sm text-text-secondary"><span class="font-semibold text-text-primary">Tip:</span> write it the way you'd explain it to a friend over a cup of tea. Rough guesses are fine. Only the description is required.</p>
     </div>
 
     <form wire:submit="submit" class="mt-6 space-y-6" novalidate>
@@ -36,7 +32,7 @@
                 <textarea id="description" wire:model.blur="description" rows="5" class="field-input"
                     aria-describedby="description-help"
                     placeholder="Walk us through it: what happens, how often, and who it affects."></textarea>
-                <p id="description-help" class="field-help">Type it, or use the microphone above. Please don't include names or personal details of your customers, clients or staff.</p>
+                <p id="description-help" class="field-help">Please don't include names or personal details of your customers, clients or staff.</p>
                 @error('description') <p class="field-error">{{ $message }}</p> @enderror
             </div>
         </section>

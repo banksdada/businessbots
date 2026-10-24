@@ -113,11 +113,11 @@ Route::middleware(['auth', 'business.onboarded', 'subscribed'])->group(function 
     Route::get('/problems/new', SubmitProblem::class)->name('problems.create');
     Route::get('/problems/{problemRequest}', [ProblemRequestController::class, 'show'])->name('problems.show');
 
-    // Voice notes — record on a phone, get text back in the form.
-    // Authenticated only: this is the client advice portal, not a public API.
-    Route::post('/voice-notes/transcribe', [VoiceNoteController::class, 'transcribe'])
-        ->middleware('throttle:10,1')
-        ->name('voice-notes.transcribe');
+    // Voice notes — disabled 2026-10-24. The microphone button was removed
+    // from the form, so this endpoint is unreachable. Kept here so re-enabling
+    // is one line. Route::post('/voice-notes/transcribe', [VoiceNoteController::class, 'transcribe'])
+    //     ->middleware('throttle:10,1')
+    //     ->name('voice-notes.transcribe');
 
     if (config('features.social')) {
         Route::get('/leads', LeadTable::class)->name('leads.index');
