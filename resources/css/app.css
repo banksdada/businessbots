@@ -203,3 +203,4 @@ h1, h2, h3 {
 @media (prefers-reduced-motion: reduce) {
   .animate-float, .typing-dots span, .animate-ping { animation: none; }
 }
+ 
