@@ -9,6 +9,10 @@
         <p class="text-sm text-text-secondary"><span class="font-semibold text-text-primary">Tip:</span> write it the way you'd explain it to a friend over a cup of tea. Rough guesses are fine. Only the first two questions are required.</p>
     </div>
 
+    <div class="mt-4">
+        <livewire:voice-note :description="$description" />
+    </div>
+
     <form wire:submit="submit" class="mt-6 space-y-6" novalidate>
         {{-- 1. Diagnose: what is going wrong --}}
         <section class="card p-5 sm:p-8 space-y-6" aria-labelledby="step-problem">

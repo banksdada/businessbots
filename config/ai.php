@@ -22,4 +22,20 @@ return [
 
     'timeout_seconds' => (int) env('AI_TIMEOUT_SECONDS', 15),
 
+    // Voice notes — "speak your problem" on the advice form.
+    //
+    // Default is the browser's Web Speech API: it runs on the client, costs
+    // nothing, and needs no API key. That's the whole point for a product
+    // with no AI budget.
+    //
+    // Set VOICE_PROVIDER=openai + VOICE_MODEL=whisper-1 and an AI_API_KEY to
+    // route through Whisper instead — useful if the client's browser doesn't
+    // support speech recognition (e.g. Firefox iOS). The Laravel controller
+    // at /voice-notes/transcribe handles that path; the default path needs
+    // no server code at all.
+    'voice' => [
+        'provider' => env('VOICE_PROVIDER', 'web_speech'),
+        'model' => env('VOICE_MODEL', 'whisper-1'),
+    ],
+
 ];

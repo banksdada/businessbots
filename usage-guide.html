@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>How to use the AI‑OS / Sorted platform</title>
+  <link href="/build/assets/app-B3TkMXuI.css" rel="stylesheet">
+  <style>
+    /* Quick inline tweaks for the guide – all Tailwind already loaded */
+    body {font-family: var(--font-display);}
+  </style>
+</head>
+<body class="bg-surface py-8">
+  <header class="text-center mb-12">
+    <h1 class="text-4xl font-semibold text-accent">Using the AI‑OS Platform</h1>
+    <p class="mt-4 text-lg text-text-primary">A quick walkthrough for new users.</p>
+  </header>
+
+  <main class="max-w-3xl mx-auto">
+    <section class="mb-10">
+      <h2 class="text-2xl font-bold text-3xl mb-4">1️⃣ Create an account</h2>
+      <p>Visit <strong>/register</strong>, enter your email and name. You’ll get a confirmation email to confirm your address.</p>
+    </section>
+
+    <section class="mb-10">
+      <h2 class="text-2xl font-bold text-3xl mb-4">2️⃣ Onboard your first business</h2>
+      <p>After logging in, go to the onboarding wizard <strong>/onboarding</strong>. Provide a business name, address and one‑time payment if you choose the paid tier.</p>
+    </section>
+
+    <section class="mb-10">
+      <h2 class="text-2xl font-bold text-3xl mb-4">3️⃣ Connect calendars & messaging</h2>
+      <p>No configuration is required for the demo. If you want to sync real bookings, connect Google or Outlook under <strong>Settings → Calendars</strong>. The AI will read your schedule and make suggestions.</p>
+    </section>
+
+    <section class="mb-10">
+      <h2 class="text-2xl font-bold text-3xl mb-4">4️⃣ Tell the AI what you need</h2>
+      <p>In <strong>/problems/new</strong> record your issue. You can either type the description or tap the <strong>Record your problem</strong> button. The system will transcribe your speaking into text automatically.</p>
+    </section>
+
+    <section class="mb-10">
+      <h2 class="text-2xl font-bold text-3xl mb-4">5️⃣ Wait for the plan</h2>
+      <p>After you hit “Find me a fix”, the AI will create a draft plan and email the owner. You’ll see the progress on <strong>/problems/show</strong>. Once the owner approves, the final report and next steps are sent to your inbox.</p>
+    </section>
+
+    <section class="mb-10">
+      <h2 class="text-2xl font-bold text-3xl mb-4">6️⃣ Go to the dashboard</h2>
+      <p>Post‑review, you’ll have access to your customer requests, live stats, and lead management via <strong>/dashboard</strong>.</p>
+    </section>
+
+    <section class="text-center mt-12">
+      <h3 class="text-3xl font-semibold text-accent">Need help?</h3>
+      <p class="mt-2 text-text-secondary">Visit <a href="/contact" class="text-accent hover:underline">Contact</a> or chat with us in the <a href="/leads" class="text-accent hover:underline">Leads</a> area.</p>
+    </section>
+  </main>
+
+  <footer class="text-center text-sm mt-16 text-text-muted">
+    © {{ date('Y') }} {{ config('legal.brand') }}. All rights reserved.
+  </footer>
+</body>
+</html>

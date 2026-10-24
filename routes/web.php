@@ -12,6 +12,7 @@ use App\Livewire\Onboarding\Wizard as OnboardingWizard;
 use App\Livewire\Leads\LeadTable;
 use App\Livewire\Problems\SubmitProblem;
 use App\Http\Controllers\ProblemRequestController;
+use App\Http\Controllers\VoiceNoteController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,6 +28,12 @@ Route::get('/demo', [MarketingController::class, 'demo'])->name('marketing.demo'
 // "Email us" as a form, so it works without a mail app on the visitor's device.
 Route::get('/contact', [ContactController::class, 'show'])->name('contact');
 Route::post('/contact', [ContactController::class, 'send'])->middleware('throttle:5,10')->name('contact.send');
+
+// Quick guide for new users – simple static HTML page
+define('USAGE_GUIDE_PATH', base_path('usage-guide.html'));
+Route::get('/getting-started', function () {
+    return response()->file(USAGE_GUIDE_PATH);
+})->name('getting.started');
 
 // Public, unauthenticated — the "living proof" metrics page from the reference design
 Route::get('/live-proof', [MarketingController::class, 'liveProof'])->name('live-proof');
@@ -105,6 +112,12 @@ Route::middleware(['auth', 'business.onboarded', 'subscribed'])->group(function 
     // Client advice portal
     Route::get('/problems/new', SubmitProblem::class)->name('problems.create');
     Route::get('/problems/{problemRequest}', [ProblemRequestController::class, 'show'])->name('problems.show');
+
+    // Voice notes — record on a phone, get text back in the form.
+    // Authenticated only: this is the client advice portal, not a public API.
+    Route::post('/voice-notes/transcribe', [VoiceNoteController::class, 'transcribe'])
+        ->middleware('throttle:10,1')
+        ->name('voice-notes.transcribe');
 
     if (config('features.social')) {
         Route::get('/leads', LeadTable::class)->name('leads.index');
