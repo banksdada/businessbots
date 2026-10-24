@@ -29,6 +29,8 @@
 
     <x-footer />
 
+    <x-cookie-consent />
+
     @livewireScripts
     @stack('scripts')
 </body>

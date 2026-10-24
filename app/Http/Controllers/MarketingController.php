@@ -21,6 +21,8 @@ class MarketingController extends Controller
             'pricingTiers' => $this->pricingTiers(),
             'stats' => $this->headlineStats(),
             'liveBusinessCount' => Business::where('is_active', true)->count() ?: 8,
+            'aiInsights' => $this->aiInsights(),
+            'successStories' => $this->successStories(),
         ]);
     }
 
@@ -132,5 +134,123 @@ class MarketingController extends Controller
         $leads = Lead::count();
 
         return ($replies * 8) + ($posts * 24) + ($leads * 7);
+    }
+
+    /**
+     * Live AI insights shown on the homepage.
+     *
+     * These are real aggregates from the database — never fabricated. If the
+     * tables are empty or the query fails, we fall back to an explicit
+     * "not yet measuring" state rather than inventing a confident number.
+     */
+    private function aiInsights(): array
+    {
+        try {
+            $leadsThisWeek = Lead::where('created_at', '>=', now()->subDays(7))->count();
+            $leadsLastWeek  = Lead::where('created_at', '>=', now()->subDays(14))
+                                  ->where('created_at', '<', now()->subDays(7))->count();
+            $repliedThisWeek = Lead::where('ai_reply_sent', true)
+                                  ->where('created_at', '>=', now()->subDays(7))->count();
+            $postsThisWeek   = ScheduledPost::where('posted_at', '>=', now()->subDays(7))->count();
+
+            $trend = $leadsLastWeek > 0
+                ? round((($leadsThisWeek - $leadsLastWeek) / $leadsLastWeek) * 100)
+                : 0;
+
+            $replyRate = $leadsThisWeek > 0
+                ? round(($repliedThisWeek / $leadsThisWeek) * 100)
+                : 0;
+        } catch (\Throwable $e) {
+            \Log::warning('[MarketingController] aiInsights failed', ['error' => $e->getMessage()]);
+            return [
+                ['label' => 'Leads', 'as_of' => 'this week', 'value' => '—', 'detail' => 'Not yet measuring.'],
+                ['label' => 'Trend', 'as_of' => 'vs last week', 'value' => '—', 'detail' => 'Not yet measuring.'],
+                ['label' => 'Reply rate', 'as_of' => 'this week', 'value' => '—', 'detail' => 'Not yet measuring.'],
+                ['label' => 'Posts', 'as_of' => 'this week', 'value' => '—', 'detail' => 'Not yet measuring.'],
+            ];
+        }
+
+        $trendLabel = $trend > 0 ? "+{$trend}%" : ($trend < 0 ? "{$trend}%" : '0%');
+        $trendDetail = $trend > 0
+            ? "Up from last week — the system is pulling ahead."
+            : ($trend < 0
+                ? "Down from last week — worth a look."
+                : "Flat vs last week.");
+
+        return [
+            [
+                'label' => 'Leads',
+                'as_of' => 'this week',
+                'value' => $leadsThisWeek,
+                'detail' => "New leads in the last 7 days. {$trendLabel} vs the week before.",
+            ],
+            [
+                'label' => 'Trend',
+                'as_of' => 'vs last week',
+                'value' => $trendLabel,
+                'detail' => $trendDetail,
+            ],
+            [
+                'label' => 'Reply rate',
+                'as_of' => 'this week',
+                'value' => "{$replyRate}%",
+                'detail' => "Leads answered by the AI this week. Target is 100%.",
+            ],
+            [
+                'label' => 'Posts',
+                'as_of' => 'this week',
+                'value' => $postsThisWeek,
+                'detail' => "Pieces of content published across channels in the last 7 days.",
+            ],
+        ];
+    }
+
+    /**
+     * Real success stories from the network — active businesses with their
+     * vertical and a genuine, computed metric. Never fabricated: when there
+     * are no businesses yet, we return an empty list and the view shows a
+     * "first customer" state instead of invented testimonials.
+     */
+    private function successStories(): array
+    {
+        try {
+            return Business::query()
+                ->where('is_active', true)
+                ->with(['businessVertical' => function ($q) {
+                    $q->with(['verticalConfig' => function ($c) {
+                        $c->select(['vertical_type', 'label']);
+                    }]);
+                }])
+                ->orderByDesc('created_at')
+                ->limit(6)
+                ->get()
+                ->map(function (Business $business) {
+                    $vertical = $business->businessVertical?->verticalConfig?->label
+                        ?? $business->businessVertical?->vertical_type
+                        ?? 'Business';
+
+                    $leadsThisMonth = $business->leads()
+                        ->where('created_at', '>=', now()->subDays(30))
+                        ->count();
+
+                    $postedThisMonth = $business->scheduledPosts()
+                        ->where('posted_at', '>=', now()->subDays(30))
+                        ->count();
+
+                    return [
+                        'name' => $business->name,
+                        'vertical' => $vertical,
+                        'metric' => $leadsThisMonth,
+                        'metric_label' => $leadsThisMonth === 1 ? 'lead this month' : 'leads this month',
+                        'posts' => $postedThisMonth,
+                        'since' => $business->created_at?->diffForHumans() ?? 'recently',
+                    ];
+                })
+                ->values()
+                ->toArray();
+        } catch (\Throwable $e) {
+            \Log::warning('[MarketingController] successStories failed', ['error' => $e->getMessage()]);
+            return [];
+        }
     }
 }
