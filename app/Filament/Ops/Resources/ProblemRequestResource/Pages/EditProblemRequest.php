@@ -33,15 +33,13 @@ class EditProblemRequest extends EditRecord
                     Notification::make()->title('Report sent to the client')->success()->send();
 
                     $this->redirect(ProblemRequestResource::getUrl('index'));
-                })
-                ->authorize(fn () => $this->record->status === ProblemRequest::STATUS_PENDING_REVIEW),
+                }),
 
             Action::make('retry')
                 ->label('Retry AI draft')
                 ->icon('heroicon-o-arrow-path')
                 ->visible(fn () => $this->record->status === ProblemRequest::STATUS_FAILED)
                 ->requiresConfirmation()
-                ->authorize(fn () => $this->record->status === ProblemRequest::STATUS_FAILED)
                 ->action(function (AdviceRequestService $advice) {
                     $advice->retry($this->record);
 
