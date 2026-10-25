@@ -6,7 +6,11 @@
 
     <div class="mt-6 flex items-center gap-4 rounded-2xl bg-sun/60 p-4 sm:p-5">
         <x-person name="owner-explain" bg="bg-sun-strong/20" class="w-14 h-14 shrink-0" />
-        <p class="text-sm text-text-secondary"><span class="font-semibold text-text-primary">Tip:</span> write it the way you'd explain it to a friend over a cup of tea. Rough guesses are fine. Only the description is required.</p>
+        <p class="text-sm text-text-secondary"><span class="font-semibold text-text-primary">Tip:</span> write it the way you'd explain it to a friend over a cup of tea, or tap the microphone and just speak. Rough guesses are fine. Only the description is required.</p>
+    </div>
+
+    <div class="mt-4">
+        <livewire:problems.voice-note />
     </div>
 
     <form wire:submit="submit" class="mt-6 space-y-6" novalidate>
