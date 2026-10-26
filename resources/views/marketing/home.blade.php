@@ -26,7 +26,30 @@
         </div>
     </section>
 
-    {{-- Stat bar --}}
+    {{-- AIOS homepage section (bold) --}}
+    <section class="mx-auto max-w-[720px] px-6 pb-24">
+        <div class="bg-surface border border-accent rounded-xl p-8 md:p-10">
+            <span class="text-label inline-block px-2.5 py-0.5 bg-accent-muted text-accent rounded-full">AI‑OS</span>
+            <h2 class="mt-3 text-h2">We don't just fix your problem.<br><span class="text-accent-dark">We run the system behind it.</span></h2>
+            <p class="mt-4 text-text-secondary leading-relaxed">
+                The AIOS (AI Operating System) automates repetitive work—email, content, follow‑ups, payment chasing—so you can focus on revenue. It powers the solutions you see on this site.
+            </p>
+            <ul class="mt-4 space-y-2 list-disc list-inside text-sm text-text-secondary">
+                <li>Less manual admin, more selling time</li>
+                <li>Leads captured and followed up automatically</li>
+                <li>Content produced consistently without hiring</li>
+                <li>Payments chased on autopilot</li>
+                <li>Everything auditable — you stay in control</li>
+            </ul>
+            <div class="mt-6">
+                <a href="#solutions" class="inline-block px-5 py-2.5 bg-gradient-accent text-white rounded-md text-sm font-semibold hover:opacity-90 transition-opacity">
+                    See how it works
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stat bar -->
     <section class="mx-auto max-w-[720px] px-6 pb-20">
         <div class="grid grid-cols-2 md:grid-cols-4 gap-px bg-border rounded-xl overflow-hidden border border-border">
             @foreach ([
