@@ -7,6 +7,7 @@
 
     <x-seo-meta />
     <x-structured-data />
+    <x-analytics />
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles

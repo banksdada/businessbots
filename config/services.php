@@ -179,4 +179,15 @@ return [
         'timeout_seconds' => (int) env('CRM_WEBHOOK_TIMEOUT_SECONDS', 10),
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Analytics (GA4 + Google Search Console)
+    |--------------------------------------------------------------------------
+    */
+
+    'analytics' => [
+        'ga4_measurement_id' => env('GA4_MEASUREMENT_ID'),
+        'google_site_verification' => env('GOOGLE_SITE_VERIFICATION'),
+    ],
+
 ];
