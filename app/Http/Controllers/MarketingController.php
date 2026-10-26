@@ -70,7 +70,13 @@ class MarketingController extends Controller
 
         abort_unless($post, 404);
 
-        return view('marketing.insight', compact('post'));
+        return view('marketing.insight', [
+            'post' => $post,
+            'seo' => [
+                'title' => $post['title'] . ' — NowSorted Insights',
+                'description' => $post['excerpt'] ?? 'Practical insights on automating your business.',
+            ],
+        ]);
     }
 
     /**

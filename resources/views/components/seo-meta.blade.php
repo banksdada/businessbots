@@ -2,7 +2,10 @@
     // SEO meta partial — rendered in <head> of every page.
     // Defaults to the page title/description passed from the layout; OG and
     // Twitter tags derive from those so the same copy works for sharing.
-    $seo = $seo ?? [];
+    // Falls back to config/seo.php keyed by the current route name.
+    $routeName = request()->route()?->getName();
+    $seoDefaults = $routeName ? (config('seo.' . $routeName) ?? []) : [];
+    $seo = array_merge($seoDefaults, $seo ?? []);
     $title = $seo['title'] ?? $title ?? config('app.name');
     $description = $seo['description'] ?? 'NowSorted — AI OS for small businesses. Automate WhatsApp replies, content, and lead follow-up.';
     $url = $seo['url'] ?? request()->fullUrl();
