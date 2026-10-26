@@ -49,6 +49,9 @@ Route::get('/insights/{slug}', [MarketingController::class, 'insight'])->name('i
 Route::get('/privacy', [LegalController::class, 'privacy'])->name('legal.privacy');
 Route::get('/cookies', [LegalController::class, 'cookies'])->name('legal.cookies');
 
+// SEO — public, no auth required
+Route::get('/sitemap.xml', [SeoController::class, 'sitemap'])->name('sitemap');
+
 /*
 |--------------------------------------------------------------------------
 | Auth routes — Laravel's default controllers (Breeze/Fortify-style)

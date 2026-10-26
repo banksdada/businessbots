@@ -1,0 +1,17 @@
+User-agent: *
+Allow: /
+
+# Disallow app-only / authenticated areas from being indexed
+Disallow: /dashboard
+Disallow: /settings
+Disallow: /onboarding
+Disallow: /leads
+Disallow: /problems
+Disallow: /billing
+Disallow: /ops
+
+# Crawl budget: keep marketing pages fresh
+Crawl-delay: 1
+
+# Sitemap
+Sitemap: https://nowsorted.co.uk/sitemap.xml
