@@ -51,6 +51,60 @@ class MarketingController extends Controller
     }
 
     /**
+     * Public insights index — blog/listing of problem-fix posts.
+     */
+    public function insights(): View
+    {
+        return view('marketing.insights', [
+            'posts' => $this->insightPosts(),
+        ]);
+    }
+
+    /**
+     * Public single insight post page.
+     */
+    public function insight(string $slug): View
+    {
+        $post = collect($this->insightPosts())
+            ->firstWhere('slug', $slug);
+
+        abort_unless($post, 404);
+
+        return view('marketing.insight', compact('post'));
+    }
+
+    /**
+     * Seed insight posts. Real content lives in resources/views/marketing/
+     * as separate Blade templates; this is the index of what's published.
+     */
+    private function insightPosts(): array
+    {
+        return [
+            [
+                'slug' => 'you-dont-need-ai',
+                'title' => 'You don\'t need AI. You need the problem gone.',
+                'excerpt' => 'Most businesses don\'t need more AI tools. They need the bottleneck gone. Here\'s how to find the one problem worth fixing first.',
+                'category' => 'Mindset',
+                'date' => '2026-10-24',
+            ],
+            [
+                'slug' => 'two-minute-test',
+                'title' => 'The 2-minute test: is this problem worth fixing?',
+                'excerpt' => 'Before you automate anything, run this 2-minute test. It tells you whether a problem is worth fixing — or just annoying.',
+                'category' => 'Process',
+                'date' => '2026-10-24',
+            ],
+            [
+                'slug' => 'human-review',
+                'title' => 'Why we review every plan by hand',
+                'excerpt' => 'AI can draft a fix plan in seconds. We still have a real person check every one. Here\'s why — and what it means for you.',
+                'category' => 'Trust',
+                'date' => '2026-10-24',
+            ],
+        ];
+    }
+
+    /**
      * Public "living proof" page — no auth required.
      * Aggregate, non-sensitive stats only; never expose per-business data here.
      */

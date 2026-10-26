@@ -30,7 +30,9 @@ Route::get('/contact', [ContactController::class, 'show'])->name('contact');
 Route::post('/contact', [ContactController::class, 'send'])->middleware('throttle:5,10')->name('contact.send');
 
 // Quick guide for new users – simple static HTML page
-define('USAGE_GUIDE_PATH', base_path('usage-guide.html'));
+if (! defined('USAGE_GUIDE_PATH')) {
+    define('USAGE_GUIDE_PATH', base_path('usage-guide.html'));
+}
 Route::get('/getting-started', function () {
     return response()->file(USAGE_GUIDE_PATH);
 })->name('getting.started');
@@ -40,6 +42,10 @@ Route::get('/live-proof', [MarketingController::class, 'liveProof'])->name('live
 
 // Legal / compliance — public, no auth required, linked from footer and signup flow
 Route::get('/terms', [LegalController::class, 'terms'])->name('legal.terms');
+
+// Insights / blog — public, no auth required
+Route::get('/insights', [MarketingController::class, 'insights'])->name('insights.index');
+Route::get('/insights/{slug}', [MarketingController::class, 'insight'])->name('insights.show');
 Route::get('/privacy', [LegalController::class, 'privacy'])->name('legal.privacy');
 Route::get('/cookies', [LegalController::class, 'cookies'])->name('legal.cookies');
 

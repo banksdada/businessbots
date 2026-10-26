@@ -100,6 +100,60 @@
         </div>
     </section>
 
+    {{-- Solutions delivered --}}
+    <section class="mx-auto max-w-[720px] px-6 pb-20">
+        <div class="text-center mb-8">
+            <span class="text-label inline-block px-2.5 py-0.5 bg-accent-muted text-accent rounded-full">SOLUTIONS DELIVERED</span>
+            <h2 class="mt-2 text-h2 text-text-primary">Real businesses, real numbers</h2>
+            <p class="mt-2 text-sm text-text-secondary">Here's what running on autopilot looks like.</p>
+        </div>
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            @foreach ([
+                ['title' => 'WhatsApp automation', 'body' => 'Replies in under 60 seconds. Leads never go cold.'],
+                ['title' => 'Content creation', 'body' => 'Consistent posts across Instagram, LinkedIn, GBP from one brief.'],
+                ['title' => 'Lead capture & follow-up', 'body' => 'Leads captured, followed up, routed to you automatically.'],
+                ['title' => 'Payment-chasing workflows', 'body' => 'Automated reminders. Faster cash collection.'],
+                ['title' => 'Reporting & visibility', 'body' => 'Dashboard of what\'s working. Decisions on data, not gut.'],
+            ] as $solution)
+                <div class="bg-surface border border-border rounded-xl p-5 hover:border-border-accent transition-colors">
+                    <h3 class="text-sm font-semibold text-text-primary">{{ $solution['title'] }}</h3>
+                    <p class="mt-2 text-sm text-text-secondary leading-relaxed">{{ $solution['body'] }}</p>
+                    <a href="{{ route('live-proof') }}" class="mt-3 inline-block text-xs text-accent-light hover:text-accent">See live proof →</a>
+                </div>
+            @endforeach
+        </div>
+    </section>
+
+    {{-- Trust + friction reducers --}}
+    <section class="mx-auto max-w-[720px] px-6 pb-16">
+        <div class="flex flex-wrap justify-center gap-4 text-xs text-text-muted">
+            <span class="inline-flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-success"></span>0 human staff — AI agents run 24/7</span>
+            <span class="inline-flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-success"></span">£4.99/month — no setup fee, no lock-in</span>
+            <span class="inline-flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-success"></span>GDPR-aware, opt-out (STOP) built in</span>
+            <span class="inline-flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-success"></span>Takes 15 minutes to set up</span>
+        </div>
+    </section>
+
+    {{-- FAQ block --}}
+    <section class="mx-auto max-w-[720px] px-6 pb-20">
+        <h2 class="text-h2 text-center mb-6">Frequently asked questions</h2>
+        <div class="space-y-4">
+            @foreach ([
+                ['q' => 'What does it cost?', 'a' => '£4.99/month. No setup fee, no lock-in. Cancel anytime.'],
+                ['q' => 'How long does setup take?', 'a' => 'About 15 minutes. Book a demo and we\'ll scope your workflow first.'],
+                ['q' => 'Does it replace my staff?', 'a' => 'It handles the repetitive work — replies, posting, follow-ups — so your team focuses on revenue.'],
+                ['q' => 'Is my data safe?', 'a' => 'Yes. GDPR-aware, encrypted tokens, opt-out (STOP) and opt-in (START) built in.'],
+                ['q' => 'What industries does it work for?', 'a' => '8 verticals seeded and counting. If yours isn\'t listed, ask — we\'ll work it out.'],
+            ] as $faq)
+                <details class="bg-surface border border-border rounded-xl p-5">
+                    <summary class="text-sm font-semibold text-text-primary cursor-pointer">{{ $faq['q'] }}</summary>
+                    <p class="mt-2 text-sm text-text-secondary leading-relaxed">{{ $faq['a'] }}</p>
+                </details>
+            @endforeach
+        </div>
+    </section>
+
     {{-- AI insights: what the system is seeing right now --}}
     <section class="mx-auto max-w-[720px] px-6 pb-28">
         <div class="flex items-center gap-2 mb-5">
