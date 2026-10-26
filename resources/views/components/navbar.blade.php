@@ -28,6 +28,7 @@
             @elseif (! auth()->check())
                 <a href="{{ route('home') }}#how-it-works" class="{{ $navLink(false) }}">How it works</a>
                 <a href="{{ route('marketing.pricing') }}" class="{{ $navLink(request()->routeIs('marketing.pricing')) }}">Pricing</a>
+                <a href="{{ route('insights.index') }}" class="{{ $navLink(request()->routeIs('insights.*')) }}">Insights</a>
                 @if ($social)
                     <a href="{{ route('live-proof') }}" class="{{ $navLink(request()->routeIs('live-proof')) }}">Live proof</a>
                 @endif
@@ -76,6 +77,7 @@
         @else
             <a href="{{ route('home') }}#how-it-works" class="block py-2 text-text-primary">How it works</a>
             <a href="{{ route('marketing.pricing') }}" class="block py-2 text-text-primary">Pricing</a>
+            <a href="{{ route('insights.index') }}" class="block py-2 text-text-primary">Insights</a>
             <a href="{{ route('login') }}" class="block py-2 text-text-primary">Sign in</a>
             <a href="{{ route('register') }}" class="block py-2 text-accent font-semibold">Get started</a>
         @endauth
