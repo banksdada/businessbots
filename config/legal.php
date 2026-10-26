@@ -14,9 +14,9 @@ return [
     'company_address' => env('COMPANY_ADDRESS', 'Address to be confirmed'),
     'domain' => env('APP_URL', 'https://automation.baseuse.xyz'),
 
-    'legal_email' => env('LEGAL_CONTACT_EMAIL', 'legal@automation.baseuse.xyz'),
-    'privacy_email' => env('PRIVACY_CONTACT_EMAIL', 'privacy@automation.baseuse.xyz'),
-    'support_email' => env('SUPPORT_CONTACT_EMAIL', 'support@automation.baseuse.xyz'),
+    'legal_email' => env('LEGAL_CONTACT_EMAIL', 'legal@nowsorted.co.uk'),
+    'privacy_email' => env('PRIVACY_CONTACT_EMAIL', 'privacy@nowsorted.co.uk'),
+    'support_email' => env('SUPPORT_CONTACT_EMAIL', 'support@nowsorted.co.uk'),
 
     // Sub-processors — anyone who touches customer/lead personal data on our behalf.
     // Update this list whenever a new integration is added (see architecture.md).
