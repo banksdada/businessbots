@@ -208,6 +208,12 @@
             These are the signals the AI OS watches. When you run your own, you get
             the same feed — about your leads, your channels, your replies.
         </p>
+
+        <p class="mt-6 text-center text-sm">
+            <a href="{{ route('insights.index') }}" class="text-accent-light hover:text-accent">
+                Read the latest insights →
+            </a>
+        </p>
     </section>
 
     {{-- Success stories: real businesses, real numbers --}}
