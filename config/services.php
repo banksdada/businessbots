@@ -165,4 +165,18 @@ return [
         ),
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | AIOS CRM
+    |--------------------------------------------------------------------------
+    */
+
+    'crm' => [
+        'webhook_url' => env('CRM_WEBHOOK_URL') ?: env('AIOS_WEBHOOK_URL'),
+
+        'webhook_secret' => env('CRM_WEBHOOK_SECRET'),
+
+        'timeout_seconds' => (int) env('CRM_WEBHOOK_TIMEOUT_SECONDS', 10),
+    ],
+
 ];
