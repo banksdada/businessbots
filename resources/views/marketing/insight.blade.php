@@ -1,4 +1,4 @@
-<x-layouts.app :title="{{$post['title']}}">
+<x-layouts.app :title="$post['title']">
 
     <section class="mx-auto max-w-[720px] px-6 py-20">
         <div class="flex items-center gap-2 mb-5">
