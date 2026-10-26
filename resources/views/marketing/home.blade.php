@@ -24,6 +24,12 @@
                 Book a demo
             </a>
         </div>
+
+        <div class="mt-4 flex flex-wrap justify-center gap-3 text-xs text-text-muted">
+            <span class="inline-flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-success"></span>Takes 2 minutes</span>
+            <span class="inline-flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-success"></span>No card needed</span>
+            <span class="inline-flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-success"></span>A real person checks every plan</span>
+        </div>
     </section>
 
     {{-- AIOS homepage section (bold) --}}
