@@ -12,13 +12,7 @@ return [
     'base_url' => env('AI_BASE_URL', 'https://api.openai.com/v1'),
     'api_key' => env('AI_API_KEY', env('OPENAI_API_KEY')), // falls back to the existing var so nothing breaks on upgrade
 
-    'models' => [
-        // Separate model per use case — classification wants fast/cheap,
-        // reply generation wants a bit more quality. Both configurable
-        // independently since not every provider prices/names them the same.
-        'classification' => env('AI_MODEL_CLASSIFICATION', 'gpt-4o-mini'),
-        'reply_generation' => env('AI_MODEL_REPLY', 'gpt-4o-mini'),
-    ],
+    'model' => env('AI_MODEL', 'gpt-4o-mini'),
 
     'timeout_seconds' => (int) env('AI_TIMEOUT_SECONDS', 15),
 

@@ -9,7 +9,7 @@ Print this out or keep it handy!
 | Service | Where to Find It | What You Need |
 |---------|------------------|---------------|
 | **Stripe** | stripe.com/dashboard | API Keys, Webhook Secret, Price IDs |
-| **Meta** | developers.facebook.com | App ID, App Secret, WhatsApp Token |
+| **Meta** | developers.facebook.com | App ID, App Secret |
 | **LinkedIn** | linkedin.com/developers | Client ID, Client Secret |
 | **Google** | console.cloud.google.com | Client ID, Client Secret |
 | **OpenAI** | platform.openai.com | API Key (sk-...) |
@@ -75,10 +75,10 @@ php artisan queue:restart
 php artisan queue:work --tries=3
 ```
 
-**WhatsApp not responding:**
-1. Check Meta webhook logs
-2. Verify token in .env matches Meta dashboard
-3. Check domain has SSL certificate
+**Instagram not posting:**
+1. Check Meta app credentials and channel connection
+2. Verify the Instagram redirect URI matches the Meta dashboard
+3. Check domain has an SSL certificate
 
 ---
 

@@ -21,7 +21,6 @@ yarn-error.log
 /.idea
 /.vscode
 .DS_Store
-/app/Services/WhatsApp/video-agent/
 /python/jobs/config.py
 /public/css/filament
 /public/js/filament

@@ -143,12 +143,12 @@ target; a real gap for multi-location businesses.
 
 # AI provider — decoupled from OpenAI specifically
 
-`config/ai.php` (PHP) and `AI_BASE_URL`/`AI_API_KEY` in `.env` (both PHP and
-Python) mean the WhatsApp intent classifier, reply generator, and post
-caption generator all call whatever endpoint you configure — OpenAI itself
+`config/ai.php` (PHP) and `AI_BASE_URL`/`AI_API_KEY` in `.env` (shared by
+PHP and Python) mean the Python post caption generator and future PHP
+AI-assisted workflows call whatever endpoint you configure — OpenAI itself
 by default, but any OpenAI-compatible `/chat/completions` API works by
-changing `.env` only. `App\Services\AI\AiClient` is the one place this
-lives on the PHP side; nothing else should call an LLM API directly.
+changing `.env` only. `App\Services\AI\AiClient` is the one place this lives
+on the PHP side; nothing else should call an LLM API directly.
 
 **Not covered by this abstraction:** `_generate_image()` in
 `content_generator.py` still calls OpenAI's DALL-E API directly. Image
@@ -163,38 +163,13 @@ this section is about what the deployed app calls at runtime.
 
 # Middleware & CSRF setup — bootstrap/app.php
 
-This project doesn't include a generated `bootstrap/app.php` (Laravel scaffolds
-this on `laravel new`). Once you run that, add the following to the
-`->withMiddleware()` call:
-
-```php
-->withMiddleware(function (Middleware $middleware) {
-    $middleware->alias([
-        'business.onboarded' => \App\Http\Middleware\EnsureBusinessOnboarded::class,
-        'subscribed' => \App\Http\Middleware\EnsureSubscribed::class,
-        'meta.signature' => \App\Http\Middleware\VerifyMetaWebhookSignature::class,
-    ]);
-
-    // Both webhooks are called by external services (Stripe, Meta) with no
-    // session/CSRF token — exempt them, but note both are still protected:
-    // Stripe's via Cashier's own signature check, Meta's via meta.signature above.
-    $middleware->validateCsrfTokens(except: [
-        'stripe/webhook',
-        'webhooks/whatsapp',
-    ]);
-})
-```
-
-## config/services.php
-
-Merge the contents of `config/services.meta.php` (in this repo) into the
-`return [...]` array in Laravel's generated `config/services.php` — don't
-leave it as a separate file; Laravel only autoloads `config/services.php`
-itself.
+`bootstrap/app.php` is present and registers the onboarding/subscription
+middleware. The only CSRF exemption is Stripe's webhook, which is protected
+by Cashier's signature check.
 
 ## Queue worker
 
-`WhatsAppHandlerJob` is dispatched onto the default queue (Redis, per
+Queued jobs (posting and advice workflows) use the default queue (Redis, per
 `.env.example`). In production this needs a running worker:
 
 ```bash

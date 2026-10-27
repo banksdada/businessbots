@@ -13,13 +13,13 @@ class AiClient
      * works identically whether that's OpenAI, Azure OpenAI, or a
      * self-hosted OpenAI-compatible gateway.
      */
-    public function chat(string $useCase, array $messages, float $temperature = 0.7, int $maxTokens = 300): string
+    public function chat(array $messages, float $temperature = 0.7, int $maxTokens = 300): string
     {
-        $model = config("ai.models.{$useCase}") ?? config('ai.models.reply_generation');
+        $model = config('ai.model', 'gpt-4o-mini');
 
         $response = Http::withToken(config('ai.api_key'))
             ->timeout(config('ai.timeout_seconds'))
-            ->post(rtrim(config('ai.base_url'), '/') . '/chat/completions', [
+            ->post(rtrim(config('ai.base_url'), '/').'/chat/completions', [
                 'model' => $model,
                 'messages' => $messages,
                 'temperature' => $temperature,

@@ -2,7 +2,6 @@
 
 namespace App\Livewire\Onboarding;
 
-use App\Models\Business;
 use App\Models\ChannelSetting;
 use Livewire\Component;
 

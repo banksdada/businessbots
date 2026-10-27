@@ -12,7 +12,7 @@ Before you start, make sure you have:
 - [ ] A **server** with Coolify installed (e.g., DigitalOcean, Vultr, Hetzner)
 - [ ] A **domain name** pointed to your server's IP address
 - [ ] A **Stripe account** (for payments)
-- [ ] A **Meta Developer account** (for WhatsApp/Instagram)
+- [ ] A **Meta Developer account** (for Instagram)
 - [ ] A **Google Cloud account** (for Business Profile)
 - [ ] An **OpenAI API key** (for AI features)
 
@@ -128,9 +128,7 @@ STRIPE_PRICE_PROFESSIONAL=price_xxxxx
 # Meta (from developers.facebook.com)
 META_APP_ID=your-app-id
 META_APP_SECRET=your-app-secret
-META_WHATSAPP_TOKEN=your-whatsapp-token
-META_WHATSAPP_PHONE_NUMBER_ID=your-phone-number-id
-META_WEBHOOK_VERIFY_TOKEN=your-custom-token
+META_INSTAGRAM_REDIRECT_URI="${APP_URL}/channels/instagram/callback"
 
 # LinkedIn (from linkedin.com/developers)
 LINKEDIN_CLIENT_ID=your-client-id
@@ -245,7 +243,7 @@ php artisan storage:link
 
 ---
 
-## Step 7: Configure Meta (WhatsApp/Instagram)
+## Step 7: Configure Meta (Instagram)
 
 ### 7.1 Create Meta App
 
@@ -255,19 +253,12 @@ php artisan storage:link
 4. Fill in app name and contact email
 5. Click **Create App**
 
-### 7.2 Set Up WhatsApp
+### 7.2 Configure Instagram OAuth
 
-1. In your app, click **Add Product** → **WhatsApp**
-2. Follow the setup wizard
-3. Copy your **Phone Number ID** and **Temporary Access Token**
-4. Add these to your `.env` in Coolify
-
-### 7.3 Configure Webhook
-
-1. In WhatsApp settings, go to **Configuration**
-2. Enter your webhook URL: `https://your-domain.com/webhooks/whatsapp`
-3. Enter your **Verify Token** (the one you set in `.env`)
-4. Subscribe to messages
+1. Add **Facebook Login** to the app
+2. Add `https://your-domain.com/channels/instagram/callback` as a valid OAuth redirect URI
+3. Copy the App ID and App Secret into `.env` as `META_APP_ID` and `META_APP_SECRET`
+4. Make sure the Instagram account is a professional account linked to a Facebook Page
 
 ---
 
@@ -280,13 +271,7 @@ php artisan storage:link
 3. Click **Sign up** and create an account
 4. Complete the onboarding wizard
 
-### 8.2 Test WhatsApp
-
-1. Send a message to your WhatsApp Business number
-2. Check the logs in Coolify for any errors
-3. You should receive an AI-generated reply
-
-### 8.3 Test Billing
+### 8.2 Test Billing
 
 1. Go to the pricing page
 2. Click **Start Free Trial**
@@ -309,10 +294,10 @@ Common fixes:
 - Make sure database credentials match
 - Run `php artisan config:clear`
 
-### "WhatsApp messages not received"
+### "Instagram posts not publishing"
 
-1. Check Meta webhook logs
-2. Verify the verify token matches
+1. Check the Meta app credentials and channel connection
+2. Verify the Instagram redirect URI matches the Meta dashboard
 3. Make sure your domain has SSL (HTTPS)
 
 ### "Posts not publishing"

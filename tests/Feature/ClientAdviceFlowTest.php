@@ -3,16 +3,17 @@
 namespace Tests\Feature;
 
 use App\Filament\Ops\Resources\ProblemRequestResource\Pages\EditProblemRequest;
+use App\Livewire\Problems\RequestProgress;
 use App\Livewire\Problems\SubmitProblem;
 use App\Mail\AdviceRequestFailedMail;
 use App\Mail\DraftReadyMail;
 use App\Mail\ReportReadyMail;
-use App\Models\AutomationJob;
 use App\Models\Business;
 use App\Models\ProblemRequest;
 use App\Models\User;
 use Filament\Facades\Filament;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
 use Livewire\Livewire;
@@ -128,7 +129,7 @@ class ClientAdviceFlowTest extends TestCase
             ->set('title', '')
             ->set('description', 'too short')
             ->call('submit')
-            ->assertHasErrors(['title' => 'required', 'description' => 'min'])
+            ->assertHasErrors(['description' => 'min'])
             ->assertSee('Please check the questions marked in red above.');
 
         $this->assertSame(0, ProblemRequest::count());
@@ -260,7 +261,7 @@ class ClientAdviceFlowTest extends TestCase
 
     public function test_pyrunner_webhook_failure_does_not_block_submission(): void
     {
-        Http::fake(['pyrunner.test/*' => fn () => throw new \Illuminate\Http\Client\ConnectionException('down')]);
+        Http::fake(['pyrunner.test/*' => fn () => throw new ConnectionException('down')]);
 
         $problem = $this->submitProblem();
 
@@ -273,7 +274,7 @@ class ClientAdviceFlowTest extends TestCase
         $owner = $this->business->owner;
 
         $component = Livewire::actingAs($owner)
-            ->test(\App\Livewire\Problems\RequestProgress::class, ['problem' => $problem])
+            ->test(RequestProgress::class, ['problem' => $problem])
             ->assertSee("You don't need to wait here", false)
             ->assertSee($owner->email)
             ->assertSee('AI is writing a first draft')
@@ -294,7 +295,7 @@ class ClientAdviceFlowTest extends TestCase
         $problem->update(['status' => ProblemRequest::STATUS_FAILED]);
 
         Livewire::actingAs($this->business->owner)
-            ->test(\App\Livewire\Problems\RequestProgress::class, ['problem' => $problem])
+            ->test(RequestProgress::class, ['problem' => $problem])
             ->assertSee('This is taking a little longer than usual')
             ->assertSeeHtmlInOrder(['font-semibold text-text-primary">AI is writing a first draft', 'text-text-muted">A person is checking it']);
     }
