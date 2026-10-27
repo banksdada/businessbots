@@ -1,16 +1,11 @@
 <div>
     <h2 class="text-lg font-semibold mb-1">Connect your channels</h2>
-    <p class="text-xs text-text-secondary mb-5">WhatsApp is required — it's how your leads reach you. The rest are optional.</p>
+    <p class="text-xs text-text-secondary mb-5">Optional — connect the channels you use now, or add them later.</p>
 
     <div class="space-y-2.5 mb-2">
         @foreach ($channels as $channel)
             <div class="flex items-center justify-between px-4 py-3 bg-surface-secondary border border-border rounded-lg">
-                <div class="flex items-center gap-2">
-                    <span class="text-sm font-medium text-text-primary">{{ $channel['label'] }}</span>
-                    @if ($channel['required'])
-                        <span class="text-[10px] text-text-faint">Required</span>
-                    @endif
-                </div>
+                <span class="text-sm font-medium text-text-primary">{{ $channel['label'] }}</span>
 
                 @if ($connected[$channel['key']])
                     <x-badge variant="success">✓ Connected</x-badge>
@@ -23,10 +18,6 @@
             </div>
         @endforeach
     </div>
-
-    @error('whatsapp')
-        <p class="text-xs text-error mb-4">{{ $message }}</p>
-    @enderror
 
     <div class="flex justify-end mt-5">
         <button wire:click="finish" wire:loading.attr="disabled" wire:target="finish"

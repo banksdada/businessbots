@@ -8,8 +8,8 @@ use Illuminate\Support\Facades\Http;
 class ChannelTokenRefresher
 {
     /**
-     * Meta (Instagram/WhatsApp) doesn't use a refresh_token grant like standard
-     * OAuth — long-lived tokens are refreshed by re-exchanging the current token
+     * Meta (Instagram) doesn't use a refresh_token grant like standard OAuth —
+     * long-lived tokens are refreshed by re-exchanging the current token
      * itself. Google and LinkedIn use the conventional refresh_token flow.
      * This is the one place that difference is handled.
      */
@@ -17,7 +17,7 @@ class ChannelTokenRefresher
     {
         try {
             $result = match ($channel->platform) {
-                'instagram', 'whatsapp' => $this->refreshMeta($channel),
+                'instagram' => $this->refreshMeta($channel),
                 'gbp' => $this->refreshStandardOAuth($channel, config('channels.gbp.token_url')),
                 'linkedin' => $this->refreshStandardOAuth($channel, config('channels.linkedin.token_url')),
                 default => false,

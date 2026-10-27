@@ -3,7 +3,7 @@
 return [
     'home' => [
         'title' => 'NowSorted — Your business, running on autopilot',
-        'description' => 'AI Operating System for small businesses. Automate WhatsApp replies, content creation, and lead follow-up for £4.99/month. No setup fee, no lock-in.',
+        'description' => 'AI Operating System for small businesses. Automate repetitive work, capture leads, and get your time back. No setup fee, no lock-in.',
     ],
     'marketing.pricing' => [
         'title' => 'Pricing — NowSorted AI OS',
@@ -11,7 +11,7 @@ return [
     ],
     'marketing.industries' => [
         'title' => 'Industries — NowSorted AI OS',
-        'description' => 'AI automation tailored for your industry. 8 verticals and counting. WhatsApp replies, content, lead follow-up — on autopilot.',
+        'description' => 'AI automation tailored for your industry. 8 verticals and counting. Content, lead follow-up and reporting — on autopilot.',
     ],
     'marketing.demo' => [
         'title' => 'Book a Demo — NowSorted',
@@ -31,7 +31,7 @@ return [
     ],
     'live-proof' => [
         'title' => 'Live Proof Dashboard — NowSorted',
-        'description' => 'See real businesses running on the AI OS in real time. WhatsApp replies, content, and lead follow-up — all automated.',
+        'description' => 'See real businesses running on the AI OS in real time. Content, lead follow-up and reporting — all automated.',
     ],
     'legal.terms' => [
         'title' => 'Terms of Service — NowSorted',

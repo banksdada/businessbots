@@ -36,7 +36,7 @@
                     </x-badge>
                 </div>
             @empty
-                <p class="text-sm text-text-muted py-4 text-center">No leads yet — they'll show up here as WhatsApp messages come in.</p>
+                <p class="text-sm text-text-muted py-4 text-center">No leads yet — they'll show up here as enquiries come in.</p>
             @endforelse
         </div>
 

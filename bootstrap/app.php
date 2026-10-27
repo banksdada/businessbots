@@ -21,15 +21,12 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'business.onboarded' => \App\Http\Middleware\EnsureBusinessOnboarded::class,
             'subscribed' => \App\Http\Middleware\EnsureSubscribed::class,
-            'meta.signature' => \App\Http\Middleware\VerifyMetaWebhookSignature::class,
         ]);
 
-        // Both webhooks are called by external services (Stripe, Meta) with no
-        // session/CSRF token — exempt them, but note both are still protected:
-        // Stripe's via Cashier's own signature check, Meta's via meta.signature above.
+        // Stripe's webhook is called by an external service with no session or
+        // CSRF token. It is still protected by Cashier's signature check.
         $middleware->validateCsrfTokens(except: [
             'stripe/webhook',
-            'webhooks/whatsapp',
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

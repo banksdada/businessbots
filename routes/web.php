@@ -1,18 +1,18 @@
 <?php
 
-use App\Http\Controllers\MarketingController;
-use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\BillingController;
-use App\Http\Controllers\StripeWebhookController;
-use App\Http\Controllers\LegalController;
-use App\Http\Controllers\ContactController;
-use App\Http\Controllers\WhatsAppWebhookController;
 use App\Http\Controllers\ChannelOAuthController;
-use App\Livewire\Onboarding\Wizard as OnboardingWizard;
-use App\Livewire\Leads\LeadTable;
-use App\Livewire\Problems\SubmitProblem;
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\LegalController;
+use App\Http\Controllers\MarketingController;
 use App\Http\Controllers\ProblemRequestController;
+use App\Http\Controllers\SeoController;
+use App\Http\Controllers\StripeWebhookController;
 use App\Http\Controllers\VoiceNoteController;
+use App\Livewire\Leads\LeadTable;
+use App\Livewire\Onboarding\Wizard as OnboardingWizard;
+use App\Livewire\Problems\SubmitProblem;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -57,7 +57,7 @@ Route::get('/sitemap.xml', [SeoController::class, 'sitemap'])->name('sitemap');
 | Auth routes — Laravel's default controllers (Breeze/Fortify-style)
 |--------------------------------------------------------------------------
 */
-require __DIR__ . '/auth.php';
+require __DIR__.'/auth.php';
 
 /*
 |--------------------------------------------------------------------------
@@ -92,20 +92,6 @@ Route::middleware('auth')->group(function () {
 // Stripe → us. No CSRF, no auth — verified via signature inside Cashier's controller.
 // Register STRIPE_WEBHOOK_SECRET in .env and point Stripe's dashboard at this URL.
 Route::post('/stripe/webhook', [StripeWebhookController::class, 'handleWebhook'])->name('cashier.webhook');
-
-/*
-|--------------------------------------------------------------------------
-| WhatsApp webhook — Meta verifies via GET once, then POSTs every message.
-| No CSRF (external caller), signature verified by middleware instead.
-| Register this URL + META_WEBHOOK_VERIFY_TOKEN in the Meta App Dashboard.
-|--------------------------------------------------------------------------
-*/
-if (config('features.social')) {
-    Route::get('/webhooks/whatsapp', [WhatsAppWebhookController::class, 'verify'])->name('webhooks.whatsapp.verify');
-    Route::post('/webhooks/whatsapp', [WhatsAppWebhookController::class, 'receive'])
-        ->middleware('meta.signature')
-        ->name('webhooks.whatsapp.receive');
-}
 
 /*
 |--------------------------------------------------------------------------

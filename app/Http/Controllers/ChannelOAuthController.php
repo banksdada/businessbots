@@ -10,7 +10,7 @@ use Illuminate\Support\Str;
 
 class ChannelOAuthController extends Controller
 {
-    private const PLATFORMS = ['instagram', 'whatsapp', 'linkedin', 'gbp'];
+    private const PLATFORMS = ['instagram', 'linkedin', 'gbp'];
 
     /**
      * Redirect to the platform's authorize screen. A signed random `state`
@@ -123,7 +123,6 @@ class ChannelOAuthController extends Controller
     {
         return match ($platform) {
             'instagram' => $this->fetchJson('https://graph.facebook.com/v19.0/me/accounts', $accessToken, ['id', 'name']),
-            'whatsapp' => $this->fetchJson('https://graph.facebook.com/v19.0/me', $accessToken, ['id', 'name']),
             'linkedin' => $this->fetchJson('https://api.linkedin.com/v2/me', $accessToken, ['id', 'localizedFirstName']),
             'gbp' => $this->resolveGbpLocation($accessToken),
             default => [],

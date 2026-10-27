@@ -8,7 +8,7 @@
             See {{ config('app.name') }} <span class="text-accent-dark">run your business</span>
         </h1>
         <p class="mt-4 text-text-secondary text-body leading-relaxed">
-            Watch how WhatsApp replies, content and lead follow-up run on autopilot — in your own industry.
+            Watch how content, lead follow-up and reporting run on autopilot — in your own industry.
         </p>
 
         <div class="mt-10 mx-auto max-w-md text-left bg-surface border border-border rounded-xl p-6">

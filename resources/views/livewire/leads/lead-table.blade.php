@@ -61,7 +61,7 @@
             </div>
         @empty
             <div class="px-5 py-12 text-center text-sm text-text-muted">
-                No leads yet — they'll show up here as WhatsApp messages come in.
+                No leads yet — they'll show up here as enquiries come in.
             </div>
         @endforelse
     </div>

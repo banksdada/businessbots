@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::create('channel_settings', function (Blueprint $table) {
             $table->id();
             $table->foreignId('business_id')->constrained()->cascadeOnDelete();
-            $table->string('platform', 20); // whatsapp, instagram, linkedin, gbp
+            $table->string('platform', 20); // instagram, linkedin, gbp
             $table->text('access_token')->nullable(); // encrypted via the model cast — never store plaintext
             $table->text('refresh_token')->nullable();
             $table->timestamp('token_expires_at')->nullable();

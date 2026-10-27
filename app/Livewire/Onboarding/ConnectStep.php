@@ -12,17 +12,15 @@ class ConnectStep extends Component
 
     /** @var array<string, bool> */
     public array $connected = [
-        'whatsapp' => false,
         'instagram' => false,
         'linkedin' => false,
         'gbp' => false,
     ];
 
     public const CHANNELS = [
-        ['key' => 'whatsapp', 'label' => 'WhatsApp Business', 'required' => true],
-        ['key' => 'instagram', 'label' => 'Instagram', 'required' => false],
-        ['key' => 'linkedin', 'label' => 'LinkedIn', 'required' => false],
-        ['key' => 'gbp', 'label' => 'Google Business Profile', 'required' => false],
+        ['key' => 'instagram', 'label' => 'Instagram'],
+        ['key' => 'linkedin', 'label' => 'LinkedIn'],
+        ['key' => 'gbp', 'label' => 'Google Business Profile'],
     ];
 
     public function mount(int $businessId): void
@@ -54,11 +52,6 @@ class ConnectStep extends Component
 
     public function finish(): void
     {
-        if (! $this->connected['whatsapp']) {
-            $this->addError('whatsapp', 'Connect WhatsApp to finish setup — it\'s how leads reach you.');
-            return;
-        }
-
         $this->dispatch('step-completed', step: 'connect', businessId: $this->businessId);
     }
 

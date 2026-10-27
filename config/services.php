@@ -37,20 +37,6 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Resend
-    |--------------------------------------------------------------------------
-    */
-
-    'resend' => [
-        // Laravel's built-in Resend mail transport (see MailManager::
-        // createResendTransport()) specifically reads services.resend.key —
-        // not api_key — so this must be named exactly this for MAIL_MAILER=
-        // resend to actually pick up the API key.
-        'key' => env('RESEND_API_KEY'),
-    ],
-
-    /*
-    |--------------------------------------------------------------------------
     | Slack
     |--------------------------------------------------------------------------
     */
@@ -64,15 +50,10 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Meta - WhatsApp / Instagram
+    | Meta - Instagram
     |--------------------------------------------------------------------------
     |
-    | These values are used for:
-    |
-    | - WhatsApp Cloud API
-    | - Meta webhook verification
-    | - WhatsApp message sending
-    | - Instagram integration later
+    | Used by the Instagram channel OAuth flow.
     |
     */
 
@@ -80,16 +61,6 @@ return [
         'app_id' => env('META_APP_ID'),
 
         'app_secret' => env('META_APP_SECRET'),
-
-        'whatsapp_token' => env('META_WHATSAPP_TOKEN'),
-
-        'whatsapp_phone_number_id' => env(
-            'META_WHATSAPP_PHONE_NUMBER_ID'
-        ),
-
-        'webhook_verify_token' => env(
-            'META_WEBHOOK_VERIFY_TOKEN'
-        ),
     ],
 
     /*
@@ -108,14 +79,6 @@ return [
 
         'api_token' => env(
             'PYRUNNER_API_TOKEN'
-        ),
-
-        'intent_webhook' => env(
-            'PYRUNNER_INTENT_WEBHOOK_URL'
-        ),
-
-        'reply_webhook' => env(
-            'PYRUNNER_REPLY_WEBHOOK_URL'
         ),
 
         // Starts the client-advice script straight away after a request is

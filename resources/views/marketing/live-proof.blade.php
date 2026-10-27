@@ -15,7 +15,7 @@
             <div class="mt-10 grid grid-cols-2 md:grid-cols-4 gap-px bg-border rounded-xl overflow-hidden border border-border">
                 @foreach ([
                     ['value' => $stats['revenue_this_month'], 'label' => 'Revenue this month'],
-                    ['value' => $stats['reply_speed'], 'label' => 'Avg WhatsApp reply time'],
+                    ['value' => $stats['reply_speed'], 'label' => 'Avg response time'],
                     ['value' => $stats['posts_today'], 'label' => 'Posts published today'],
                     ['value' => $stats['days_no_human_reply'], 'label' => 'Days with 0 human replies needed'],
                 ] as $stat)

@@ -12,7 +12,7 @@ return [
     // company. Defaults to the new name now that the app is rebranding.
     'brand' => env('FOOTER_BRAND', 'nowsorted'),
     'company_address' => env('COMPANY_ADDRESS', 'Address to be confirmed'),
-    'domain' => env('APP_URL', 'https://automation.baseuse.xyz'),
+    'domain' => env('LEGAL_DOMAIN', 'https://nowsorted.co.uk'),
 
     'legal_email' => env('LEGAL_CONTACT_EMAIL', 'legal@nowsorted.co.uk'),
     'privacy_email' => env('PRIVACY_CONTACT_EMAIL', 'privacy@nowsorted.co.uk'),
@@ -21,7 +21,7 @@ return [
     // Sub-processors — anyone who touches customer/lead personal data on our behalf.
     // Update this list whenever a new integration is added (see architecture.md).
     'sub_processors' => [
-        ['name' => 'Meta Platforms, Inc.', 'purpose' => 'WhatsApp Business API, Instagram posting', 'location' => 'USA/EU (SCCs)'],
+        ['name' => 'Meta Platforms, Inc.', 'purpose' => 'Instagram posting', 'location' => 'USA/EU (SCCs)'],
         ['name' => 'OpenAI, L.L.C.', 'purpose' => 'AI content generation, reply drafting', 'location' => 'USA (SCCs)'],
         ['name' => 'Stripe, Inc.', 'purpose' => 'Payment processing, billing', 'location' => 'USA/EU (SCCs)'],
         ['name' => 'LinkedIn Corporation', 'purpose' => 'LinkedIn posting', 'location' => 'USA (SCCs)'],

@@ -17,7 +17,6 @@ class SocialFeatureSwitchTest extends TestCase
 
         $this->get('/live-proof')->assertNotFound();
         $this->actingAs($business->owner)->get('/leads')->assertNotFound();
-        $this->post('/webhooks/whatsapp')->assertNotFound();
     }
 
     public function test_onboarding_skips_the_connect_step_when_social_is_off(): void

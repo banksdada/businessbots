@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Lead extends Model
 {
@@ -32,11 +31,6 @@ class Lead extends Model
         return $this->belongsTo(Business::class);
     }
 
-    public function conversations(): HasMany
-    {
-        return $this->hasMany(WhatsAppConversation::class);
-    }
-
     /** Complaints and unreplied messages surface for manual follow-up in the UI. */
     public function needsHumanAttention(): bool
     {
@@ -46,18 +40,5 @@ class Lead extends Model
     public function scopeForBusiness($query, int $businessId)
     {
         return $query->where('business_id', $businessId);
-    }
-
-    /**
-     * Has this phone number opted out of AI replies for this business, ever?
-     * Checked before every send — an opt-out on one conversation thread must
-     * suppress replies across all future messages from the same number.
-     */
-    public static function hasOptedOut(int $businessId, string $phone): bool
-    {
-        return static::where('business_id', $businessId)
-            ->where('phone', $phone)
-            ->where('opted_out', true)
-            ->exists();
     }
 }

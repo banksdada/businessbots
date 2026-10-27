@@ -10,7 +10,7 @@
         'legalName' => $companyName,
         'url' => $domain,
         'logo' => $domain . '/images/og-default.png',
-        'description' => 'AI Operating System for small businesses — automates WhatsApp replies, content, and lead follow-up.',
+        'description' => 'AI Operating System for small businesses — automates the repetitive work so owners can focus on revenue.',
         'areaServed' => 'GB',
         'sameAs' => [],
     ];
@@ -23,7 +23,7 @@
             '@type' => 'Organization',
             'name' => $brand,
         ],
-        'description' => 'AI-driven automation for small businesses: WhatsApp lead capture and reply, social media content generation and scheduling, and related analytics.',
+        'description' => 'AI-driven automation for small businesses: social media content generation and scheduling, lead follow-up, and related analytics.',
         'offers' => [
             '@type' => 'Offer',
             'price' => '4.99',
@@ -51,5 +51,7 @@
 @endphp
 
 <script type="application/ld+json">{!! json_encode($organization, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) !!}</script>
+@if (config('features.social') && request()->routeIs('home'))
 <script type="application/ld+json">{!! json_encode($service, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) !!}</script>
 <script type="application/ld+json">{!! json_encode($faqPage, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) !!}</script>
+@endif

@@ -23,7 +23,7 @@
             @csrf
             <input type="hidden" name="email" value="{{ $email }}">
             <button type="submit" class="btn-secondary w-full">
-                Resend login link
+                Send a new login link
             </button>
         </form>
 

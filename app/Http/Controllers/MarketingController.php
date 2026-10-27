@@ -152,12 +152,12 @@ class MarketingController extends Controller
 
         return [
             [
-                'name' => 'Starter', 'price' => '£4.99', 'subtitle' => '100 WhatsApp replies/mo',
+                'name' => 'Starter', 'price' => '£4.99', 'subtitle' => 'For solo owners',
                 'features' => ['3 posts/day, all channels', '1 vertical AI config', 'Basic analytics'],
                 'cta_label' => 'Start free trial', 'cta_url' => $checkoutUrl('starter'), 'featured' => false,
             ],
             [
-                'name' => 'Professional', 'price' => '£14.99', 'subtitle' => 'Unlimited WhatsApp replies',
+                'name' => 'Professional', 'price' => '£14.99', 'subtitle' => 'For growing teams',
                 'features' => ['Unlimited posts, all channels', '5 team members', 'Advanced analytics + learning'],
                 'cta_label' => 'Start free trial', 'cta_url' => $checkoutUrl('professional'), 'featured' => true,
             ],

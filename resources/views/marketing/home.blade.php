@@ -13,7 +13,7 @@
         </h1>
 
         <p class="mt-4 text-text-secondary text-body leading-relaxed">
-            Runs WhatsApp, content and lead follow-up 24/7 — while the owner works 15 minutes a day.
+            Runs content, lead follow-up and reporting 24/7 — while the owner works 15 minutes a day.
         </p>
 
         <div class="mt-8 flex justify-center gap-3">
@@ -61,7 +61,7 @@
             @foreach ([
                 ['value' => $stats['agents_active'] ?? '27+', 'label' => 'AI agents active'],
                 ['value' => $stats['businesses_running'] ?? '8', 'label' => 'Businesses running'],
-                ['value' => $stats['avg_reply_time'] ?? '<60s', 'label' => 'WhatsApp reply time'],
+                ['value' => $stats['avg_reply_time'] ?? '<60s', 'label' => 'Avg response time'],
                 ['value' => '£0', 'label' => 'Human salary cost'],
             ] as $stat)
                 <div class="bg-surface-secondary p-4 text-center">
@@ -139,7 +139,6 @@
 
         <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             @foreach ([
-                ['title' => 'WhatsApp automation', 'body' => 'Replies in under 60 seconds. Leads never go cold.'],
                 ['title' => 'Content creation', 'body' => 'Consistent posts across Instagram, LinkedIn, GBP from one brief.'],
                 ['title' => 'Lead capture & follow-up', 'body' => 'Leads captured, followed up, routed to you automatically.'],
                 ['title' => 'Payment-chasing workflows', 'body' => 'Automated reminders. Faster cash collection.'],
@@ -159,7 +158,7 @@
         <div class="flex flex-wrap justify-center gap-4 text-xs text-text-muted">
             <span class="inline-flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-success"></span>0 human staff — AI agents run 24/7</span>
             <span class="inline-flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-success"></span">£4.99/month — no setup fee, no lock-in</span>
-            <span class="inline-flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-success"></span>GDPR-aware, opt-out (STOP) built in</span>
+            <span class="inline-flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-success"></span>GDPR-aware, clear opt-outs built in</span>
             <span class="inline-flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-success"></span>Takes 15 minutes to set up</span>
         </div>
     </section>
@@ -172,7 +171,7 @@
                 ['q' => 'What does it cost?', 'a' => '£4.99/month. No setup fee, no lock-in. Cancel anytime.'],
                 ['q' => 'How long does setup take?', 'a' => 'About 15 minutes. Book a demo and we\'ll scope your workflow first.'],
                 ['q' => 'Does it replace my staff?', 'a' => 'It handles the repetitive work — replies, posting, follow-ups — so your team focuses on revenue.'],
-                ['q' => 'Is my data safe?', 'a' => 'Yes. GDPR-aware, encrypted tokens, opt-out (STOP) and opt-in (START) built in.'],
+                ['q' => 'Is my data safe?', 'a' => 'Yes. GDPR-aware, encrypted tokens, and clear opt-outs built in.'],
                 ['q' => 'What industries does it work for?', 'a' => '8 verticals seeded and counting. If yours isn\'t listed, ask — we\'ll work it out.'],
             ] as $faq)
                 <details class="bg-surface border border-border rounded-xl p-5">

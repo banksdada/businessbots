@@ -128,7 +128,7 @@
                         <div>
                             <label for="current_tools" class="field-label">Tools or software you use now <span class="font-normal text-text-muted">(optional)</span></label>
                             <input id="current_tools" type="text" wire:model.blur="current_tools" class="field-input"
-                                placeholder="e.g. Excel, WhatsApp, Google Drive">
+                                placeholder="e.g. Excel, email, Google Drive">
                             @error('current_tools') <p class="field-error">{{ $message }}</p> @enderror
                         </div>
 

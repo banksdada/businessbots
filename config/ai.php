@@ -5,7 +5,7 @@
 // here by changing only .env — OpenAI itself, Azure OpenAI, or a local/self-hosted
 // model gateway. This does NOT change which tool you use to write code (that's
 // a separate choice, e.g. OpenCode) — this is what the running app calls at
-// request time to classify WhatsApp intent and generate replies/content.
+// request time to generate content and power AI-assisted workflows.
 
 return [
 

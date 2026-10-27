@@ -4,6 +4,27 @@ A single honest pass over everything built so far: what's real and working, what
 
 ---
 
+## 2026-10-27 — SEO foundation, legal emails, Postal-only mail
+
+All changes below are in the working tree of `projects/sorted-app` (uncommitted at time of writing).
+
+- **SEO foundation:** `robots.txt` points at `https://nowsorted.co.uk/sitemap.xml`; `SeoController` generates the sitemap with the three microsites and only includes `/live-proof` when `features.social` is on; `SeoTest` covers the sitemap, canonical, OG/Twitter meta, robots, and OG image.
+- **Meta/OG:** `seo-meta` builds canonical from `legal.domain` + path and drops query strings; added `og:image:width/height/alt`, `twitter:image:alt`; default `public/images/og-default.png` is 1200x630. Static microsites (`public/ai-audit/`, `public/career/`, `public/consult/`, `public/ai-audit.html`) now have description, canonical, OG and Twitter tags, and their broken `/projects/microsites/...` nav links are fixed.
+- **Structured data:** Organization schema uses a neutral description; Service and FAQPage are gated to `features.social && home`.
+- **Legal emails:** legal pages render `legal@nowsorted.co.uk` and `privacy@nowsorted.co.uk` from `config/legal.php`; `LegalEmailTest` asserts the old `automation.baseuse.xyz` / `businessbots.com` addresses are gone.
+- **Config:** `legal.domain` now uses `LEGAL_DOMAIN` (default `https://nowsorted.co.uk`); `.env.example` sets `APP_URL=https://nowsorted.co.uk`; `phpunit.xml` pins `APP_URL` and clears `DATABASE_URL` so tests no longer depend on the local `.env`.
+- **Mail:** removed the out-of-scope Resend transport, mailer, service config, env key and patch files. Mail is Postal/SMTP only; `.env.example` documents the Postal production values.
+- **Test status:** SEO, legal-email and contact suites pass. The full suite still has one pre-existing failure in `ClientAdviceFlowTest` (Livewire validation assertion), unrelated to these changes.
+
+## 2026-10-27 — Legacy WhatsApp automation removed
+
+- Deleted the WhatsApp webhook controller, queued handler, Meta signature middleware, conversation model, WhatsApp service classes and the WhatsApp conversation migration.
+- Removed WhatsApp from channel OAuth, token refresh, onboarding, service/config/env keys, marketing/legal copy, dashboard/leads empty states and the Filament lead label.
+- Preserved Instagram/LinkedIn/GBP posting and the generic lead/consent records. The `whatsapp_conversations` table may still exist in already-migrated databases; no application code reads or writes it.
+- Added `WhatsAppRemovalTest` to prove the webhook is gone, WhatsApp is not an available channel, onboarding can finish without a channel, and public copy no longer advertises it.
+
+---
+
 ## ✅ Solid — built, wired, and internally consistent
 
 ### Documentation
@@ -60,7 +81,6 @@ OAuth flow for WhatsApp/Instagram/LinkedIn/GBP, with CSRF-style state verificati
 
 - **Auth pages** — `routes/auth.php`, login/register views. Referenced everywhere, assumed to exist, never generated in this repo.
 - **`bootstrap/app.php` / `bootstrap/providers.php`** — middleware aliases, CSRF exemptions, and the Filament panel provider registration are all *documented* in `SETUP-NOTES.md` but the actual files don't exist yet (Laravel scaffolds these on `laravel new`, which hasn't been run against this tree).
-- **Tests** — zero. No unit, feature, or integration tests anywhere.
 - **CI/CD pipeline** — no GitHub Actions / equivalent.
 - **`docker-compose.yml`** — described piecemeal across `SETUP-NOTES.md` and earlier chat (shared volume config, service list) but never assembled into one actual file.
 - **Weekly learning job** (`performance_analyzer.py`, the thing that would weight future content toward what performed well) — described in `architecture.md`, never built.
@@ -85,4 +105,4 @@ OAuth flow for WhatsApp/Instagram/LinkedIn/GBP, with CSRF-style state verificati
 
 This isn't a judgment that the project is behind — for the scope covered (multi-vertical SaaS, WhatsApp automation, Stripe billing, multi-platform posting, GDPR-aware legal pages, admin tenancy) this is a substantial working skeleton. It's a map of exactly where the edges are, so nothing gets assumed to work that hasn't actually been tested.
 
-**Last updated:** during this build session, reflecting everything through the image-cleanup command.
+**Last updated:** 2026-10-27 — SEO foundation, legal-email rebrand, Postal-only mail, and test coverage.

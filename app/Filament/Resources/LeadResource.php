@@ -39,8 +39,8 @@ class LeadResource extends Resource
             Textarea::make('message')->disabled()->columnSpanFull(),
             Toggle::make('ai_reply_sent')->label('AI reply sent')->disabled(),
             Toggle::make('opted_out')
-                ->label('Opted out of WhatsApp messages')
-                ->helperText('Set automatically when the lead replies STOP. Editable here only for manual correction.'),
+                ->label('Opted out of messages')
+                ->helperText('Set automatically when the lead opts out. Editable here only for manual correction.'),
             DateTimePicker::make('scheduled_visit_at')->label('Scheduled visit'),
         ]);
     }

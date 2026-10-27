@@ -17,8 +17,8 @@
 
         <h2 class="text-base font-semibold text-text-primary mt-8 mb-3">1. The Service</h2>
         <p class="mb-4">
-            {{ config('app.name') }} provides AI-driven automation for small businesses, including WhatsApp lead
-            capture and reply, social media content generation and scheduling, and related analytics
+            {{ config('app.name') }} provides AI-driven automation for small businesses, including social
+            media content generation and scheduling, lead follow-up, and related analytics
             ("the Service"). The Service is provided on a subscription basis as described at
             <a href="{{ route('marketing.pricing') }}" class="text-accent-light">{{ $legal['domain'] }}/pricing</a>.
         </p>
@@ -42,7 +42,7 @@
         <h2 class="text-base font-semibold text-text-primary mt-8 mb-3">4. Acceptable use</h2>
         <p class="mb-4">You agree not to use the Service to:</p>
         <ul class="list-disc pl-5 mb-4 space-y-1">
-            <li>Send unsolicited messages to individuals who have not consented to contact ("spam"), including via WhatsApp, in violation of Meta's WhatsApp Business Messaging Policy</li>
+            <li>Send unsolicited messages to individuals who have not consented to contact ("spam") through any connected channel</li>
             <li>Generate or distribute unlawful, deceptive, defamatory, or infringing content</li>
             <li>Attempt to reverse-engineer, resell, or white-label the Service without a separate written agreement</li>
             <li>Interfere with the Service's operation or attempt unauthorized access to other accounts</li>
@@ -54,21 +54,21 @@
             generate through the Service. You grant us a limited license to process this data solely
             to provide the Service, as described in our
             <a href="{{ route('legal.privacy') }}" class="text-accent-light">Privacy Policy</a>.
-            You are responsible for ensuring you have lawful basis (including WhatsApp opt-in consent
-            where applicable) to contact the leads and customers you manage through the Service.
+            You are responsible for ensuring you have a lawful basis (including consent where
+            applicable) to contact the leads and customers you manage through the Service.
         </p>
 
         <h2 class="text-base font-semibold text-text-primary mt-8 mb-3">6. AI-generated content</h2>
         <p class="mb-4">
-            The Service uses third-party AI models (including OpenAI) to generate message replies and
-            social media content on your behalf. AI-generated content may contain errors; you are
+            The Service uses third-party AI models (including OpenAI) to generate social media content
+            and other drafts on your behalf. AI-generated content may contain errors; you are
             responsible for reviewing content before it materially affects a customer relationship or
-            legal obligation, and we recommend periodic manual review of AI-sent replies.
+            legal obligation, and we recommend periodic manual review of AI-generated content.
         </p>
 
         <h2 class="text-base font-semibold text-text-primary mt-8 mb-3">7. Third-party platforms</h2>
         <p class="mb-4">
-            The Service integrates with WhatsApp, Instagram, LinkedIn, and Google Business Profile.
+            The Service integrates with Instagram, LinkedIn, and Google Business Profile.
             Your use of these integrations is also subject to each platform's own terms. We are not
             responsible for outages, policy changes, or account actions taken by these third-party
             platforms.
@@ -85,7 +85,7 @@
         <h2 class="text-base font-semibold text-text-primary mt-8 mb-3">9. Termination</h2>
         <p class="mb-4">
             We may suspend or terminate accounts that violate these Terms, including sustained
-            non-payment or misuse of WhatsApp/social integrations that puts our platform access at
+            non-payment or misuse of social integrations that puts our platform access at
             risk. You may close your account at any time from Settings.
         </p>
 

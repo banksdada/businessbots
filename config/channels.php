@@ -17,16 +17,6 @@ return [
         'redirect_uri' => env('META_INSTAGRAM_REDIRECT_URI'),
     ],
 
-    'whatsapp' => [
-        'label' => 'WhatsApp Business',
-        'authorize_url' => 'https://www.facebook.com/v19.0/dialog/oauth',
-        'token_url' => 'https://graph.facebook.com/v19.0/oauth/access_token',
-        'scope' => 'whatsapp_business_management,whatsapp_business_messaging',
-        'client_id' => env('META_APP_ID'),
-        'client_secret' => env('META_APP_SECRET'),
-        'redirect_uri' => env('META_WHATSAPP_REDIRECT_URI'),
-    ],
-
     'linkedin' => [
         'label' => 'LinkedIn',
         'authorize_url' => 'https://www.linkedin.com/oauth/v2/authorization',

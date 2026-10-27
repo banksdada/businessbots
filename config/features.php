@@ -7,8 +7,8 @@
 
 return [
 
-    // WhatsApp replies, channel connections, scheduled social posting and the
-    // leads page. Paused while the client advice portal is the focus.
+    // Channel connections, scheduled social posting and the leads page.
+    // Paused while the client advice portal is the focus.
     'social' => (bool) env('FEATURE_SOCIAL', false),
 
 ];

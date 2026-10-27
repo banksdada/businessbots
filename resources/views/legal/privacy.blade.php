@@ -20,12 +20,12 @@
             <li>Account details: name, email, password (hashed, never stored in plain text)</li>
             <li>Business details: business name, location, description, industry</li>
             <li>Billing details: handled directly by Stripe — we store a Stripe customer reference, not card numbers</li>
-            <li>OAuth tokens for connected channels (WhatsApp, Instagram, LinkedIn, Google Business Profile), encrypted at rest</li>
+            <li>OAuth tokens for connected channels (Instagram, LinkedIn, Google Business Profile), encrypted at rest</li>
         </ul>
         <p class="mb-2 font-medium text-text-primary text-xs uppercase tracking-wide">From your leads and customers (processed on your behalf)</p>
         <ul class="list-disc pl-5 mb-4 space-y-1">
-            <li>Phone numbers and message content sent via WhatsApp</li>
-            <li>Names, where provided in conversation</li>
+            <li>Names and contact details provided through connected channels or lead forms</li>
+            <li>Message content submitted through those channels</li>
             <li>Engagement data from social posts (aggregate metrics only — not individual follower data)</li>
         </ul>
         <p class="mb-4 text-xs">
@@ -65,7 +65,7 @@
         <p class="mb-4">
             Account and business data is retained for the life of your subscription plus 90 days
             after cancellation, after which it is deleted unless a longer period is required for
-            legal or tax purposes. Lead/conversation data follows the same retention unless you
+            legal or tax purposes. Lead and enquiry data follows the same retention unless you
             request earlier deletion.
         </p>
 
