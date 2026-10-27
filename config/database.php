@@ -35,7 +35,7 @@ return [
             'strict' => true,
             'engine' => null,
             'options' => extension_loaded('pdo_mysql') ? array_filter([
-                defined('PDO::MYSQL_ATTR_SSL_CA') ? constant('PDO::MYSQL_ATTR_SSL_CA') : null => env('MYSQL_ATTR_SSL_CA'),
+                defined('PDO\\Mysql::ATTR_SSL_CA') ? constant('PDO\\Mysql::ATTR_SSL_CA') : null => env('MYSQL_ATTR_SSL_CA'),
             ]) : [],
         ],
 
