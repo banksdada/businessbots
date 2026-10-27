@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\VerticalConfig;
-use App\Models\ScheduledPost;
-use App\Models\Lead;
 use App\Models\Business;
+use App\Models\Lead;
+use App\Models\ScheduledPost;
+use App\Models\VerticalConfig;
 use Illuminate\View\View;
 
 class MarketingController extends Controller
@@ -73,7 +73,7 @@ class MarketingController extends Controller
         return view('marketing.insight', [
             'post' => $post,
             'seo' => [
-                'title' => $post['title'] . ' — NowSorted Insights',
+                'title' => $post['title'].' — NowSorted Insights',
                 'description' => $post['excerpt'] ?? 'Practical insights on automating your business.',
             ],
         ]);
@@ -121,13 +121,13 @@ class MarketingController extends Controller
         try {
             $stats = [
                 'revenue_this_month' => 0, // populated once billing is wired up
-                'reply_speed' => $this->platformAvgReplySpeed(),
+                'leads_this_month' => Lead::where('created_at', '>=', now()->startOfMonth())->count(),
                 'posts_today' => ScheduledPost::whereDate('posted_at', today())->count(),
-                'days_no_human_reply' => 63, // placeholder until an incident log exists
+                'active_businesses' => Business::where('is_active', true)->count(),
                 'total_saved' => $this->platformTotalSaved(),
-                'replies_count' => Lead::where('ai_reply_sent', true)->count(),
                 'posts_count' => ScheduledPost::whereNotNull('posted_at')->count(),
                 'leads_count' => Lead::count(),
+                'open_leads' => Lead::where('status', '!=', 'closed')->count(),
             ];
         } catch (\Exception $e) {
             \Log::error('[MarketingController] liveProof stats failed', ['error' => $e->getMessage()]);
@@ -174,26 +174,16 @@ class MarketingController extends Controller
         return [
             'agents_active' => '27+',
             'businesses_running' => Business::where('is_active', true)->count() ?: 8,
-            'avg_reply_time' => '<60s',
+            'leads_captured' => Lead::count(),
         ];
-    }
-
-    private function platformAvgReplySpeed(): string
-    {
-        $avg = Lead::where('ai_reply_sent', true)
-            ->where('created_at', '>=', now()->subDay())
-            ->avg('reply_time_seconds');
-
-        return $avg ? round($avg) . 's' : '—';
     }
 
     private function platformTotalSaved(): float
     {
-        $replies = Lead::where('ai_reply_sent', true)->count();
         $posts = ScheduledPost::whereNotNull('posted_at')->count();
         $leads = Lead::count();
 
-        return ($replies * 8) + ($posts * 24) + ($leads * 7);
+        return ($leads * 8) + ($posts * 24);
     }
 
     /**
@@ -207,35 +197,31 @@ class MarketingController extends Controller
     {
         try {
             $leadsThisWeek = Lead::where('created_at', '>=', now()->subDays(7))->count();
-            $leadsLastWeek  = Lead::where('created_at', '>=', now()->subDays(14))
-                                  ->where('created_at', '<', now()->subDays(7))->count();
-            $repliedThisWeek = Lead::where('ai_reply_sent', true)
-                                  ->where('created_at', '>=', now()->subDays(7))->count();
-            $postsThisWeek   = ScheduledPost::where('posted_at', '>=', now()->subDays(7))->count();
+            $leadsLastWeek = Lead::where('created_at', '>=', now()->subDays(14))
+                ->where('created_at', '<', now()->subDays(7))->count();
+            $openLeads = Lead::where('status', '!=', 'closed')->count();
+            $postsThisWeek = ScheduledPost::where('posted_at', '>=', now()->subDays(7))->count();
 
             $trend = $leadsLastWeek > 0
                 ? round((($leadsThisWeek - $leadsLastWeek) / $leadsLastWeek) * 100)
                 : 0;
-
-            $replyRate = $leadsThisWeek > 0
-                ? round(($repliedThisWeek / $leadsThisWeek) * 100)
-                : 0;
         } catch (\Throwable $e) {
             \Log::warning('[MarketingController] aiInsights failed', ['error' => $e->getMessage()]);
+
             return [
                 ['label' => 'Leads', 'as_of' => 'this week', 'value' => '—', 'detail' => 'Not yet measuring.'],
                 ['label' => 'Trend', 'as_of' => 'vs last week', 'value' => '—', 'detail' => 'Not yet measuring.'],
-                ['label' => 'Reply rate', 'as_of' => 'this week', 'value' => '—', 'detail' => 'Not yet measuring.'],
+                ['label' => 'Open leads', 'as_of' => 'right now', 'value' => '—', 'detail' => 'Not yet measuring.'],
                 ['label' => 'Posts', 'as_of' => 'this week', 'value' => '—', 'detail' => 'Not yet measuring.'],
             ];
         }
 
         $trendLabel = $trend > 0 ? "+{$trend}%" : ($trend < 0 ? "{$trend}%" : '0%');
         $trendDetail = $trend > 0
-            ? "Up from last week — the system is pulling ahead."
+            ? 'Up from last week — the system is pulling ahead.'
             : ($trend < 0
-                ? "Down from last week — worth a look."
-                : "Flat vs last week.");
+                ? 'Down from last week — worth a look.'
+                : 'Flat vs last week.');
 
         return [
             [
@@ -251,16 +237,16 @@ class MarketingController extends Controller
                 'detail' => $trendDetail,
             ],
             [
-                'label' => 'Reply rate',
-                'as_of' => 'this week',
-                'value' => "{$replyRate}%",
-                'detail' => "Leads answered by the AI this week. Target is 100%.",
+                'label' => 'Open leads',
+                'as_of' => 'right now',
+                'value' => $openLeads,
+                'detail' => 'Leads not yet marked closed.',
             ],
             [
                 'label' => 'Posts',
                 'as_of' => 'this week',
                 'value' => $postsThisWeek,
-                'detail' => "Pieces of content published across channels in the last 7 days.",
+                'detail' => 'Pieces of content published across channels in the last 7 days.',
             ],
         ];
     }
@@ -310,6 +296,7 @@ class MarketingController extends Controller
                 ->toArray();
         } catch (\Throwable $e) {
             \Log::warning('[MarketingController] successStories failed', ['error' => $e->getMessage()]);
+
             return [];
         }
     }

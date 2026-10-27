@@ -4,8 +4,8 @@ namespace Tests\Unit;
 
 use App\Models\Business;
 use App\Models\Lead;
-use Tests\Unit\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Schema;
 
 class LeadTest extends TestCase
 {
@@ -27,17 +27,31 @@ class LeadTest extends TestCase
         $this->assertEquals('new', $lead->status);
     }
 
-    public function test_lead_is_not_escalated_by_default(): void
+    public function test_new_lead_needs_human_attention(): void
     {
         $lead = Lead::factory()->create();
+
+        $this->assertTrue($lead->needsHumanAttention());
+    }
+
+    public function test_closed_lead_does_not_need_human_attention(): void
+    {
+        $lead = Lead::factory()->create(['status' => 'closed']);
 
         $this->assertFalse($lead->needsHumanAttention());
     }
 
-    public function test_lead_can_be_escalated(): void
+    public function test_complaint_needs_human_attention(): void
     {
         $lead = Lead::factory()->escalated()->create();
 
         $this->assertTrue($lead->needsHumanAttention());
+    }
+
+    public function test_ai_reply_fields_are_removed(): void
+    {
+        $this->assertFalse(Schema::hasColumn('leads', 'ai_reply_sent'));
+        $this->assertFalse(Schema::hasColumn('leads', 'ai_reply_text'));
+        $this->assertFalse(Schema::hasColumn('leads', 'reply_time_seconds'));
     }
 }

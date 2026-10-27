@@ -4,19 +4,30 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\LeadResource\Pages;
 use App\Models\Lead;
+use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
-use Filament\Forms\Components\{TextInput, Textarea, Select, Toggle, DateTimePicker};
 use Filament\Resources\Resource;
-use Filament\Tables\Table;
-use Filament\Tables\Columns\{TextColumn, BadgeColumn, IconColumn};
-use Filament\Tables\Filters\{SelectFilter, Filter, TernaryFilter};
-use Filament\Tables\Actions\{Action, BulkAction};
+use Filament\Tables\Actions\Action;
 use Filament\Tables\Actions\ActionGroup;
+use Filament\Tables\Actions\BulkAction;
+use Filament\Tables\Columns\BadgeColumn;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\Filter;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Filters\TernaryFilter;
+use Filament\Tables\Table;
 
 class LeadResource extends Resource
 {
     protected static ?string $model = Lead::class;
+
     protected static ?string $navigationIcon = 'heroicon-o-inbox';
+
     protected static ?string $navigationGroup = 'Business';
 
     /** Admins only see leads for the business they're scoped to — enforced globally, not per-query here. See AppServiceProvider tenant scoping note in SETUP-NOTES.md. */
@@ -37,7 +48,6 @@ class LeadResource extends Resource
                 'closed' => 'Closed',
             ]),
             Textarea::make('message')->disabled()->columnSpanFull(),
-            Toggle::make('ai_reply_sent')->label('AI reply sent')->disabled(),
             Toggle::make('opted_out')
                 ->label('Opted out of messages')
                 ->helperText('Set automatically when the lead opts out. Editable here only for manual correction.'),
@@ -58,7 +68,6 @@ class LeadResource extends Resource
                     'danger' => 'complaint',
                     'gray' => 'other',
                 ]),
-                IconColumn::make('ai_reply_sent')->label('Replied')->boolean(),
                 IconColumn::make('opted_out')
                     ->label('Opted out')
                     ->boolean()
@@ -86,9 +95,7 @@ class LeadResource extends Resource
                 TernaryFilter::make('opted_out')->label('Opted out'),
                 Filter::make('needs_human')
                     ->label('Needs human attention')
-                    ->query(fn ($query) => $query->where(function ($q) {
-                        $q->where('intent', 'complaint')->orWhere('ai_reply_sent', false);
-                    })),
+                    ->query(fn ($query) => $query->where('status', '!=', 'closed')),
             ])
             ->actions([
                 ActionGroup::make([

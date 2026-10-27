@@ -24,12 +24,12 @@
 
     <div class="bg-surface border border-border rounded-xl overflow-hidden">
         <div class="grid grid-cols-[1.3fr_2fr_0.9fr_0.9fr_0.9fr] px-5 py-2.5 border-b border-border text-[10px] font-medium text-text-muted uppercase tracking-wide">
-            <div>Name</div><div>Message</div><div>Intent</div><div>AI reply</div><div>Action</div>
+            <div>Name</div><div>Message</div><div>Intent</div><div>Status</div><div>Action</div>
         </div>
 
         @forelse ($leads as $lead)
             @php
-                $needsHuman = $lead->intent === 'complaint' || ! $lead->ai_reply_sent;
+                $needsHuman = $lead->status !== 'closed';
             @endphp
             <div class="grid grid-cols-[1.3fr_2fr_0.9fr_0.9fr_0.9fr] px-5 py-3.5 items-center border-b border-border last:border-0
                 {{ $needsHuman ? 'bg-error/5' : '' }}">
@@ -45,17 +45,24 @@
                     {{ ucfirst($lead->intent) }}
                 </x-badge>
 
-                <div class="text-xs {{ $lead->ai_reply_sent ? 'text-success' : 'text-warning' }}">
-                    {{ $lead->ai_reply_sent ? '✓ Sent' : 'Needs human' }}
-                </div>
+                <x-badge :variant="match($lead->status) {
+                    'closed' => 'success',
+                    'followup' => 'warning',
+                    default => 'accent',
+                }">
+                    {{ ucfirst($lead->status) }}
+                </x-badge>
 
                 <div>
                     @if ($needsHuman)
-                        <a href="tel:{{ $lead->phone }}" class="text-xs font-semibold text-error">Call now</a>
+                        <div class="flex items-center gap-2">
+                            <a href="tel:{{ $lead->phone }}" class="text-xs font-semibold text-error">Call now</a>
+                            <button wire:click="markClosed({{ $lead->id }})" class="text-xs font-medium text-accent-light">
+                                Mark closed
+                            </button>
+                        </div>
                     @else
-                        <button wire:click="markClosed({{ $lead->id }})" class="text-xs font-medium text-accent-light">
-                            Mark closed
-                        </button>
+                        <span class="text-xs text-text-muted">Closed</span>
                     @endif
                 </div>
             </div>

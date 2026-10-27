@@ -10,7 +10,7 @@
     {{-- Stat cards --}}
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
         <x-stat-card label="Leads this week" :value="$leadsThisWeek" />
-        <x-stat-card label="Avg reply time" :value="$avgReplyTime" />
+        <x-stat-card label="Needs attention" :value="$leadsNeedingAttention" />
         <x-stat-card label="Posts this week" :value="$postsThisWeek" />
         <x-stat-card label="Days without staff" :value="$daysWithoutStaff" />
     </div>

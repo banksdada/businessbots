@@ -61,7 +61,7 @@
             @foreach ([
                 ['value' => $stats['agents_active'] ?? '27+', 'label' => 'AI agents active'],
                 ['value' => $stats['businesses_running'] ?? '8', 'label' => 'Businesses running'],
-                ['value' => $stats['avg_reply_time'] ?? '<60s', 'label' => 'Avg response time'],
+                ['value' => $stats['leads_captured'] ?? '0', 'label' => 'Leads captured'],
                 ['value' => '£0', 'label' => 'Human salary cost'],
             ] as $stat)
                 <div class="bg-surface-secondary p-4 text-center">

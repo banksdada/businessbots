@@ -19,7 +19,6 @@ class LeadFactory extends Factory
             'status' => 'new',
             'intent' => 'inquiry',
             'message' => fake()->sentence(),
-            'ai_reply_sent' => true,
         ];
     }
 

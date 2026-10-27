@@ -15,9 +15,9 @@
             <div class="mt-10 grid grid-cols-2 md:grid-cols-4 gap-px bg-border rounded-xl overflow-hidden border border-border">
                 @foreach ([
                     ['value' => $stats['revenue_this_month'], 'label' => 'Revenue this month'],
-                    ['value' => $stats['reply_speed'], 'label' => 'Avg response time'],
+                    ['value' => $stats['leads_this_month'], 'label' => 'Leads this month'],
                     ['value' => $stats['posts_today'], 'label' => 'Posts published today'],
-                    ['value' => $stats['days_no_human_reply'], 'label' => 'Days with 0 human replies needed'],
+                    ['value' => $stats['active_businesses'], 'label' => 'Active businesses'],
                 ] as $stat)
                     <div class="bg-surface-secondary p-4 text-center">
                         <div class="text-xl font-bold text-text-primary">{{ $stat['value'] }}</div>
@@ -28,9 +28,9 @@
 
             <div class="mt-10 grid grid-cols-1 md:grid-cols-3 gap-4">
                 @foreach ([
-                    ['value' => $stats['replies_count'], 'label' => 'AI replies sent'],
                     ['value' => $stats['posts_count'], 'label' => 'Posts published all-time'],
                     ['value' => $stats['leads_count'], 'label' => 'Leads captured'],
+                    ['value' => $stats['open_leads'], 'label' => 'Open leads'],
                 ] as $stat)
                     <div class="bg-surface border border-border rounded-xl p-5 text-center">
                         <div class="text-2xl font-bold text-success">{{ $stat['value'] }}</div>

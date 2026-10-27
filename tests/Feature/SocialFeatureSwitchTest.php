@@ -31,4 +31,25 @@ class SocialFeatureSwitchTest extends TestCase
     {
         $this->get('/')->assertOk()->assertSee("Tell us what's getting in the way.", false)->assertDontSee('WhatsApp');
     }
+
+    public function test_home_page_uses_non_reply_metrics(): void
+    {
+        config(['features.social' => true]);
+
+        $this->get('/')->assertOk()
+            ->assertSee('Leads captured')
+            ->assertDontSee('Avg response time');
+    }
+
+    public function test_live_proof_uses_non_reply_metrics(): void
+    {
+        config(['features.social' => true]);
+
+        $this->get('/live-proof')->assertOk()
+            ->assertSee('Leads this month')
+            ->assertSee('Active businesses')
+            ->assertSee('Open leads')
+            ->assertDontSee('AI replies sent')
+            ->assertDontSee('Avg response time');
+    }
 }
