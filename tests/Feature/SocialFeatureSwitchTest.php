@@ -32,6 +32,14 @@ class SocialFeatureSwitchTest extends TestCase
         $this->get('/')->assertOk()->assertSee("Tell us what's getting in the way.", false)->assertDontSee('WhatsApp');
     }
 
+    public function test_home_page_sells_the_aios_and_links_to_contact(): void
+    {
+        $this->get('/')->assertOk()
+            ->assertSee("The fix doesn't have to become another job.", false)
+            ->assertSee('Ask about AIOS')
+            ->assertSee(route('contact', ['about' => 'AIOS']), false);
+    }
+
     public function test_home_page_uses_non_reply_metrics(): void
     {
         config(['features.social' => true]);

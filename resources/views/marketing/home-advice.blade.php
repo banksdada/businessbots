@@ -89,6 +89,119 @@
         </div>
     </section>
 
+    {{-- AIOS: the system behind the fix --}}
+    <section id="aios" class="mx-auto max-w-[1100px] px-4 sm:px-6 pb-16 sm:pb-24 scroll-mt-20">
+        <div class="overflow-hidden rounded-[2rem] bg-text-primary text-white">
+            <div class="grid gap-10 p-7 sm:p-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:p-12">
+                <div>
+                    <p class="text-sm font-semibold text-accent2 uppercase tracking-wider">AIOS — the system behind the fix</p>
+                    <h2 class="mt-3 text-3xl sm:text-4xl font-semibold leading-tight">The fix doesn't have to become another job.</h2>
+                    <p class="mt-4 text-lg text-white/75 leading-relaxed">
+                        AIOS is the AI Operating System we set up around your business. It keeps the repeat work moving — enquiries answered, follow-ups sent, content posted, numbers reported — without adding another tool for you to manage.
+                    </p>
+                    <ul class="mt-6 space-y-3 text-white/85">
+                        @foreach ([
+                            'Replies and follow-ups that don\'t wait for a quiet day.',
+                            'A weekly report that arrives already written.',
+                            'A real person checks the important bits.',
+                        ] as $point)
+                            <li class="flex items-start gap-3">
+                                <span class="mt-1.5 w-1.5 h-1.5 shrink-0 rounded-full bg-accent2"></span>
+                                <span>{{ $point }}</span>
+                            </li>
+                        @endforeach
+                    </ul>
+                    <div class="mt-8 flex flex-col sm:flex-row gap-3">
+                        <a href="{{ route('contact', ['about' => 'AIOS']) }}" class="inline-flex items-center justify-center px-6 py-3 rounded-full bg-white text-text-primary font-semibold hover:bg-accent-muted transition-colors">
+                            Ask about AIOS
+                        </a>
+                        <a href="#how-it-works" class="inline-flex items-center justify-center px-6 py-3 rounded-full border border-white/25 text-white font-semibold hover:bg-white/10 transition-colors">
+                            See how it works
+                        </a>
+                    </div>
+                    <p class="mt-4 text-sm text-white/60">No jargon. No new tools for you to manage.</p>
+                </div>
+
+                <div class="rounded-2xl border border-white/20 bg-white/10 p-5 sm:p-6">
+                    <p class="text-xs font-semibold uppercase tracking-wider text-white/55">Example workflow</p>
+
+                    <svg viewBox="0 0 360 220" class="mt-3 h-auto w-full" role="img" aria-labelledby="aios-map-title aios-map-desc">
+                        <title id="aios-map-title">How AIOS connects the repeat work</title>
+                        <desc id="aios-map-desc">AIOS sits at the centre of enquiries, follow-ups, content and reports.</desc>
+                        <defs>
+                            <linearGradient id="aios-core" x1="0" y1="0" x2="1" y2="1">
+                                <stop offset="0" stop-color="#ff4da6"/>
+                                <stop offset="1" stop-color="#8e4dff"/>
+                            </linearGradient>
+                        </defs>
+
+                        <g fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="1.5" stroke-dasharray="4 6">
+                            <path d="M180 110 C 150 95, 130 70, 110 47"/>
+                            <path d="M180 110 C 210 95, 230 70, 250 47"/>
+                            <path d="M180 110 C 150 125, 130 150, 110 173"/>
+                            <path d="M180 110 C 210 125, 230 150, 250 173"/>
+                        </g>
+
+                        <circle cx="180" cy="110" r="54" fill="none" stroke="rgba(255,255,255,0.18)"/>
+                        <circle cx="180" cy="110" r="44" fill="url(#aios-core)"/>
+                        <text x="180" y="115" text-anchor="middle" fill="#ffffff" font-size="15" font-weight="700" font-family="Inter, sans-serif">AIOS</text>
+
+                        <g font-family="Inter, sans-serif" font-size="11" font-weight="600">
+                            <g>
+                                <rect x="20" y="30" width="110" height="34" rx="17" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.2)"/>
+                                <circle cx="38" cy="47" r="4" fill="#ff4da6"/>
+                                <text x="50" y="51" fill="rgba(255,255,255,0.82)">Enquiries</text>
+                            </g>
+                            <g>
+                                <rect x="230" y="30" width="110" height="34" rx="17" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.2)"/>
+                                <circle cx="248" cy="47" r="4" fill="#dcebdf"/>
+                                <text x="260" y="51" fill="rgba(255,255,255,0.82)">Follow-ups</text>
+                            </g>
+                            <g>
+                                <rect x="20" y="156" width="110" height="34" rx="17" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.2)"/>
+                                <circle cx="38" cy="173" r="4" fill="#fbe8b0"/>
+                                <text x="50" y="177" fill="rgba(255,255,255,0.82)">Content</text>
+                            </g>
+                            <g>
+                                <rect x="230" y="156" width="110" height="34" rx="17" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.2)"/>
+                                <circle cx="248" cy="173" r="4" fill="#8e4dff"/>
+                                <text x="260" y="177" fill="rgba(255,255,255,0.82)">Reports</text>
+                            </g>
+                        </g>
+                    </svg>
+
+                    <div class="mt-6 flex items-center justify-between gap-4">
+                        <p class="font-display text-xl font-semibold">A Tuesday with AIOS</p>
+                        <span class="inline-flex items-center gap-1.5 rounded-full bg-success/15 px-2.5 py-1 text-xs font-semibold text-white/80">
+                            <span class="w-1.5 h-1.5 rounded-full bg-success"></span>
+                            Running
+                        </span>
+                    </div>
+
+                    <ol class="mt-4 space-y-5">
+                        @foreach ([
+                            ['08:12', 'New enquiry from the website', 'Reply drafted in your voice, ready for your OK.'],
+                            ['11:30', 'Quote still unanswered', 'A gentle follow-up goes out, so you don\'t have to remember.'],
+                            ['17:00', 'End of the day', 'The week\'s numbers land in your inbox, already written.'],
+                        ] as [$time, $title, $detail])
+                            <li class="grid grid-cols-[3.25rem_1fr] gap-3">
+                                <span class="pt-0.5 text-xs font-medium tabular-nums text-white/45">{{ $time }}</span>
+                                <div class="border-l border-white/20 pl-4">
+                                    <p class="font-semibold">{{ $title }}</p>
+                                    <p class="mt-1 text-sm leading-relaxed text-white/65">{{ $detail }}</p>
+                                </div>
+                            </li>
+                        @endforeach
+                    </ol>
+
+                    <p class="mt-6 border-t border-white/20 pt-4 text-xs leading-relaxed text-white/50">
+                        Example workflow. Yours is built around your actual work — and you approve the voice before anything goes out.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     {{-- A real person --}}
     <section class="mx-auto max-w-[1100px] px-4 sm:px-6 py-16 sm:py-24 grid md:grid-cols-[2fr_3fr] gap-10 items-center">
         <x-person name="reviewer-paper" bg="bg-accent-muted" class="w-full max-w-[320px] aspect-square mx-auto" />
