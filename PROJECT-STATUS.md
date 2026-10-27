@@ -6,7 +6,7 @@ A single honest pass over everything built so far: what's real and working, what
 
 ## 2026-10-27 — SEO foundation, legal emails, Postal-only mail
 
-These changes are committed in `d177264`; the final cleanup and documentation edits are in the working tree.
+These changes are committed in `d177264`; the final cleanup and documentation edits are committed in `5cd8f1f`.
 
 - **SEO foundation:** `robots.txt` points at `https://nowsorted.co.uk/sitemap.xml`; `SeoController` generates the sitemap with the three microsites and only includes `/live-proof` when `features.social` is on; `SeoTest` covers the sitemap, canonical, OG/Twitter meta, robots, and OG image.
 - **Meta/OG:** `seo-meta` builds canonical from `legal.domain` + path and drops query strings; added `og:image:width/height/alt`, `twitter:image:alt`; default `public/images/og-default.png` is 1200x630. Static microsites (`public/ai-audit/`, `public/career/`, `public/consult/`, `public/ai-audit.html`) now have description, canonical, OG and Twitter tags, and their broken `/projects/microsites/...` nav links are fixed.
