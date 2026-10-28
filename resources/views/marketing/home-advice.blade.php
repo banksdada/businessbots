@@ -91,111 +91,74 @@
 
     {{-- AIOS: the system behind the fix --}}
     <section id="aios" class="mx-auto max-w-[1100px] px-4 sm:px-6 pb-16 sm:pb-24 scroll-mt-20">
-        <div class="overflow-hidden rounded-[2rem] bg-text-primary text-white">
-            <div class="grid gap-10 p-7 sm:p-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:p-12">
+        <div class="rounded-3xl bg-surface border border-border p-8 sm:p-12 shadow-sm">
+            <div class="grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
                 <div>
-                    <p class="text-sm font-semibold text-accent2 uppercase tracking-wider">AIOS — the system behind the fix</p>
-                    <h2 class="mt-3 text-3xl sm:text-4xl font-semibold leading-tight">The fix doesn't have to become another job.</h2>
-                    <p class="mt-4 text-lg text-white/75 leading-relaxed">
-                        AIOS is the AI Operating System we set up around your business. It keeps the repeat work moving — enquiries answered, follow-ups sent, content posted, numbers reported — without adding another tool for you to manage.
+                    <span class="inline-flex items-center gap-2 px-3 py-1 bg-accent-muted rounded-full text-sm font-semibold text-accent uppercase tracking-wider">
+                        <span class="w-2 h-2 rounded-full bg-accent"></span>
+                        AIOS — The Autonomous Operating System
+                    </span>
+                    <h2 class="mt-4 text-3xl sm:text-4xl font-semibold leading-tight text-text-primary">The fix doesn't have to become another job.</h2>
+                    <p class="mt-4 text-lg text-text-secondary leading-relaxed">
+                        AIOS runs quietly around your business. It handles payments, books client meetings, drafts replies and builds your reports on autopilot — without adding another dashboard for you to log into.
                     </p>
-                    <ul class="mt-6 space-y-3 text-white/85">
+                    <ul class="mt-6 space-y-3 text-text-primary font-medium">
                         @foreach ([
-                            'Replies and follow-ups that don\'t wait for a quiet day.',
-                            'A weekly report that arrives already written.',
-                            'A real person checks the important bits.',
-                        ] as $point)
+                            ['💳', 'Payments collected automatically via Stripe invoices & reminders.'],
+                            ['📅', 'Consultations & calendar entries scheduled without email ping-pong.'],
+                            ['💬', 'Inbound enquiries & quotes answered instantly in your voice.'],
+                            ['📊', 'Daily reports compiled and delivered to your inbox at 5pm.'],
+                        ] as [$icon, $point])
                             <li class="flex items-start gap-3">
-                                <span class="mt-1.5 w-1.5 h-1.5 shrink-0 rounded-full bg-accent2"></span>
-                                <span>{{ $point }}</span>
+                                <span class="text-xl leading-none pt-0.5">{{ $icon }}</span>
+                                <span class="text-text-secondary">{{ $point }}</span>
                             </li>
                         @endforeach
                     </ul>
                     <div class="mt-8 flex flex-col sm:flex-row gap-3">
-                        <a href="{{ route('contact', ['about' => 'AIOS']) }}" class="inline-flex items-center justify-center px-6 py-3 rounded-full bg-white text-text-primary font-semibold hover:bg-accent-muted transition-colors">
+                        <a href="{{ route('contact', ['about' => 'AIOS']) }}" class="btn-primary text-base px-7 py-3">
                             Ask about AIOS
                         </a>
-                        <a href="#how-it-works" class="inline-flex items-center justify-center px-6 py-3 rounded-full border border-white/25 text-white font-semibold hover:bg-white/10 transition-colors">
+                        <a href="#how-it-works" class="btn-secondary text-base px-7 py-3">
                             See how it works
                         </a>
                     </div>
-                    <p class="mt-4 text-sm text-white/60">No jargon. No new tools for you to manage.</p>
+                    <p class="mt-4 text-sm text-text-muted">No jargon. No new tools to learn. A real person oversees every workflow.</p>
                 </div>
 
-                <div class="rounded-2xl border border-white/20 bg-white/10 p-5 sm:p-6">
-                    <p class="text-xs font-semibold uppercase tracking-wider text-white/55">Example workflow</p>
-
-                    <svg viewBox="0 0 360 220" class="mt-3 h-auto w-full" role="img" aria-labelledby="aios-map-title aios-map-desc">
-                        <title id="aios-map-title">How AIOS connects the repeat work</title>
-                        <desc id="aios-map-desc">AIOS sits at the centre of enquiries, follow-ups, content and reports.</desc>
-                        <defs>
-                            <linearGradient id="aios-core" x1="0" y1="0" x2="1" y2="1">
-                                <stop offset="0" stop-color="#ff4da6"/>
-                                <stop offset="1" stop-color="#8e4dff"/>
-                            </linearGradient>
-                        </defs>
-
-                        <g fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="1.5" stroke-dasharray="4 6">
-                            <path d="M180 110 C 150 95, 130 70, 110 47"/>
-                            <path d="M180 110 C 210 95, 230 70, 250 47"/>
-                            <path d="M180 110 C 150 125, 130 150, 110 173"/>
-                            <path d="M180 110 C 210 125, 230 150, 250 173"/>
-                        </g>
-
-                        <circle cx="180" cy="110" r="54" fill="none" stroke="rgba(255,255,255,0.18)"/>
-                        <circle cx="180" cy="110" r="44" fill="url(#aios-core)"/>
-                        <text x="180" y="115" text-anchor="middle" fill="#ffffff" font-size="15" font-weight="700" font-family="Inter, sans-serif">AIOS</text>
-
-                        <g font-family="Inter, sans-serif" font-size="11" font-weight="600">
-                            <g>
-                                <rect x="20" y="30" width="110" height="34" rx="17" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.2)"/>
-                                <circle cx="38" cy="47" r="4" fill="#ff4da6"/>
-                                <text x="50" y="51" fill="rgba(255,255,255,0.82)">Enquiries</text>
-                            </g>
-                            <g>
-                                <rect x="230" y="30" width="110" height="34" rx="17" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.2)"/>
-                                <circle cx="248" cy="47" r="4" fill="#dcebdf"/>
-                                <text x="260" y="51" fill="rgba(255,255,255,0.82)">Follow-ups</text>
-                            </g>
-                            <g>
-                                <rect x="20" y="156" width="110" height="34" rx="17" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.2)"/>
-                                <circle cx="38" cy="173" r="4" fill="#fbe8b0"/>
-                                <text x="50" y="177" fill="rgba(255,255,255,0.82)">Content</text>
-                            </g>
-                            <g>
-                                <rect x="230" y="156" width="110" height="34" rx="17" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.2)"/>
-                                <circle cx="248" cy="173" r="4" fill="#8e4dff"/>
-                                <text x="260" y="177" fill="rgba(255,255,255,0.82)">Reports</text>
-                            </g>
-                        </g>
-                    </svg>
-
-                    <div class="mt-6 flex items-center justify-between gap-4">
-                        <p class="font-display text-xl font-semibold">A Tuesday with AIOS</p>
-                        <span class="inline-flex items-center gap-1.5 rounded-full bg-success/15 px-2.5 py-1 text-xs font-semibold text-white/80">
-                            <span class="w-1.5 h-1.5 rounded-full bg-success"></span>
-                            Running
+                <div class="rounded-2xl border border-border bg-background p-6 shadow-sm">
+                    <div class="flex items-center justify-between pb-4 border-b border-border">
+                        <div class="flex items-center gap-2">
+                            <span class="w-2.5 h-2.5 rounded-full bg-success animate-pulse"></span>
+                            <p class="font-display font-semibold text-text-primary">AIOS Live Operations</p>
+                        </div>
+                        <span class="inline-flex items-center gap-1 rounded-full bg-success/15 px-2.5 py-1 text-xs font-semibold text-success">
+                            Autonomous Mode
                         </span>
                     </div>
 
-                    <ol class="mt-4 space-y-5">
+                    <div class="mt-5 space-y-4">
                         @foreach ([
-                            ['08:12', 'New enquiry from the website', 'Reply drafted in your voice, ready for your OK.'],
-                            ['11:30', 'Quote still unanswered', 'A gentle follow-up goes out, so you don\'t have to remember.'],
-                            ['17:00', 'End of the day', 'The week\'s numbers land in your inbox, already written.'],
-                        ] as [$time, $title, $detail])
-                            <li class="grid grid-cols-[3.25rem_1fr] gap-3">
-                                <span class="pt-0.5 text-xs font-medium tabular-nums text-white/45">{{ $time }}</span>
-                                <div class="border-l border-white/20 pl-4">
-                                    <p class="font-semibold">{{ $title }}</p>
-                                    <p class="mt-1 text-sm leading-relaxed text-white/65">{{ $detail }}</p>
+                            ['badge' => 'Payment', 'badge-bg' => 'bg-peach text-peach-strong', 'time' => '2m ago', 'title' => '£480 invoice paid via Stripe', 'detail' => 'Automatic receipt sent & ledger updated.'],
+                            ['badge' => 'Booking', 'badge-bg' => 'bg-sage text-sage-strong', 'time' => '14m ago', 'title' => '30-minute consult booked', 'detail' => 'Synced to calendar, reminder scheduled for client.'],
+                            ['badge' => 'Message', 'badge-bg' => 'bg-sun text-accent-dark', 'time' => '1h ago', 'title' => 'Inbound enquiry answered', 'detail' => 'Drafted in your voice, waiting for your quick approval.'],
+                            ['badge' => 'Report', 'badge-bg' => 'bg-accent-muted text-accent', 'time' => 'Today 17:00', 'title' => 'Daily financial pulse compiled', 'detail' => 'Revenue & outstanding invoices summarized in inbox.'],
+                        ] as $item)
+                            <div class="p-3.5 rounded-xl bg-surface border border-border flex items-start gap-3">
+                                <span class="px-2 py-0.5 rounded-md text-xs font-semibold {{ $item['badge-bg'] }} shrink-0 mt-0.5">{{ $item['badge'] }}</span>
+                                <div class="flex-1 min-w-0">
+                                    <div class="flex items-center justify-between gap-2">
+                                        <p class="text-sm font-semibold text-text-primary truncate">{{ $item['title'] }}</p>
+                                        <span class="text-xs text-text-muted shrink-0 tabular-nums">{{ $item['time'] }}</span>
+                                    </div>
+                                    <p class="mt-1 text-xs text-text-secondary leading-relaxed">{{ $item['detail'] }}</p>
                                 </div>
-                            </li>
+                            </div>
                         @endforeach
-                    </ol>
+                    </div>
 
-                    <p class="mt-6 border-t border-white/20 pt-4 text-xs leading-relaxed text-white/50">
-                        Example workflow. Yours is built around your actual work — and you approve the voice before anything goes out.
+                    <p class="mt-5 pt-4 border-t border-border text-xs text-text-muted text-center">
+                        Example live activity feed. Your AIOS is customised to your actual tools and business rules.
                     </p>
                 </div>
             </div>
