@@ -90,75 +90,73 @@
     </section>
 
     {{-- AIOS: the system behind the fix --}}
-    <section id="aios" class="mx-auto max-w-[1100px] px-4 sm:px-6 pb-16 sm:pb-24 scroll-mt-20">
-        <div class="rounded-3xl bg-surface border border-border p-8 sm:p-12 shadow-sm">
-            <div class="grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
+    <section id="aios" class="mx-auto max-w-[1100px] px-4 sm:px-6 pt-12 sm:pt-16 pb-12 sm:pb-20 scroll-mt-20">
+        <div class="rounded-3xl border border-border bg-surface p-6 sm:p-8 lg:p-10">
+            <div class="grid gap-8 lg:grid-cols-2 lg:items-center">
                 <div>
-                    <span class="inline-flex items-center gap-2 px-3 py-1 bg-accent-muted rounded-full text-sm font-semibold text-accent uppercase tracking-wider">
-                        <span class="w-2 h-2 rounded-full bg-accent"></span>
-                        AIOS — The Autonomous Operating System
-                    </span>
-                    <h2 class="mt-4 text-3xl sm:text-4xl font-semibold leading-tight text-text-primary">The fix doesn't have to become another job.</h2>
-                    <p class="mt-4 text-lg text-text-secondary leading-relaxed">
+                    <p class="text-label text-peach-strong">AIOS — the system behind the fix</p>
+                    <h2 class="text-h2 mt-2 text-text-primary">The fix doesn't have to become another job.</h2>
+                    <p class="mt-3 text-sm leading-relaxed text-text-secondary sm:text-[0.95rem]">
                         AIOS runs quietly around your business. It handles payments, books client meetings, drafts replies and builds your reports on autopilot — without adding another dashboard for you to log into.
                     </p>
-                    <ul class="mt-6 space-y-3 text-text-primary font-medium">
+                    <ul class="mt-4 space-y-1.5 text-sm text-text-secondary">
                         @foreach ([
-                            ['💳', 'Payments collected automatically via Stripe invoices & reminders.'],
-                            ['📅', 'Consultations & calendar entries scheduled without email ping-pong.'],
-                            ['💬', 'Inbound enquiries & quotes answered instantly in your voice.'],
-                            ['📊', 'Daily reports compiled and delivered to your inbox at 5pm.'],
-                        ] as [$icon, $point])
-                            <li class="flex items-start gap-3">
-                                <span class="text-xl leading-none pt-0.5">{{ $icon }}</span>
-                                <span class="text-text-secondary">{{ $point }}</span>
+                            'Payments collected automatically via Stripe invoices & reminders.',
+                            'Consultations & calendar entries scheduled without email ping-pong.',
+                            'Inbound enquiries & quotes answered instantly in your voice.',
+                            'Daily reports compiled and delivered to your inbox at 5pm.',
+                        ] as $point)
+                            <li class="flex items-start gap-2">
+                                <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-peach-strong"></span>
+                                <span>{{ $point }}</span>
                             </li>
                         @endforeach
                     </ul>
-                    <div class="mt-8 flex flex-col sm:flex-row gap-3">
-                        <a href="{{ route('contact', ['about' => 'AIOS']) }}" class="btn-primary text-base px-7 py-3">
+                    <div class="mt-5 flex flex-col sm:flex-row gap-2.5">
+                        <a href="{{ route('contact', ['about' => 'AIOS']) }}" class="btn-primary px-5 py-2 text-sm">
                             Ask about AIOS
                         </a>
-                        <a href="#how-it-works" class="btn-secondary text-base px-7 py-3">
+                        <a href="#solutions" class="btn-secondary px-5 py-2 text-sm">
                             See how it works
                         </a>
                     </div>
-                    <p class="mt-4 text-sm text-text-muted">No jargon. No new tools to learn. A real person oversees every workflow.</p>
+                    <p class="mt-3 text-xs text-text-muted">No jargon. No new tools to learn. A real person oversees every workflow.</p>
                 </div>
 
-                <div class="rounded-2xl border border-border bg-background p-6 shadow-sm">
-                    <div class="flex items-center justify-between pb-4 border-b border-border">
-                        <div class="flex items-center gap-2">
-                            <span class="w-2.5 h-2.5 rounded-full bg-success animate-pulse"></span>
-                            <p class="font-display font-semibold text-text-primary">AIOS Live Operations</p>
-                        </div>
-                        <span class="inline-flex items-center gap-1 rounded-full bg-success/15 px-2.5 py-1 text-xs font-semibold text-success">
-                            Autonomous Mode
+                <div class="rounded-2xl border border-border bg-background p-5 sm:p-6">
+                    <div class="relative mx-auto h-40 max-w-[17rem]">
+                        <div class="absolute left-1/2 top-1/2 z-10 flex h-16 w-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-gradient-to-br from-peach-strong to-accent-light font-display text-sm font-semibold text-white">AIOS</div>
+                        <div class="absolute left-1/2 top-0 -translate-x-1/2 rounded-full border border-border bg-surface px-2.5 py-1 text-[11px] font-medium text-text-primary"><span class="mr-1 inline-block h-1.5 w-1.5 rounded-full bg-peach-strong"></span>Enquiries</div>
+                        <div class="absolute right-0 top-[40%] rounded-full border border-border bg-surface px-2.5 py-1 text-[11px] font-medium text-text-primary"><span class="mr-1 inline-block h-1.5 w-1.5 rounded-full bg-sage-strong"></span>Follow-ups</div>
+                        <div class="absolute bottom-0 left-1/2 -translate-x-1/2 rounded-full border border-border bg-surface px-2.5 py-1 text-[11px] font-medium text-text-primary"><span class="mr-1 inline-block h-1.5 w-1.5 rounded-full bg-sun-strong"></span>Payments</div>
+                        <div class="absolute left-0 top-[40%] rounded-full border border-border bg-surface px-2.5 py-1 text-[11px] font-medium text-text-primary"><span class="mr-1 inline-block h-1.5 w-1.5 rounded-full bg-accent-light"></span>Reports</div>
+                    </div>
+
+                    <div class="mt-5 flex items-center justify-between">
+                        <h3 class="font-display text-sm font-semibold text-text-primary">A Tuesday with AIOS</h3>
+                        <span class="inline-flex items-center gap-1 rounded-full bg-success-muted px-2 py-0.5 text-[10px] font-semibold text-success">
+                            <span class="h-1.5 w-1.5 rounded-full bg-success"></span>
+                            Running
                         </span>
                     </div>
-
-                    <div class="mt-5 space-y-4">
+                    <ol class="mt-3 space-y-3">
                         @foreach ([
-                            ['badge' => 'Payment', 'badge-bg' => 'bg-peach text-peach-strong', 'time' => '2m ago', 'title' => '£480 invoice paid via Stripe', 'detail' => 'Automatic receipt sent & ledger updated.'],
-                            ['badge' => 'Booking', 'badge-bg' => 'bg-sage text-sage-strong', 'time' => '14m ago', 'title' => '30-minute consult booked', 'detail' => 'Synced to calendar, reminder scheduled for client.'],
-                            ['badge' => 'Message', 'badge-bg' => 'bg-sun text-accent-dark', 'time' => '1h ago', 'title' => 'Inbound enquiry answered', 'detail' => 'Drafted in your voice, waiting for your quick approval.'],
-                            ['badge' => 'Report', 'badge-bg' => 'bg-accent-muted text-accent', 'time' => 'Today 17:00', 'title' => 'Daily financial pulse compiled', 'detail' => 'Revenue & outstanding invoices summarized in inbox.'],
-                        ] as $item)
-                            <div class="p-3.5 rounded-xl bg-surface border border-border flex items-start gap-3">
-                                <span class="px-2 py-0.5 rounded-md text-xs font-semibold {{ $item['badge-bg'] }} shrink-0 mt-0.5">{{ $item['badge'] }}</span>
-                                <div class="flex-1 min-w-0">
-                                    <div class="flex items-center justify-between gap-2">
-                                        <p class="text-sm font-semibold text-text-primary truncate">{{ $item['title'] }}</p>
-                                        <span class="text-xs text-text-muted shrink-0 tabular-nums">{{ $item['time'] }}</span>
-                                    </div>
-                                    <p class="mt-1 text-xs text-text-secondary leading-relaxed">{{ $item['detail'] }}</p>
+                            ['08:12', '£480 invoice paid via Stripe', 'Receipt sent and the ledger updated.'],
+                            ['11:30', '30-minute consult booked', 'Synced to the calendar, reminder set for the client.'],
+                            ['14:00', 'Inbound enquiry answered', 'Drafted in your voice, waiting for your OK.'],
+                            ['17:00', 'Daily financial pulse compiled', 'Revenue and outstanding invoices in your inbox.'],
+                        ] as [$time, $title, $detail])
+                            <li class="grid grid-cols-[2.75rem_1fr] gap-3">
+                                <span class="pt-0.5 text-[11px] tabular-nums text-text-faint">{{ $time }}</span>
+                                <div class="border-l border-border pl-3">
+                                    <p class="text-[13px] font-semibold text-text-primary">{{ $title }}</p>
+                                    <p class="mt-0.5 text-[11px] leading-snug text-text-secondary">{{ $detail }}</p>
                                 </div>
-                            </div>
+                            </li>
                         @endforeach
-                    </div>
-
-                    <p class="mt-5 pt-4 border-t border-border text-xs text-text-muted text-center">
-                        Example live activity feed. Your AIOS is customised to your actual tools and business rules.
+                    </ol>
+                    <p class="mt-4 border-t border-border pt-3 text-center text-[11px] text-text-muted">
+                        Example workflow. Yours is built around your actual work — and you approve the voice before anything goes out.
                     </p>
                 </div>
             </div>
@@ -166,7 +164,7 @@
     </section>
 
     {{-- Solutions delivered --}}
-    <section class="mx-auto max-w-[1100px] px-4 sm:px-6 pb-16 sm:pb-24">
+    <section id="solutions" class="mx-auto max-w-[1100px] px-4 sm:px-6 pb-16 sm:pb-24 scroll-mt-20">
         <div class="max-w-[46rem] mx-auto text-center mb-10">
             <p class="text-sm font-semibold text-peach-strong uppercase tracking-wider">Solutions delivered</p>
             <h2 class="mt-2 text-3xl sm:text-4xl font-semibold leading-tight">Social proof, in plain numbers.</h2>
