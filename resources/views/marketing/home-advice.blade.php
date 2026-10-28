@@ -202,6 +202,29 @@
         </div>
     </section>
 
+    {{-- Solutions delivered --}}
+    <section class="mx-auto max-w-[1100px] px-4 sm:px-6 pb-16 sm:pb-24">
+        <div class="max-w-[46rem] mx-auto text-center mb-10">
+            <p class="text-sm font-semibold text-peach-strong uppercase tracking-wider">Solutions delivered</p>
+            <h2 class="mt-2 text-3xl sm:text-4xl font-semibold leading-tight">Social proof, in plain numbers.</h2>
+            <p class="mt-4 text-lg text-text-secondary leading-relaxed">Real outcomes from fixes already shipped.</p>
+        </div>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            @foreach ([
+                ['Email automation', 'Inbound replies drafted and routed; manual inbox triage cut.'],
+                ['Content creation', 'Consistent multi-platform posts from one brief; no content gap.'],
+                ['Payment-chasing workflows', 'Automated reminders and follow-ups; faster cash collection.'],
+                ['Lead capture & CRM', 'Verified-email pipeline; junk leads filtered before the CRM.'],
+                ['Reporting & visibility', 'Dashboard of what\'s working; decisions on data, not gut.'],
+            ] as [$title, $body])
+                <div class="rounded-2xl bg-surface border border-border p-7">
+                    <h3 class="text-xl font-semibold">{{ $title }}</h3>
+                    <p class="mt-2 text-text-secondary leading-relaxed">{{ $body }}</p>
+                </div>
+            @endforeach
+        </div>
+    </section>
+
     {{-- A real person --}}
     <section class="mx-auto max-w-[1100px] px-4 sm:px-6 py-16 sm:py-24 grid md:grid-cols-[2fr_3fr] gap-10 items-center">
         <x-person name="reviewer-paper" bg="bg-accent-muted" class="w-full max-w-[320px] aspect-square mx-auto" />
